@@ -91,10 +91,39 @@ export async function confirmChampion(
     }
 
     revalidatePath('/champions')
+    revalidatePath('/admin/champions')
     revalidatePath('/')
     return { success: true }
   } catch (err: any) {
     if (isDynamicServerError(err)) throw err
     return { error: err.message || 'Failed to confirm champion' }
+  }
+}
+
+export async function deleteChampion(id: string) {
+  try {
+    const supabase = await createClient()
+
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return { error: 'Unauthorized: Admin login required' }
+    }
+
+    const { error } = await supabase
+      .from('monthly_champions')
+      .delete()
+      .eq('id', id)
+
+    if (error) {
+      return { error: error.message }
+    }
+
+    revalidatePath('/champions')
+    revalidatePath('/admin/champions')
+    revalidatePath('/')
+    return { success: true }
+  } catch (err: any) {
+    if (isDynamicServerError(err)) throw err
+    return { error: err.message || 'Failed to delete champion' }
   }
 }

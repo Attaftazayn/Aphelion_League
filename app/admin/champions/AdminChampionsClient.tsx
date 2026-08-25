@@ -3,8 +3,8 @@
 import { useState, useMemo, useTransition } from 'react'
 import type { MonthlyChampion, Player, MatchWithPlayers } from '@/lib/types'
 import { calculateLeaderboard } from '@/lib/leaderboard'
-import { confirmChampion } from '@/app/champions/actions'
-import { Award, Trophy, ShieldCheck, Loader2, Check, AlertTriangle } from 'lucide-react'
+import { confirmChampion, deleteChampion } from '@/app/champions/actions'
+import { Award, Trophy, ShieldCheck, Loader2, Check, AlertTriangle, Trash2, X } from 'lucide-react'
 
 function formatMonthLabel(monthKey: string) {
   if (!monthKey) return ''
@@ -13,6 +13,99 @@ function formatMonthLabel(monthKey: string) {
   return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase()
 }
 
+/* ============================================================
+   Delete Champion Modal
+   ============================================================ */
+function DeleteChampionModal({
+  champion,
+  onClose,
+}: {
+  champion: MonthlyChampion
+  onClose: () => void
+}) {
+  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | null>(null)
+
+  function handleDelete() {
+    startTransition(async () => {
+      const result = await deleteChampion(champion.id)
+      if (result?.error) {
+        setError(result.error)
+      } else {
+        onClose()
+      }
+    })
+  }
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
+        <div className="modal-header">
+          <h2 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
+            Delete Champion Snapshot
+          </h2>
+          <button onClick={onClose} className="btn btn-ghost btn-icon">
+            <X size={18} />
+          </button>
+        </div>
+        <div className="modal-body">
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+            <div
+              style={{
+                width: 38,
+                height: 38,
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'var(--danger-dim)',
+                color: 'var(--danger)',
+                flexShrink: 0,
+              }}
+            >
+              <AlertTriangle size={18} />
+            </div>
+            <div>
+              <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)', marginBottom: 4 }}>
+                Remove {champion.player?.name} as Champion for {formatMonthLabel(champion.month_key)}?
+              </p>
+              <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
+                This will remove the snapshot from the public Hall of Fame.
+              </p>
+            </div>
+          </div>
+          {error && (
+            <div style={{ padding: '10px 14px', borderRadius: 8, fontSize: 13, background: 'var(--danger-dim)', color: 'var(--danger)', border: '1px solid var(--danger-border)' }}>
+              {error}
+            </div>
+          )}
+        </div>
+        <div className="modal-footer">
+          <button onClick={onClose} className="btn btn-secondary">
+            Cancel
+          </button>
+          <button onClick={handleDelete} disabled={isPending} className="btn btn-danger">
+            {isPending ? (
+              <>
+                <Loader2 size={15} className="animate-spin" />
+                Deleting...
+              </>
+            ) : (
+              <>
+                <Trash2 size={15} />
+                Delete Snapshot
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ============================================================
+   Main Admin Champions Client Component
+   ============================================================ */
 export function AdminChampionsClient({
   confirmedChampions,
   players,
@@ -27,6 +120,7 @@ export function AdminChampionsClient({
   const [isPending, startTransition] = useTransition()
   const [selectedMonth, setSelectedMonth] = useState<string>(availableMonths[0] ?? '')
   const [msg, setMsg] = useState<{ text: string; error?: boolean } | null>(null)
+  const [deletingChampion, setDeletingChampion] = useState<MonthlyChampion | null>(null)
 
   const monthCandidate = useMemo(() => {
     if (!selectedMonth) return null
@@ -85,7 +179,7 @@ export function AdminChampionsClient({
             </span>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 2 }}>
-            Confirm and declare monthly champions into the Hall of Fame
+            Confirm, manage, or remove monthly champions in the Hall of Fame
           </p>
         </div>
       </div>
@@ -245,10 +339,11 @@ export function AdminChampionsClient({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
+                  gap: 12,
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <Award size={20} style={{ color: 'var(--accent)' }} />
+                  <Award size={20} style={{ color: 'var(--accent)', flexShrink: 0 }} />
                   <div>
                     <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--accent)' }}>
                       {formatMonthLabel(c.month_key)}
@@ -261,11 +356,28 @@ export function AdminChampionsClient({
                     </p>
                   </div>
                 </div>
+
+                <button
+                  onClick={() => setDeletingChampion(c)}
+                  className="btn btn-ghost btn-icon btn-sm"
+                  title="Delete champion snapshot"
+                  style={{ color: 'var(--danger)' }}
+                >
+                  <Trash2 size={16} />
+                </button>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Delete Modal */}
+      {deletingChampion && (
+        <DeleteChampionModal
+          champion={deletingChampion}
+          onClose={() => setDeletingChampion(null)}
+        />
+      )}
     </div>
   )
 }
