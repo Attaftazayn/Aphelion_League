@@ -88,8 +88,23 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
 
         {/* Back link */}
         <div>
-          <Link href="/players" className="btn btn-ghost btn-sm" style={{ paddingLeft: 0, gap: 4, minHeight: 36 }}>
-            <ChevronLeft size={15} />
+          <Link
+            href="/players"
+            className="btn btn-secondary btn-sm"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              padding: '6px 14px 6px 10px',
+              borderRadius: 10,
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-base)',
+              color: 'var(--text-primary)',
+              fontWeight: 600,
+              fontSize: 13,
+            }}
+          >
+            <ChevronLeft size={16} style={{ color: 'var(--accent)' }} />
             Semua Pemain
           </Link>
         </div>

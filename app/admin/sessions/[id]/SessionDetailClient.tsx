@@ -924,15 +924,26 @@ export function SessionDetailClient({
 
   return (
     <div className="page-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {/* Back link */}
+      {/* Back button */}
       <div>
         <Link
           href="/admin/sessions"
-          className="btn btn-ghost btn-sm inline-flex"
-          style={{ paddingLeft: 0, gap: 4, color: 'var(--text-secondary)' }}
+          className="btn btn-secondary btn-sm"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '6px 14px 6px 10px',
+            borderRadius: 10,
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border-base)',
+            color: 'var(--text-primary)',
+            fontWeight: 600,
+            fontSize: 13,
+          }}
         >
-          <ChevronLeft size={16} />
-          All Sessions
+          <ChevronLeft size={16} style={{ color: 'var(--accent)' }} />
+          Semua Sesi
         </Link>
       </div>
 
