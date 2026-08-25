@@ -11,7 +11,7 @@ export default async function ChampionsPage() {
   const { confirmedChampions, players, matches, availableMonths } = await getChampionsData()
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-primary)' }}>
+    <div className="min-h-screen flex flex-col">
       <PublicHeader />
       <main className="flex-1">
         <ChampionsClient

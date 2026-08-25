@@ -6,7 +6,7 @@ export function HeroBackdrop() {
         top: 0,
         left: 0,
         right: 0,
-        height: 480,
+        height: 520,
         zIndex: 0,
         overflow: 'hidden',
         pointerEvents: 'none',
@@ -21,9 +21,9 @@ export function HeroBackdrop() {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          objectPosition: 'center 25%',
-          opacity: 0.28,
-          filter: 'brightness(0.75) contrast(1.15)',
+          objectPosition: 'center 20%',
+          opacity: 0.60,
+          filter: 'brightness(0.85) contrast(1.1)',
         }}
       />
       {/* Smooth 3-stop vertical gradient mask fading into #121517 background */}
@@ -32,7 +32,7 @@ export function HeroBackdrop() {
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(180deg, rgba(18, 21, 23, 0.35) 0%, rgba(18, 21, 23, 0.75) 50%, var(--bg-base) 100%)',
+            'linear-gradient(180deg, rgba(18, 21, 23, 0.25) 0%, rgba(18, 21, 23, 0.65) 55%, var(--bg-base) 100%)',
         }}
       />
     </div>

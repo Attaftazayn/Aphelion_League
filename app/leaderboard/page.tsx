@@ -10,7 +10,7 @@ export default async function LeaderboardPage() {
   const { players, sessions, matches } = await getLeaderboardData()
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg-base)' }}>
+    <div className="min-h-screen flex flex-col">
       <PublicHeader />
       <main className="flex-1">
         <LeaderboardClient

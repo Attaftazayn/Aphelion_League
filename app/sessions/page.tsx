@@ -11,7 +11,7 @@ export default async function PublicSessionsPage() {
   const [sessions, players] = await Promise.all([getSessions(), getPlayers()])
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-primary)' }}>
+    <div className="min-h-screen flex flex-col">
       <PublicHeader />
       <main className="flex-1">
         <PublicSessionsClient sessions={sessions} allPlayers={players} />
