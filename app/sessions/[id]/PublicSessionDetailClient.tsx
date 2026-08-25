@@ -5,7 +5,7 @@ import type { SessionWithPlayers, MatchWithPlayers } from '@/lib/types'
 import { Calendar, Clock, MapPin, Users, ChevronLeft, CheckCircle2, Circle } from 'lucide-react'
 
 function formatDate(dateStr: string) {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-GB', {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('id-ID', {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
@@ -14,11 +14,11 @@ function formatDate(dateStr: string) {
 }
 
 function formatTime(timeStr: string) {
-  const [h, m] = timeStr.split(':')
-  const hour = parseInt(h, 10)
-  const ampm = hour >= 12 ? 'PM' : 'AM'
-  const displayHour = hour % 12 || 12
-  return `${displayHour}:${m} ${ampm}`
+  if (!timeStr) return ''
+  const parts = timeStr.split(':')
+  const h = parts[0]?.padStart(2, '0') ?? '00'
+  const m = parts[1]?.padStart(2, '0') ?? '00'
+  return `${h}.${m}`
 }
 
 function getInitials(name: string) {
@@ -52,11 +52,11 @@ export function PublicSessionDetailClient({
       >
         <div className="page-wrapper" style={{ padding: '0 16px' }}>
           <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent)' }}>
-            Session Overview
+            Ringkasan Sesi
           </span>
           <h1 className="page-title" style={{ marginTop: 4 }}>{session.name}</h1>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
-            Match pairings, schedule, and live point results
+            Pasangan pertandingan, jadwal, dan hasil poin terkini
           </p>
         </div>
       </div>
@@ -70,7 +70,7 @@ export function PublicSessionDetailClient({
             style={{ paddingLeft: 0, gap: 4, color: 'var(--text-secondary)' }}
           >
             <ChevronLeft size={16} />
-            All Sessions
+            Semua Sesi
           </Link>
         </div>
 
@@ -100,15 +100,15 @@ export function PublicSessionDetailClient({
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
             <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border-base)', borderRadius: 10, padding: '12px 16px' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Players</p>
+              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Pemain</p>
               <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', marginTop: 2 }}>{participants.length}</p>
             </div>
             <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border-base)', borderRadius: 10, padding: '12px 16px' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Matches</p>
+              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Pertandingan</p>
               <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', marginTop: 2 }}>{matches.length}</p>
             </div>
             <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border-base)', borderRadius: 10, padding: '12px 16px' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Completed</p>
+              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Selesai</p>
               <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--accent)', marginTop: 2 }}>{completedMatches.length}</p>
             </div>
           </div>
@@ -119,11 +119,11 @@ export function PublicSessionDetailClient({
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
             <Users size={15} style={{ color: 'var(--accent)' }} />
             <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-              Confirmed Participants ({participants.length})
+              Peserta Terkonfirmasi ({participants.length})
             </h2>
           </div>
           {participants.length === 0 ? (
-            <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>No participants confirmed yet.</p>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Belum ada peserta yang dikonfirmasi.</p>
           ) : (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {participants.map((p) => (
@@ -170,7 +170,7 @@ export function PublicSessionDetailClient({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
             <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-              Match Schedule & Results ({matches.length})
+              Jadwal & Hasil Pertandingan ({matches.length})
             </h2>
           </div>
 
@@ -184,9 +184,9 @@ export function PublicSessionDetailClient({
                 textAlign: 'center',
               }}
             >
-              <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>No match pairings generated yet</p>
+              <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada jadwal pertandingan</p>
               <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 4 }}>
-                Match pairings will appear here once finalized by the admin.
+                Jadwal pertandingan akan muncul di sini setelah dibuat oleh admin.
               </p>
             </div>
           ) : (
@@ -218,11 +218,11 @@ export function PublicSessionDetailClient({
                     {/* Header */}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>
-                        Match {m.match_number}
+                        Match #{m.match_number}
                       </span>
                       <span className={`badge ${isCompleted ? 'badge-completed' : 'badge-upcoming'}`}>
                         {isCompleted ? <CheckCircle2 size={11} /> : <Circle size={11} />}
-                        {m.status}
+                        {isCompleted ? 'Selesai' : 'Mendatang'}
                       </span>
                     </div>
 
@@ -242,10 +242,10 @@ export function PublicSessionDetailClient({
                       >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                           <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
-                            Team A
+                            Tim A
                           </span>
-                          {isWinnerA && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} pts</span>}
-                          {!isWinnerA && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} pts</span>}
+                          {isWinnerA && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} poin</span>}
+                          {!isWinnerA && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} poin</span>}
                         </div>
                         {teamA.map((mp) => (
                           <div key={mp.id} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -296,10 +296,10 @@ export function PublicSessionDetailClient({
                       >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                           <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
-                            Team B
+                            Tim B
                           </span>
-                          {isWinnerB && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} pts</span>}
-                          {!isWinnerB && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} pts</span>}
+                          {isWinnerB && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} poin</span>}
+                          {!isWinnerB && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} poin</span>}
                         </div>
                         {teamB.map((mp) => (
                           <div key={mp.id} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

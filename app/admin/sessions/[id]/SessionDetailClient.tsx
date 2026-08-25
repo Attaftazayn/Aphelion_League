@@ -35,7 +35,7 @@ import {
    Helpers
    ============================================================ */
 function formatDate(dateStr: string) {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-GB', {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('id-ID', {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
@@ -44,11 +44,11 @@ function formatDate(dateStr: string) {
 }
 
 function formatTime(timeStr: string) {
-  const [h, m] = timeStr.split(':')
-  const hour = parseInt(h, 10)
-  const ampm = hour >= 12 ? 'PM' : 'AM'
-  const displayHour = hour % 12 || 12
-  return `${displayHour}:${m} ${ampm}`
+  if (!timeStr) return ''
+  const parts = timeStr.split(':')
+  const h = parts[0]?.padStart(2, '0') ?? '00'
+  const m = parts[1]?.padStart(2, '0') ?? '00'
+  return `${h}.${m}`
 }
 
 function getInitials(name: string) {
