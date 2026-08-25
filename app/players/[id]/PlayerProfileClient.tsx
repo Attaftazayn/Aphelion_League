@@ -95,7 +95,7 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
         <div>
           <Link href="/players" className="btn btn-ghost btn-sm" style={{ paddingLeft: 0, gap: 4, minHeight: 36 }}>
             <ChevronLeft size={15} />
-            All Players
+            Semua Pemain
           </Link>
         </div>
 
@@ -117,22 +117,22 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
             <PlayerAvatar player={player} size={68} />
             <div style={{ flex: 1, minWidth: 140 }}>
               <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent)', display: 'block', marginBottom: 4 }}>
-                Player Profile
+                Profil Pemain
               </span>
               <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-0.5px', color: 'var(--text-primary)', lineHeight: 1.1 }}>
                 {player.name}
               </h1>
               <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>
-                Member since {new Date(player.created_at).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                Terdaftar sejak {new Date(player.created_at).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}
               </p>
             </div>
             <div style={{ display: 'flex', gap: 10, flexShrink: 0 }}>
               <div style={{ textAlign: 'center', padding: '10px 16px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Rank</span>
+                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Pos</span>
                 <span style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-1px', color: 'var(--accent)', lineHeight: 1 }}>#{rank}</span>
               </div>
               <div style={{ textAlign: 'center', padding: '10px 16px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Points</span>
+                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Poin</span>
                 <span style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-1px', color: 'var(--text-primary)', lineHeight: 1 }}>{total_points}</span>
               </div>
             </div>
@@ -148,19 +148,19 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
               borderTop: '1px solid var(--border-subtle)',
             }}
           >
-            <StatBox label="Matches" value={matches_played} />
-            <StatBox label="Wins" value={wins} accent />
-            <StatBox label="Losses" value={losses} />
+            <StatBox label="Pertandingan" value={matches_played} />
+            <StatBox label="Menang" value={wins} accent />
+            <StatBox label="Kalah" value={losses} />
             <StatBox
-              label="Win Rate"
+              label="% Menang"
               value={matches_played > 0 ? `${(win_rate * 100).toFixed(0)}%` : '—'}
             />
             <StatBox
-              label="Streak"
+              label="Beruntun"
               value={
                 <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   {current_streak > 0 && <Flame size={16} style={{ color: 'var(--accent)' }} />}
-                  {current_streak}W
+                  {current_streak}M
                 </span>
               }
               accent={current_streak > 0}
@@ -168,75 +168,26 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
           </div>
         </div>
 
-        {/* ── Streaks + Partner/Rival ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14 }}>
-
-          {/* Streaks */}
-          <div className="card" style={{ padding: 20 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-              <Flame size={15} style={{ color: 'var(--accent)' }} />
-              <span className="section-label">Win Streaks</span>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Current</span>
-                <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px' }}>
-                  {current_streak}
-                </span>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 3 }}>wins</span>
-              </div>
-              <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Best Ever</span>
-                <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>
-                  {best_streak}
-                </span>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 3 }}>wins</span>
-              </div>
-            </div>
+        {/* ── Win Streaks Card ── */}
+        <div className="card" style={{ padding: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <Flame size={15} style={{ color: 'var(--accent)' }} />
+            <span className="section-label">Kemenangan Beruntun</span>
           </div>
-
-          {/* Partner & Rival */}
-          <div className="card" style={{ padding: 20 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-              <Users size={15} style={{ color: 'var(--accent)' }} />
-              <span className="section-label">Partner & Rival</span>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
+              <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Beruntun Saat Ini</span>
+              <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px' }}>
+                {current_streak}
+              </span>
+              <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 3 }}>menang</span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              {/* Favorite Partner */}
-              <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Partner</span>
-                {favorite_partner ? (
-                  <Link href={`/players/${favorite_partner.player.id}`} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
-                      {favorite_partner.player.name}
-                    </span>
-                    <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                      {favorite_partner.matches_together}× · {(favorite_partner.win_rate * 100).toFixed(0)}% W
-                    </span>
-                  </Link>
-                ) : (
-                  <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>—</span>
-                )}
-              </div>
-
-              {/* Toughest Opponent */}
-              <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                  <ShieldAlert size={11} style={{ color: 'var(--danger)' }} /> Rival
-                </span>
-                {toughest_opponent ? (
-                  <Link href={`/players/${toughest_opponent.player.id}`} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
-                      {toughest_opponent.player.name}
-                    </span>
-                    <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                      {toughest_opponent.matches_against}× · {(toughest_opponent.win_rate * 100).toFixed(0)}% W
-                    </span>
-                  </Link>
-                ) : (
-                  <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>—</span>
-                )}
-              </div>
+            <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
+              <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Rekor Terbaik</span>
+              <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>
+                {best_streak}
+              </span>
+              <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 3 }}>menang</span>
             </div>
           </div>
         </div>
@@ -245,13 +196,13 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
             <Calendar size={15} style={{ color: 'var(--accent)' }} />
-            <span className="section-label">Recent Matches ({recent_matches.length})</span>
+            <span className="section-label">Pertandingan Terakhir ({recent_matches.length})</span>
           </div>
 
           {recent_matches.length === 0 ? (
             <div className="card" style={{ padding: '40px 24px', textAlign: 'center' }}>
               <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-                No completed matches recorded yet.
+                Belum ada riwayat pertandingan.
               </p>
             </div>
           ) : (
