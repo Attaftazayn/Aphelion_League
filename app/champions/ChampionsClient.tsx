@@ -1,18 +1,14 @@
 'use client'
 
-import { useState, useMemo, useTransition } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import type { MonthlyChampion, Player, MatchWithPlayers } from '@/lib/types'
 import { calculateLeaderboard } from '@/lib/leaderboard'
-import { confirmChampion } from './actions'
 import {
   Trophy,
   Award,
   Calendar,
-  Loader2,
   UserRound,
-  ShieldCheck,
-  Check,
 } from 'lucide-react'
 
 function PlayerAvatar({ player, size = 64 }: { player: Player; size?: number }) {
@@ -60,17 +56,13 @@ export function ChampionsClient({
   players,
   matches,
   availableMonths,
-  isAdmin,
 }: {
   confirmedChampions: MonthlyChampion[]
   players: Player[]
   matches: MatchWithPlayers[]
   availableMonths: string[]
-  isAdmin: boolean
 }) {
-  const [isPending, startTransition] = useTransition()
-  const [selectedMonth, setSelectedMonth] = useState<string>(availableMonths[0] ?? '')
-  const [msg, setMsg] = useState<{ text: string; error?: boolean } | null>(null)
+  const [selectedMonth] = useState<string>(availableMonths[0] ?? '')
 
   const monthCandidate = useMemo(() => {
     if (!selectedMonth) return null
@@ -107,29 +99,7 @@ export function ChampionsClient({
     return null
   }, [confirmedChampions, monthCandidate, selectedMonth])
 
-  const isSelectedMonthConfirmed = useMemo(() => {
-    return confirmedChampions.some((c) => c.month_key === selectedMonth)
-  }, [confirmedChampions, selectedMonth])
 
-  function handleConfirmChampion() {
-    if (!selectedMonth || !monthCandidate) return
-    setMsg(null)
-
-    startTransition(async () => {
-      const res = await confirmChampion(
-        selectedMonth,
-        monthCandidate.player.id,
-        monthCandidate.total_points,
-        monthCandidate.wins,
-        monthCandidate.win_rate,
-      )
-      if (res?.error) {
-        setMsg({ text: res.error, error: true })
-      } else {
-        setMsg({ text: 'Champion confirmed and saved to Hall of Fame.' })
-      }
-    })
-  }
 
   return (
     <div className="page-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -292,77 +262,7 @@ export function ChampionsClient({
         </div>
       )}
 
-      {/* Admin: Confirm Champion Tool */}
-      {isAdmin && availableMonths.length > 0 && (
-        <div
-          style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-strong)',
-            borderRadius: 12,
-            padding: '16px 20px',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-            <ShieldCheck size={16} style={{ color: 'var(--accent)' }} />
-            <h2 style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>
-              Confirm Monthly Champion
-            </h2>
-          </div>
-          <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 14 }}>
-            Snapshot the winner into the Hall of Fame so historical standings remain stable.
-          </p>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
-            <select
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-              className="input"
-              style={{ maxWidth: 220, minHeight: 40 }}
-            >
-              {availableMonths.map((m) => (
-                <option key={m} value={m}>
-                  {formatMonthLabel(m)}
-                </option>
-              ))}
-            </select>
-
-            {monthCandidate ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>
-                  Winner:{' '}
-                  <span style={{ color: 'var(--accent)' }}>{monthCandidate.player.name}</span>
-                  {' '}({monthCandidate.total_points} pts)
-                </span>
-                <button
-                  onClick={handleConfirmChampion}
-                  disabled={isPending}
-                  className="btn btn-primary btn-sm"
-                >
-                  {isPending ? <Loader2 size={13} className="animate-spin" /> : <Check size={13} />}
-                  {isSelectedMonthConfirmed ? 'Re-Confirm' : 'Confirm Champion'}
-                </button>
-              </div>
-            ) : (
-              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                No completed match data for this month yet.
-              </span>
-            )}
-          </div>
-
-          {msg && (
-            <p
-              style={{
-                fontSize: 12,
-                marginTop: 10,
-                fontWeight: 600,
-                color: msg.error ? 'var(--danger)' : 'var(--accent)',
-              }}
-            >
-              {msg.text}
-            </p>
-          )}
-        </div>
-      )}
 
       {/* Hall of Fame */}
       <div>
@@ -408,8 +308,8 @@ export function ChampionsClient({
                   transition: 'border-color 0.14s ease',
                   textDecoration: 'none',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--border-strong)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border-base)')}
+                onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.borderColor = 'var(--border-strong)')}
+                onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.borderColor = 'var(--border-base)')}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <PlayerAvatar player={c.player!} size={42} />

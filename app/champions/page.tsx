@@ -10,11 +10,6 @@ export const metadata = {
 export default async function ChampionsPage() {
   const { confirmedChampions, players, matches, availableMonths } = await getChampionsData()
 
-  // Check if current user is admin
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  const isAdmin = !!user
-
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'var(--color-bg-primary)' }}>
       <PublicHeader />
@@ -24,7 +19,6 @@ export default async function ChampionsPage() {
           players={players}
           matches={matches}
           availableMonths={availableMonths}
-          isAdmin={isAdmin}
         />
       </main>
     </div>
