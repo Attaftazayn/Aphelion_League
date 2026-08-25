@@ -5,12 +5,10 @@ import Link from 'next/link'
 import type { Player, MatchWithPlayers, Session, MonthlyChampion } from '@/lib/types'
 import { calculateLeaderboard } from '@/lib/leaderboard'
 import {
-  Trophy,
   Calendar,
   Clock,
   MapPin,
   ChevronRight,
-  Award,
   Zap,
   UserRound,
   TrendingUp,
@@ -150,14 +148,10 @@ export function HomeDashboardClient({
     return matches.find((m) => m.status === 'upcoming') ?? null
   }, [currentSessionMatches, matches])
 
-  const top3Standings = useMemo(() => {
+  const topStandings = useMemo(() => {
     const leaderboard = calculateLeaderboard(players, matches)
-    return leaderboard.slice(0, 3)
+    return leaderboard.slice(0, 5)
   }, [players, matches])
-
-  const latestChampion = useMemo(() => {
-    return confirmedChampions[0] ?? null
-  }, [confirmedChampions])
 
   const completedCount = currentSessionMatches.filter((m) => m.status === 'completed').length
 
@@ -176,165 +170,163 @@ export function HomeDashboardClient({
           </p>
         </div>
 
-        {/* ── ROW 1: Session + Next Match ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+        {/* ── MAIN DASHBOARD GRID (Left: 2 stacked cards, Right: 1 tall standings card) ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16, alignItems: 'stretch' }}>
 
-          {/* Current Session */}
-          <div className="card" style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Calendar size={14} style={{ color: 'var(--accent)' }} />
-                <span className="section-label">Sesi Saat Ini</span>
+          {/* ── LEFT COLUMN: Sesi Saat Ini + Pertandingan Berikutnya ── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+            {/* Current Session */}
+            <div className="card" style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Calendar size={14} style={{ color: 'var(--accent)' }} />
+                  <span className="section-label">Sesi Saat Ini</span>
+                </div>
+                {currentSession && (
+                  <span className="badge badge-accent" style={{ fontSize: 10 }}>Aktif</span>
+                )}
               </div>
-              {currentSession && (
-                <span className="badge badge-accent" style={{ fontSize: 10 }}>Aktif</span>
+
+              {currentSession ? (
+                <>
+                  <div>
+                    <h2
+                      style={{
+                        fontSize: 17,
+                        fontWeight: 700,
+                        color: 'var(--text-primary)',
+                        letterSpacing: '-0.2px',
+                        marginBottom: 8,
+                      }}
+                    >
+                      {currentSession.name}
+                    </h2>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                      {[
+                        { icon: Calendar, text: formatDate(currentSession.date) },
+                        { icon: Clock, text: `${formatTime(currentSession.start_time)} – ${formatTime(currentSession.end_time)}` },
+                        { icon: MapPin, text: currentSession.location },
+                      ].map(({ icon: Icon, text }, i) => (
+                        <span key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text-secondary)' }}>
+                          <Icon size={12} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                          {text}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Mini progress bar */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                        {completedCount} / {currentSessionMatches.length} pertandingan selesai
+                      </span>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--accent)' }}>
+                        {currentSessionMatches.length > 0
+                          ? Math.round((completedCount / currentSessionMatches.length) * 100)
+                          : 0}%
+                      </span>
+                    </div>
+                    <div style={{ height: 4, borderRadius: 99, background: 'var(--bg-raised)', overflow: 'hidden' }}>
+                      <div
+                        style={{
+                          height: '100%',
+                          borderRadius: 99,
+                          background: 'var(--accent)',
+                          width: `${currentSessionMatches.length > 0 ? (completedCount / currentSessionMatches.length) * 100 : 0}%`,
+                          transition: 'width 0.4s ease',
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <Link href={`/sessions/${currentSession.id}`} className="btn btn-secondary btn-sm" style={{ width: '100%' }}>
+                    Lihat Detail Sesi
+                    <ChevronRight size={14} />
+                  </Link>
+                </>
+              ) : (
+                <p style={{ color: 'var(--text-muted)', fontSize: 13, flex: 1 }}>
+                  Belum ada sesi aktif yang dijadwalkan.
+                </p>
               )}
             </div>
 
-            {currentSession ? (
-              <>
-                <div>
-                  <h2
+            {/* Next Match */}
+            <div className="card" style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16, flex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Zap size={14} style={{ color: 'var(--accent)' }} />
+                  <span className="section-label">Pertandingan Berikutnya</span>
+                </div>
+                {nextMatch && (
+                  <span className="badge badge-neutral" style={{ fontSize: 10 }}>
+                    Match #{nextMatch.match_number}
+                  </span>
+                )}
+              </div>
+
+              {nextMatch ? (
+                <>
+                  <div
                     style={{
-                      fontSize: 17,
-                      fontWeight: 700,
-                      color: 'var(--text-primary)',
-                      letterSpacing: '-0.2px',
-                      marginBottom: 8,
+                      borderRadius: 10,
+                      padding: '16px',
+                      background: 'var(--bg-raised)',
+                      display: 'grid',
+                      gridTemplateColumns: '1fr auto 1fr',
+                      gap: 12,
+                      alignItems: 'center',
                     }}
                   >
-                    {currentSession.name}
-                  </h2>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    {[
-                      { icon: Calendar, text: formatDate(currentSession.date) },
-                      { icon: Clock, text: `${formatTime(currentSession.start_time)} – ${formatTime(currentSession.end_time)}` },
-                      { icon: MapPin, text: currentSession.location },
-                    ].map(({ icon: Icon, text }, i) => (
-                      <span key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text-secondary)' }}>
-                        <Icon size={12} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
-                        {text}
+                    {/* Team A */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                        Tim A
                       </span>
-                    ))}
+                      {nextMatch.match_players?.filter((mp) => mp.team === 'A').map((mp) => (
+                        <span key={mp.id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
+                          {mp.players.name}
+                        </span>
+                      ))}
+                    </div>
+
+                    <span style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>VS</span>
+
+                    {/* Team B */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, textAlign: 'right' }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                        Tim B
+                      </span>
+                      {nextMatch.match_players?.filter((mp) => mp.team === 'B').map((mp) => (
+                        <span key={mp.id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
+                          {mp.players.name}
+                        </span>
+                      ))}
+                    </div>
                   </div>
+
+                  <Link href={`/sessions/${nextMatch.session_id}`} className="btn btn-primary btn-sm" style={{ width: '100%', marginTop: 'auto' }}>
+                    Jadwal Pertandingan
+                  </Link>
+                </>
+              ) : (
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
+                    Belum ada pertandingan mendatang.
+                  </p>
                 </div>
-
-                {/* Mini progress bar */}
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                    <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                      {completedCount} / {currentSessionMatches.length} pertandingan selesai
-                    </span>
-                    <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--accent)' }}>
-                      {currentSessionMatches.length > 0
-                        ? Math.round((completedCount / currentSessionMatches.length) * 100)
-                        : 0}%
-                    </span>
-                  </div>
-                  <div style={{ height: 4, borderRadius: 99, background: 'var(--bg-raised)', overflow: 'hidden' }}>
-                    <div
-                      style={{
-                        height: '100%',
-                        borderRadius: 99,
-                        background: 'var(--accent)',
-                        width: `${currentSessionMatches.length > 0 ? (completedCount / currentSessionMatches.length) * 100 : 0}%`,
-                        transition: 'width 0.4s ease',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <Link href={`/sessions/${currentSession.id}`} className="btn btn-secondary btn-sm" style={{ width: '100%' }}>
-                  Lihat Detail Sesi
-                  <ChevronRight size={14} />
-                </Link>
-              </>
-            ) : (
-              <p style={{ color: 'var(--text-muted)', fontSize: 13, flex: 1 }}>
-                Belum ada sesi aktif yang dijadwalkan.
-              </p>
-            )}
-          </div>
-
-          {/* Next Match */}
-          <div className="card" style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Zap size={14} style={{ color: 'var(--accent)' }} />
-                <span className="section-label">Pertandingan Berikutnya</span>
-              </div>
-              {nextMatch && (
-                <span className="badge badge-neutral" style={{ fontSize: 10 }}>
-                  Match #{nextMatch.match_number}
-                </span>
               )}
             </div>
 
-            {nextMatch ? (
-              <>
-                <div
-                  style={{
-                    borderRadius: 10,
-                    padding: '16px',
-                    background: 'var(--bg-raised)',
-                    display: 'grid',
-                    gridTemplateColumns: '1fr auto 1fr',
-                    gap: 12,
-                    alignItems: 'center',
-                  }}
-                >
-                  {/* Team A */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                      Tim A
-                    </span>
-                    {nextMatch.match_players?.filter((mp) => mp.team === 'A').map((mp) => (
-                      <span key={mp.id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
-                        {mp.players.name}
-                      </span>
-                    ))}
-                  </div>
-
-                  <span style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>VS</span>
-
-                  {/* Team B */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4, textAlign: 'right' }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                      Tim B
-                    </span>
-                    {nextMatch.match_players?.filter((mp) => mp.team === 'B').map((mp) => (
-                      <span key={mp.id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
-                        {mp.players.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <Link href={`/sessions/${nextMatch.session_id}`} className="btn btn-primary btn-sm" style={{ width: '100%' }}>
-                  Jadwal Pertandingan
-                </Link>
-              </>
-            ) : (
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
-                  Belum ada pertandingan mendatang.
-                </p>
-              </div>
-            )}
           </div>
-        </div>
 
-        {/* ── ROW 2: Top Standings + Latest Champion ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
-
-          {/* Standings */}
-          <div
-            className="card"
-            style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}
-          >
+          {/* ── RIGHT COLUMN: Memanjang Klasemen Teratas ── */}
+          <div className="card" style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <TrendingUp size={14} style={{ color: 'var(--accent)' }} />
+                <TrendingUp size={15} style={{ color: 'var(--accent)' }} />
                 <span className="section-label">Klasemen Teratas</span>
               </div>
               <Link
@@ -345,11 +337,13 @@ export function HomeDashboardClient({
               </Link>
             </div>
 
-            {top3Standings.length === 0 ? (
-              <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Belum ada klasemen.</p>
+            {topStandings.length === 0 ? (
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Belum ada klasemen.</p>
+              </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {top3Standings.map((st) => (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
+                {topStandings.map((st) => (
                   <Link
                     key={st.player.id}
                     href={`/players/${st.player.id}`}
@@ -357,20 +351,26 @@ export function HomeDashboardClient({
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: '10px 12px',
+                      padding: '12px 14px',
                       borderRadius: 10,
                       background: 'var(--bg-raised)',
                       border: '1px solid var(--border-subtle)',
-                      transition: 'border-color 0.14s ease',
+                      transition: 'border-color 0.14s ease, transform 0.14s ease',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--border-base)')}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border-subtle)')}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.borderColor = 'var(--border-base)'
+                      e.currentTarget.style.transform = 'translateX(2px)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.borderColor = 'var(--border-subtle)'
+                      e.currentTarget.style.transform = 'translateX(0)'
+                    }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <RankIndicator rank={st.rank} />
-                      <PlayerAvatar player={st.player} size={32} />
+                      <PlayerAvatar player={st.player} size={36} />
                       <div>
-                        <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.2 }}>
+                        <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
                           {st.player.name}
                         </p>
                         <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
@@ -379,92 +379,22 @@ export function HomeDashboardClient({
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px' }}>
+                      <span style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px', display: 'block' }}>
                         {st.total_points}
                       </span>
-                      <span style={{ fontSize: 10, color: 'var(--text-muted)', marginLeft: 3 }}>poin</span>
+                      <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>poin</span>
                     </div>
                   </Link>
                 ))}
               </div>
             )}
-          </div>
 
-          {/* Latest Champion */}
-          <div
-            className="card"
-            style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Award size={14} style={{ color: 'var(--accent)' }} />
-                <span className="section-label">Juara Bulan Terakhir</span>
-              </div>
-            </div>
-
-            {latestChampion ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, flex: 1, justifyContent: 'center', paddingBlock: 8 }}>
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'var(--accent-dim)',
-                    border: '1px solid var(--accent-border)',
-                    flexShrink: 0,
-                  }}
-                >
-                  <Trophy size={22} style={{ color: 'var(--accent)' }} />
-                </div>
-                <PlayerAvatar player={latestChampion.player!} size={52} />
-                <div style={{ textAlign: 'center' }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.2px' }}>
-                    {latestChampion.player?.name}
-                  </h3>
-                  <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {latestChampion.month_key}
-                  </p>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: 16,
-                    padding: '8px 16px',
-                    background: 'var(--bg-raised)',
-                    borderRadius: 8,
-                    border: '1px solid var(--border-subtle)',
-                  }}
-                >
-                  <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)', display: 'block' }}>
-                      {latestChampion.total_points}
-                    </span>
-                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>poin</span>
-                  </div>
-                  <div style={{ width: 1, background: 'var(--border-base)' }} />
-                  <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', display: 'block' }}>
-                      {latestChampion.wins}
-                    </span>
-                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>menang</span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, paddingBlock: 16 }}>
-                <Trophy size={28} style={{ color: 'var(--text-disabled)' }} />
-                <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Belum ada juara terkonfirmasi.</p>
-              </div>
-            )}
-
-            <Link href="/champions" className="btn btn-secondary btn-sm" style={{ width: '100%' }}>
-              Hall of Fame
-              <ChevronRight size={13} />
+            <Link href="/leaderboard" className="btn btn-secondary btn-sm" style={{ width: '100%', marginTop: 'auto' }}>
+              Lihat Klasemen Lengkap
+              <ChevronRight size={14} />
             </Link>
           </div>
+
         </div>
 
       </div>
