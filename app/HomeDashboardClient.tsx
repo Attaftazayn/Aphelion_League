@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import Link from 'next/link'
 import type { Player, MatchWithPlayers, Session, MonthlyChampion } from '@/lib/types'
 import { calculateLeaderboard } from '@/lib/leaderboard'
+import { MonthlySessionCalendar } from '@/components/calendar/MonthlySessionCalendar'
 import {
   Calendar,
   Clock,
@@ -518,6 +519,11 @@ export function HomeDashboardClient({
             </Link>
           </div>
 
+        </div>
+
+        {/* ── BOTTOM SECTION: Kalender Sesi Bulanan ── */}
+        <div style={{ marginTop: 8 }}>
+          <MonthlySessionCalendar sessions={sessions as any} />
         </div>
 
       </div>
