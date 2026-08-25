@@ -5,40 +5,41 @@
    DESIGN TOKENS — 8pt Grid System
    ============================================================ */
 :root {
-  /* Backgrounds — Lighter, elegant slate-charcoal */
-  --bg-base:       #121517;
-  --bg-surface:    #1B1E22;
-  --bg-raised:     #24282E;
-  --bg-overlay:    #2D323A;
+  /* Backgrounds — Premium Charcoal Slate */
+  --bg-base:       #0F1318;
+  --bg-surface:    #181D24;
+  --bg-raised:     #222832;
+  --bg-overlay:    #2C3440;
 
-  /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-base:   rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.22);
+  /* Borders — Crisp separation */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-base:   rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.25);
 
-  /* Text */
-  --text-primary:   #FFFFFF;
-  --text-secondary: #B0B7C0;
-  --text-muted:     #788290;
-  --text-disabled:  #4E5560;
+  /* Text — Maximum Legibility (WCAG AAA Compliant) */
+  --text-primary:   #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted:     #94A3B8;
+  --text-disabled:  #64748B;
 
-  /* Accent & Secondary — Unified #03412c (Deep Forest Green) */
-  --accent:           #03412c;
-  --accent-hover:     #055c3e;
-  --accent-dim:       rgba(3, 65, 44, 0.35);
-  --accent-border:    rgba(3, 65, 44, 0.70);
+  /* Accent & Secondary — High Visibility Emerald (#10B981) for Text/Icons + Deep Forest (#03412c) for Buttons */
+  --accent:           #10B981;
+  --accent-btn:       #03412c;
+  --accent-hover:     #059669;
+  --accent-dim:       rgba(16, 185, 129, 0.16);
+  --accent-border:    rgba(16, 185, 129, 0.40);
 
-  --secondary:        #03412c;
-  --secondary-hover:  #055c3e;
-  --secondary-dim:    rgba(3, 65, 44, 0.35);
-  --secondary-border: rgba(3, 65, 44, 0.70);
+  --secondary:        #10B981;
+  --secondary-hover:  #059669;
+  --secondary-dim:    rgba(16, 185, 129, 0.16);
+  --secondary-border: rgba(16, 185, 129, 0.40);
 
   /* Semantic */
-  --danger:         #E54D4D;
-  --danger-dim:     rgba(229, 77, 77, 0.10);
-  --danger-border:  rgba(229, 77, 77, 0.22);
-  --warning:        #D97706;
-  --success:        #03412c;
+  --danger:         #EF4444;
+  --danger-dim:     rgba(239, 68, 68, 0.12);
+  --danger-border:  rgba(239, 68, 68, 0.30);
+  --warning:        #F59E0B;
+  --success:        #10B981;
 
   /* Spacing scale (8pt) */
   --sp-1:  4px;
@@ -231,9 +232,9 @@ img { display: block; max-width: 100%; }
 
 /* Primary */
 .btn-primary {
-  background: var(--accent);
+  background: var(--accent-btn);
   color: #ffffff;
-  border-color: var(--accent);
+  border-color: var(--accent-btn);
 }
 .btn-primary:hover:not(:disabled) {
   background: var(--accent-hover);

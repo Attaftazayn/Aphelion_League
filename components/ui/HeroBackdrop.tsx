@@ -11,7 +11,7 @@ export function HeroBackdrop() {
         overflow: 'hidden',
         pointerEvents: 'none',
         background:
-          'linear-gradient(180deg, #222830 0%, #1A1F26 40%, var(--bg-base) 100%)',
+          'linear-gradient(180deg, #1E2530 0%, #151A22 45%, var(--bg-base) 100%)',
       }}
     />
   )
