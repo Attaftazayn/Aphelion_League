@@ -105,14 +105,12 @@ export function PublicHeader() {
                 }}
                 onMouseEnter={e => {
                   if (!active) {
-                    (e.currentTarget as HTMLElement).style.color = 'var(--text-primary)'
-                    ;(e.currentTarget as HTMLElement).style.background = 'var(--bg-raised)'
+                    (e.currentTarget as HTMLElement).style.color = 'var(--accent)'
                   }
                 }}
                 onMouseLeave={e => {
                   if (!active) {
                     (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)'
-                    ;(e.currentTarget as HTMLElement).style.background = 'transparent'
                   }
                 }}
               >
