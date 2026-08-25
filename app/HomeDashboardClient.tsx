@@ -133,7 +133,27 @@ export function HomeDashboardClient({
   matches: MatchWithPlayers[]
   confirmedChampions: MonthlyChampion[]
 }) {
-  const currentSession = sessions[0] ?? null
+  const currentSession = useMemo(() => {
+    if (sessions.length === 0) return null
+
+    const now = new Date()
+    const todayTimestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+
+    let closest = sessions[0]
+    let minDiff = Infinity
+
+    for (const session of sessions) {
+      if (!session.date) continue
+      const sessionTimestamp = new Date(session.date + 'T00:00:00').getTime()
+      const diff = Math.abs(sessionTimestamp - todayTimestamp)
+      if (diff < minDiff) {
+        minDiff = diff
+        closest = session
+      }
+    }
+
+    return closest
+  }, [sessions])
 
   const currentSessionMatches = useMemo(() => {
     if (!currentSession) return []
