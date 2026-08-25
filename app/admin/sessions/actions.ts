@@ -87,20 +87,32 @@ export async function createSession(formData: FormData) {
       location_url: location_url.trim() || null,
     }
 
-    const { data: session, error: sessionError } = await supabase
+    let { data: session, error: sessionError } = await supabase
       .from('sessions')
       .insert(sessionPayload)
       .select()
       .single()
 
+    // Fallback if location_url column is not present in Supabase schema yet
+    if (sessionError && (sessionError.message.includes('location_url') || sessionError.message.includes('schema cache'))) {
+      delete sessionPayload.location_url
+      const retry = await supabase
+        .from('sessions')
+        .insert(sessionPayload)
+        .select()
+        .single()
+      session = retry.data
+      sessionError = retry.error
+    }
+
     if (sessionError) {
       if (sessionError.message.includes('schema cache') || sessionError.message.includes('relation')) {
-        return { error: 'Database table public.sessions does not exist. Please run supabase/schema.sql in your Supabase SQL Editor.' }
+        return { error: 'Database table public.sessions does not exist or schema needs refresh. Please run supabase/schema.sql in your Supabase SQL Editor.' }
       }
       return { error: sessionError.message }
     }
 
-    if (playerIds.length > 0) {
+    if (playerIds.length > 0 && session) {
       const { error: spError } = await supabase
         .from('session_players')
         .insert(playerIds.map((player_id) => ({ session_id: session.id, player_id })))
@@ -109,7 +121,7 @@ export async function createSession(formData: FormData) {
     }
 
     revalidatePath('/admin/sessions')
-    return { success: true, id: session.id }
+    return { success: true, id: session?.id }
   } catch (err: any) {
     if (isDynamicServerError(err)) throw err
     return { error: err.message || 'Failed to create session' }
@@ -140,10 +152,20 @@ export async function updateSession(id: string, formData: FormData) {
       location_url: location_url.trim() || null,
     }
 
-    const { error: sessionError } = await supabase
+    let { error: sessionError } = await supabase
       .from('sessions')
       .update(updatePayload)
       .eq('id', id)
+
+    // Fallback if location_url column is not present in Supabase schema yet
+    if (sessionError && (sessionError.message.includes('location_url') || sessionError.message.includes('schema cache'))) {
+      delete updatePayload.location_url
+      const retry = await supabase
+        .from('sessions')
+        .update(updatePayload)
+        .eq('id', id)
+      sessionError = retry.error
+    }
 
     if (sessionError) return { error: sessionError.message }
 
