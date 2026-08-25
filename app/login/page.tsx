@@ -21,19 +21,28 @@ export default function LoginPage() {
     setError(null)
     setLoading(true)
 
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    try {
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
 
-    if (authError) {
-      setError(authError.message)
+      if (authError) {
+        setError(authError.message)
+        setLoading(false)
+        return
+      }
+
+      router.push('/admin/players')
+      router.refresh()
+    } catch (err: any) {
       setLoading(false)
-      return
+      setError(
+        err?.message?.includes('fetch')
+          ? 'Failed to connect to database. Please make sure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are added to Vercel Environment Variables.'
+          : err?.message || 'Login failed. Please check network connection.'
+      )
     }
-
-    router.push('/admin/players')
-    router.refresh()
   }
 
   return (
