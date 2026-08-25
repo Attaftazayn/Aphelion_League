@@ -222,17 +222,39 @@ export function HomeDashboardClient({
                     >
                       {currentSession.name}
                     </h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                      {[
-                        { icon: Calendar, text: formatDate(currentSession.date) },
-                        { icon: Clock, text: `${formatTime(currentSession.start_time)} – ${formatTime(currentSession.end_time)}` },
-                        { icon: MapPin, text: currentSession.location },
-                      ].map(({ icon: Icon, text }, i) => (
-                        <span key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text-secondary)' }}>
-                          <Icon size={12} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
-                          {text}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
+                        <Calendar size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                        {formatDate(currentSession.date)}
+                      </span>
+
+                      {/* Highlighted Time Badge */}
+                      <div style={{ display: 'flex' }}>
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 6,
+                            padding: '5px 12px',
+                            borderRadius: 8,
+                            background: 'rgba(16, 185, 129, 0.14)',
+                            border: '1px solid rgba(16, 185, 129, 0.35)',
+                            color: 'var(--accent)',
+                            fontSize: 13,
+                            fontWeight: 800,
+                            letterSpacing: '0.02em',
+                            boxShadow: '0 2px 8px rgba(16, 185, 129, 0.1)',
+                          }}
+                        >
+                          <Clock size={15} style={{ color: 'var(--accent)' }} />
+                          {formatTime(currentSession.start_time)} – {formatTime(currentSession.end_time)} WIB
                         </span>
-                      ))}
+                      </div>
+
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
+                        <MapPin size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                        {currentSession.location}
+                      </span>
                     </div>
                   </div>
 

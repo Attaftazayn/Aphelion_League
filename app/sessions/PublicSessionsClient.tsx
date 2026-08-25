@@ -92,17 +92,35 @@ export function PublicSessionsClient({
                       <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.2px', marginBottom: 6 }}>
                         {s.name}
                       </h2>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px' }}>
-                        {[
-                          { icon: Calendar, text: formatDate(s.date) },
-                          { icon: Clock,    text: `${formatTime(s.start_time)} – ${formatTime(s.end_time)}` },
-                          { icon: MapPin,   text: s.location },
-                        ].map(({ icon: Icon, text }, i) => (
-                          <span key={i} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: 'var(--text-secondary)' }}>
-                            <Icon size={12} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
-                            {text}
-                          </span>
-                        ))}
+                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px 14px' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 13, color: 'var(--text-secondary)' }}>
+                          <Calendar size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                          {formatDate(s.date)}
+                        </span>
+
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 5,
+                            padding: '3px 10px',
+                            borderRadius: 6,
+                            background: 'rgba(16, 185, 129, 0.14)',
+                            border: '1px solid rgba(16, 185, 129, 0.35)',
+                            color: 'var(--accent)',
+                            fontSize: 12,
+                            fontWeight: 800,
+                            letterSpacing: '0.02em',
+                          }}
+                        >
+                          <Clock size={13} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+                          {formatTime(s.start_time)} – {formatTime(s.end_time)} WIB
+                        </span>
+
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 13, color: 'var(--text-secondary)' }}>
+                          <MapPin size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                          {s.location}
+                        </span>
                       </div>
                     </div>
                   </div>

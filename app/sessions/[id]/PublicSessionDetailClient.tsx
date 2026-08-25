@@ -124,14 +124,28 @@ export function PublicSessionDetailClient({
             padding: 20,
           }}
         >
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, marginBottom: 16 }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
               <Calendar size={14} style={{ color: 'var(--accent)' }} />
               {formatDate(session.date)}
             </span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-              <Clock size={14} style={{ color: 'var(--accent)' }} />
-              {formatTime(session.start_time)} – {formatTime(session.end_time)}
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '4px 12px',
+                borderRadius: 8,
+                background: 'rgba(16, 185, 129, 0.14)',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                color: 'var(--accent)',
+                fontSize: 13,
+                fontWeight: 800,
+                letterSpacing: '0.02em',
+              }}
+            >
+              <Clock size={15} style={{ color: 'var(--accent)' }} />
+              {formatTime(session.start_time)} – {formatTime(session.end_time)} WIB
             </span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
               <MapPin size={14} style={{ color: 'var(--accent)' }} />
