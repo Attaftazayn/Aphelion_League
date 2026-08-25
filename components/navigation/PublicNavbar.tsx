@@ -188,8 +188,8 @@ export function MobileBottomNav() {
           backdropFilter: 'blur(24px) saturate(180%)',
           WebkitBackdropFilter: 'blur(24px) saturate(180%)',
           border: '1px solid rgba(255, 255, 255, 0.14)',
-          borderRadius: 22,
-          padding: '6px 8px',
+          borderRadius: 9999,
+          padding: '6px 10px',
           boxShadow: '0 16px 36px rgba(0, 0, 0, 0.55), 0 2px 10px rgba(0, 0, 0, 0.35)',
         }}
       >
@@ -213,7 +213,7 @@ export function MobileBottomNav() {
                   justifyContent: 'center',
                   gap: 3,
                   padding: '8px 4px',
-                  borderRadius: 16,
+                  borderRadius: 9999,
                   color: active ? '#ffffff' : 'var(--text-secondary)',
                   background: active ? 'var(--accent)' : 'transparent',
                   boxShadow: active ? '0 4px 14px rgba(3, 65, 44, 0.5)' : 'none',
