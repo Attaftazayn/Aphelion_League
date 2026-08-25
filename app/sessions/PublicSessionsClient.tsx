@@ -22,6 +22,76 @@ function formatTime(timeStr: string) {
   return `${h}.${m}`
 }
 
+function parseDateParts(dateStr: string) {
+  if (!dateStr) return { dayName: '', dayNum: '', monthName: '', year: '' }
+  const d = new Date(dateStr + 'T00:00:00')
+  const dayName = d.toLocaleDateString('id-ID', { weekday: 'short' }).toUpperCase()
+  const dayNum = d.getDate().toString().padStart(2, '0')
+  const monthName = d.toLocaleDateString('id-ID', { month: 'short' }).toUpperCase()
+  const year = d.getFullYear().toString()
+  return { dayName, dayNum, monthName, year }
+}
+
+function CalendarDateBlock({ dateStr }: { dateStr: string }) {
+  const { dayName, dayNum, monthName, year } = parseDateParts(dateStr)
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 64,
+        padding: '8px 10px',
+        borderRadius: 12,
+        background: 'linear-gradient(180deg, rgba(59, 130, 246, 0.22) 0%, rgba(15, 23, 42, 0.8) 100%)',
+        border: '1px solid rgba(59, 130, 246, 0.4)',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
+        textAlign: 'center',
+        flexShrink: 0,
+      }}
+    >
+      <span
+        style={{
+          fontSize: 9,
+          fontWeight: 800,
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          color: '#60A5FA',
+          lineHeight: 1,
+          marginBottom: 3,
+        }}
+      >
+        {dayName}
+      </span>
+      <span
+        style={{
+          fontSize: 22,
+          fontWeight: 900,
+          color: '#ffffff',
+          lineHeight: 1,
+          letterSpacing: '-0.5px',
+        }}
+      >
+        {dayNum}
+      </span>
+      <span
+        style={{
+          fontSize: 9,
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          color: '#93C5FD',
+          lineHeight: 1,
+          marginTop: 3,
+        }}
+      >
+        {monthName} {year}
+      </span>
+    </div>
+  )
+}
+
 export function PublicSessionsClient({
   sessions,
 }: {
@@ -86,40 +156,23 @@ export function PublicSessionsClient({
                     border: '1px solid var(--border-base)',
                   }}
                 >
-                  {/* Top row */}
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
-                    <div>
-                      <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.2px', marginBottom: 6 }}>
+                  {/* Top row with Calendar Date Block */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                    <CalendarDateBlock dateStr={s.date} />
+
+                    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.2px', lineHeight: 1.2 }}>
                         {s.name}
                       </h2>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
-                        {/* Hari & Tanggal Badge */}
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: 5,
-                            padding: '4px 10px',
-                            borderRadius: 7,
-                            background: 'rgba(59, 130, 246, 0.12)',
-                            border: '1px solid rgba(59, 130, 246, 0.3)',
-                            color: '#60A5FA',
-                            fontSize: 12,
-                            fontWeight: 700,
-                          }}
-                        >
-                          <Calendar size={13} style={{ color: '#60A5FA', flexShrink: 0 }} />
-                          {formatDate(s.date)}
-                        </span>
-
+                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6 }}>
                         {/* Jam / Waktu Badge */}
                         <span
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: 5,
-                            padding: '4px 10px',
-                            borderRadius: 7,
+                            padding: '3px 9px',
+                            borderRadius: 6,
                             background: 'rgba(16, 185, 129, 0.14)',
                             border: '1px solid rgba(16, 185, 129, 0.35)',
                             color: 'var(--accent)',
@@ -127,7 +180,7 @@ export function PublicSessionsClient({
                             fontWeight: 800,
                           }}
                         >
-                          <Clock size={13} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+                          <Clock size={12} style={{ color: 'var(--accent)', flexShrink: 0 }} />
                           {formatTime(s.start_time)} – {formatTime(s.end_time)} WIB
                         </span>
 
@@ -137,8 +190,8 @@ export function PublicSessionsClient({
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: 5,
-                            padding: '4px 10px',
-                            borderRadius: 7,
+                            padding: '3px 9px',
+                            borderRadius: 6,
                             background: 'rgba(245, 158, 11, 0.12)',
                             border: '1px solid rgba(245, 158, 11, 0.3)',
                             color: '#FBBF24',
@@ -146,7 +199,7 @@ export function PublicSessionsClient({
                             fontWeight: 700,
                           }}
                         >
-                          <MapPin size={13} style={{ color: '#FBBF24', flexShrink: 0 }} />
+                          <MapPin size={12} style={{ color: '#FBBF24', flexShrink: 0 }} />
                           {s.location}
                         </span>
                       </div>

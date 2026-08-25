@@ -122,6 +122,76 @@ function RankIndicator({ rank }: { rank: number }) {
   )
 }
 
+function parseDateParts(dateStr: string) {
+  if (!dateStr) return { dayName: '', dayNum: '', monthName: '', year: '' }
+  const d = new Date(dateStr + 'T00:00:00')
+  const dayName = d.toLocaleDateString('id-ID', { weekday: 'long' }).toUpperCase()
+  const dayNum = d.getDate().toString().padStart(2, '0')
+  const monthName = d.toLocaleDateString('id-ID', { month: 'short' }).toUpperCase()
+  const year = d.getFullYear().toString()
+  return { dayName, dayNum, monthName, year }
+}
+
+function CalendarDateBlock({ dateStr }: { dateStr: string }) {
+  const { dayName, dayNum, monthName, year } = parseDateParts(dateStr)
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 68,
+        padding: '10px 12px',
+        borderRadius: 12,
+        background: 'linear-gradient(180deg, rgba(59, 130, 246, 0.22) 0%, rgba(15, 23, 42, 0.8) 100%)',
+        border: '1px solid rgba(59, 130, 246, 0.4)',
+        boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
+        textAlign: 'center',
+        flexShrink: 0,
+      }}
+    >
+      <span
+        style={{
+          fontSize: 10,
+          fontWeight: 800,
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          color: '#60A5FA',
+          lineHeight: 1,
+          marginBottom: 4,
+        }}
+      >
+        {dayName}
+      </span>
+      <span
+        style={{
+          fontSize: 24,
+          fontWeight: 900,
+          color: '#ffffff',
+          lineHeight: 1,
+          letterSpacing: '-0.5px',
+        }}
+      >
+        {dayNum}
+      </span>
+      <span
+        style={{
+          fontSize: 10,
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          color: '#93C5FD',
+          lineHeight: 1,
+          marginTop: 4,
+        }}
+      >
+        {monthName} {year}
+      </span>
+    </div>
+  )
+}
+
 export function HomeDashboardClient({
   players,
   sessions,
@@ -210,75 +280,62 @@ export function HomeDashboardClient({
 
               {currentSession ? (
                 <>
-                  <div>
-                    <h2
-                      style={{
-                        fontSize: 17,
-                        fontWeight: 700,
-                        color: 'var(--text-primary)',
-                        letterSpacing: '-0.2px',
-                        marginBottom: 8,
-                      }}
-                    >
-                      {currentSession.name}
-                    </h2>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
-                      {/* Hari & Tanggal Badge */}
-                      <span
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 6,
-                          padding: '5px 12px',
-                          borderRadius: 8,
-                          background: 'rgba(59, 130, 246, 0.12)',
-                          border: '1px solid rgba(59, 130, 246, 0.3)',
-                          color: '#60A5FA',
-                          fontSize: 12,
-                          fontWeight: 700,
-                        }}
-                      >
-                        <Calendar size={13} style={{ color: '#60A5FA', flexShrink: 0 }} />
-                        {formatDate(currentSession.date)}
-                      </span>
+                  <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+                    {/* Big Calendar Box */}
+                    <CalendarDateBlock dateStr={currentSession.date} />
 
-                      {/* Jam / Waktu Badge */}
-                      <span
+                    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <h2
                         style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 6,
-                          padding: '5px 12px',
-                          borderRadius: 8,
-                          background: 'rgba(16, 185, 129, 0.14)',
-                          border: '1px solid rgba(16, 185, 129, 0.35)',
-                          color: 'var(--accent)',
-                          fontSize: 12,
+                          fontSize: 17,
                           fontWeight: 800,
+                          color: 'var(--text-primary)',
+                          letterSpacing: '-0.3px',
+                          lineHeight: 1.2,
                         }}
                       >
-                        <Clock size={13} style={{ color: 'var(--accent)', flexShrink: 0 }} />
-                        {formatTime(currentSession.start_time)} – {formatTime(currentSession.end_time)} WIB
-                      </span>
+                        {currentSession.name}
+                      </h2>
 
-                      {/* Tempat / Lokasi Badge */}
-                      <span
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 6,
-                          padding: '5px 12px',
-                          borderRadius: 8,
-                          background: 'rgba(245, 158, 11, 0.12)',
-                          border: '1px solid rgba(245, 158, 11, 0.3)',
-                          color: '#FBBF24',
-                          fontSize: 12,
-                          fontWeight: 700,
-                        }}
-                      >
-                        <MapPin size={13} style={{ color: '#FBBF24', flexShrink: 0 }} />
-                        {currentSession.location}
-                      </span>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6 }}>
+                        {/* Jam / Waktu Badge */}
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 5,
+                            padding: '4px 10px',
+                            borderRadius: 7,
+                            background: 'rgba(16, 185, 129, 0.14)',
+                            border: '1px solid rgba(16, 185, 129, 0.35)',
+                            color: 'var(--accent)',
+                            fontSize: 12,
+                            fontWeight: 800,
+                          }}
+                        >
+                          <Clock size={13} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+                          {formatTime(currentSession.start_time)} – {formatTime(currentSession.end_time)} WIB
+                        </span>
+
+                        {/* Tempat / Lokasi Badge */}
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 5,
+                            padding: '4px 10px',
+                            borderRadius: 7,
+                            background: 'rgba(245, 158, 11, 0.12)',
+                            border: '1px solid rgba(245, 158, 11, 0.3)',
+                            color: '#FBBF24',
+                            fontSize: 12,
+                            fontWeight: 700,
+                          }}
+                        >
+                          <MapPin size={13} style={{ color: '#FBBF24', flexShrink: 0 }} />
+                          {currentSession.location}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
