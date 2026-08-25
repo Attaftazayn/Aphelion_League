@@ -5,22 +5,22 @@
    DESIGN TOKENS — 8pt Grid System
    ============================================================ */
 :root {
-  /* Backgrounds */
-  --bg-base:       #080808;
-  --bg-surface:    #111111;
-  --bg-raised:     #181818;
-  --bg-overlay:    #202020;
+  /* Backgrounds — Lighter, elegant slate-charcoal */
+  --bg-base:       #121517;
+  --bg-surface:    #1B1E22;
+  --bg-raised:     #24282E;
+  --bg-overlay:    #2D323A;
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-base:   rgba(255, 255, 255, 0.10);
-  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-base:   rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
 
   /* Text */
-  --text-primary:   #F5F5F5;
-  --text-secondary: #A3A3A3;
-  --text-muted:     #626262;
-  --text-disabled:  #404040;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #B0B7C0;
+  --text-muted:     #788290;
+  --text-disabled:  #4E5560;
 
   /* Accent & Secondary — Unified #03412c (Deep Forest Green) */
   --accent:           #03412c;

@@ -35,7 +35,7 @@ export function PublicHeader() {
         borderBottom: '1px solid rgba(255,255,255,0.07)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        background: 'rgba(8,8,8,0.88)',
+        background: 'rgba(18,21,23,0.88)',
       }}
     >
       <div
@@ -174,7 +174,7 @@ export function MobileBottomNav() {
         borderTop: '1px solid rgba(255,255,255,0.08)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        background: 'rgba(8,8,8,0.95)',
+        background: 'rgba(18,21,23,0.95)',
       }}
     >
       <div
