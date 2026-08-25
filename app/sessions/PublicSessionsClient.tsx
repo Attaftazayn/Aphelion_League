@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import Link from 'next/link'
 import type { Player, SessionWithPlayers } from '@/lib/types'
 import { Calendar, MapPin, Clock, Users, ChevronRight } from 'lucide-react'
+import { MonthlySessionCalendar } from '@/components/calendar/MonthlySessionCalendar'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('id-ID', {
@@ -129,6 +130,16 @@ export function PublicSessionsClient({
           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
             Total {sortedSessions.length} sesi pertandingan
           </p>
+        </div>
+
+        {/* ── Interactive Monthly Calendar Widget ── */}
+        <MonthlySessionCalendar sessions={sessions} />
+
+        {/* ── Sessions Cards List Header ── */}
+        <div style={{ marginTop: 8 }}>
+          <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
+            Daftar Sesi Terjadwal ({sortedSessions.length})
+          </h2>
         </div>
 
         {sortedSessions.length === 0 ? (
