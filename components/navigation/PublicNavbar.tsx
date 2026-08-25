@@ -43,7 +43,7 @@ export function PublicHeader() {
           maxWidth: 1024,
           marginInline: 'auto',
           padding: '0 24px',
-          height: 56,
+          height: 68,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -54,9 +54,9 @@ export function PublicHeader() {
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
           <span
             style={{
-              fontWeight: 800,
-              fontSize: 16,
-              letterSpacing: '-0.3px',
+              fontWeight: 900,
+              fontSize: 18,
+              letterSpacing: '-0.4px',
               color: 'var(--text-primary)',
             }}
           >
@@ -67,7 +67,7 @@ export function PublicHeader() {
         {/* Desktop Nav — center */}
         <nav
           className="hidden md:flex"
-          style={{ alignItems: 'center', gap: 2 }}
+          style={{ alignItems: 'center', gap: 4 }}
         >
           {navLinks.map(({ href, label, icon: Icon }) => {
             const active = isActive(href)
@@ -78,12 +78,12 @@ export function PublicHeader() {
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: 6,
-                  height: 36,
-                  padding: '0 12px',
-                  borderRadius: 8,
-                  fontSize: 13,
-                  fontWeight: 500,
+                  gap: 8,
+                  height: 42,
+                  padding: '0 14px',
+                  borderRadius: 10,
+                  fontSize: 14,
+                  fontWeight: 600,
                   color: active ? 'var(--accent)' : 'var(--text-secondary)',
                   background: active ? 'var(--accent-dim)' : 'transparent',
                   transition: 'background 0.14s ease, color 0.14s ease',
@@ -101,7 +101,7 @@ export function PublicHeader() {
                   }
                 }}
               >
-                <Icon size={14} />
+                <Icon size={16} />
                 {label}
               </Link>
             )
@@ -116,7 +116,7 @@ export function PublicHeader() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 8,
+            gap: 10,
             textDecoration: 'none',
           }}
           title="Jejak Tennis Club Instagram"
@@ -126,21 +126,20 @@ export function PublicHeader() {
             src="/Logo%20jejak%20hijau.png"
             alt="Jejak Tennis Club"
             style={{
-              width: 34,
-              height: 34,
-              borderRadius: 10,
+              width: 40,
+              height: 40,
+              borderRadius: 12,
               objectFit: 'cover',
               background: 'var(--bg-raised)',
               border: '1px solid var(--border-base)',
             }}
             onError={(e) => {
-              // Hide image if logo.png is not found yet, show fallback badge
               ;(e.target as HTMLImageElement).style.display = 'none'
             }}
           />
           <span
             style={{
-              fontSize: 12,
+              fontSize: 13,
               fontWeight: 700,
               color: 'var(--text-secondary)',
               display: 'inline-block',
