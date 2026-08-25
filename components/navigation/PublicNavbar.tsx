@@ -57,12 +57,12 @@ export function PublicHeader() {
             src="/aphelion.jpeg"
             alt="Aphelion League"
             style={{
-              width: 36,
-              height: 36,
-              borderRadius: 9,
+              width: 44,
+              height: 44,
+              borderRadius: 11,
               objectFit: 'cover',
               border: '1px solid var(--border-base)',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              boxShadow: '0 3px 10px rgba(0,0,0,0.3)',
             }}
           />
           <span
