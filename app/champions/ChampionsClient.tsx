@@ -88,18 +88,8 @@ export function ChampionsClient({
         winRate: confirmed.win_rate,
       }
     }
-    if (monthCandidate) {
-      return {
-        isConfirmed: false,
-        monthKey: selectedMonth,
-        player: monthCandidate.player,
-        totalPoints: monthCandidate.total_points,
-        wins: monthCandidate.wins,
-        winRate: monthCandidate.win_rate,
-      }
-    }
     return null
-  }, [confirmedChampions, monthCandidate, selectedMonth])
+  }, [confirmedChampions, selectedMonth])
 
   return (
     <div className="page-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
