@@ -172,7 +172,7 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
         {achievements.length > 0 && (
           <div className="card" style={{ padding: 20 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-              <Award size={16} style={{ color: '#F59E0B' }} />
+              <Award size={16} style={{ color: 'var(--accent)' }} />
               <span className="section-label">Pencapaian & Gelar ({achievements.length})</span>
             </div>
 
@@ -186,9 +186,9 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
                     gap: 14,
                     padding: '14px 16px',
                     borderRadius: 12,
-                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(27, 30, 34, 0.8) 100%)',
-                    border: '1px solid rgba(245, 158, 11, 0.3)',
-                    boxShadow: '0 4px 14px rgba(245, 158, 11, 0.08)',
+                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, var(--bg-surface) 100%)',
+                    border: '1px solid var(--accent-border)',
+                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.2)',
                   }}
                 >
                   <div
@@ -196,12 +196,12 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
                       width: 42,
                       height: 42,
                       borderRadius: '50%',
-                      background: 'rgba(245, 158, 11, 0.18)',
-                      border: '1px solid rgba(245, 158, 11, 0.4)',
+                      background: 'var(--accent-dim)',
+                      border: '1px solid var(--accent-border)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: '#F59E0B',
+                      color: 'var(--accent)',
                       flexShrink: 0,
                     }}
                   >
@@ -209,7 +209,7 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
                   </div>
 
                   <div>
-                    <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#F59E0B' }}>
+                    <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent)' }}>
                       Juara Bulanan
                     </span>
                     <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', marginTop: 2, lineHeight: 1.2 }}>

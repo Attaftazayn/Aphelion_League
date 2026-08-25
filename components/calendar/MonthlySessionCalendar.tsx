@@ -335,7 +335,7 @@ export function MonthlySessionCalendar({
                         {formatTime(s.start_time)} – {formatTime(s.end_time)} WIB
                       </span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                        <MapPin size={11} style={{ color: '#FBBF24' }} />
+                        <MapPin size={11} style={{ color: 'var(--accent)' }} />
                         {s.location}
                       </span>
                     </div>

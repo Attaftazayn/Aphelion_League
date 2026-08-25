@@ -38,8 +38,20 @@
   --danger:         #EF4444;
   --danger-dim:     rgba(239, 68, 68, 0.12);
   --danger-border:  rgba(239, 68, 68, 0.30);
-  --warning:        #F59E0B;
+  --warning:        #D97706;
+  --warning-dim:    rgba(217, 119, 6, 0.14);
+  --warning-border: rgba(217, 119, 6, 0.35);
   --success:        #10B981;
+
+  /* Component Semantic Tokens (No AI slop hardcoded colors) */
+  --hero-banner-bg:     linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, var(--bg-surface) 100%);
+  --hero-banner-border: rgba(16, 185, 129, 0.25);
+  --hero-accent-text:   var(--accent);
+  --hero-subtext:       var(--text-secondary);
+
+  --badge-venue-bg:     var(--bg-raised);
+  --badge-venue-border: var(--border-base);
+  --badge-venue-text:   var(--text-secondary);
 
   /* Spacing scale (8pt) */
   --sp-1:  4px;

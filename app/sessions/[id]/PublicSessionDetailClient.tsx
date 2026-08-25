@@ -83,8 +83,8 @@ function CalendarDateBlock({ dateStr }: { dateStr: string }) {
         minWidth: 72,
         padding: '10px 14px',
         borderRadius: 12,
-        background: 'linear-gradient(180deg, rgba(59, 130, 246, 0.22) 0%, rgba(15, 23, 42, 0.8) 100%)',
-        border: '1px solid rgba(59, 130, 246, 0.4)',
+        background: 'var(--accent-dim)',
+        border: '1px solid var(--accent-border)',
         boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
         textAlign: 'center',
         flexShrink: 0,
@@ -96,7 +96,7 @@ function CalendarDateBlock({ dateStr }: { dateStr: string }) {
           fontWeight: 800,
           textTransform: 'uppercase',
           letterSpacing: '0.08em',
-          color: '#60A5FA',
+          color: 'var(--accent)',
           lineHeight: 1,
           marginBottom: 4,
         }}
@@ -107,7 +107,7 @@ function CalendarDateBlock({ dateStr }: { dateStr: string }) {
         style={{
           fontSize: 26,
           fontWeight: 900,
-          color: '#ffffff',
+          color: 'var(--text-primary)',
           lineHeight: 1,
           letterSpacing: '-0.5px',
         }}
@@ -119,7 +119,7 @@ function CalendarDateBlock({ dateStr }: { dateStr: string }) {
           fontSize: 10,
           fontWeight: 700,
           textTransform: 'uppercase',
-          color: '#93C5FD',
+          color: 'var(--text-secondary)',
           lineHeight: 1,
           marginTop: 4,
         }}
@@ -229,14 +229,14 @@ export function PublicSessionDetailClient({
                     gap: 6,
                     padding: '5px 12px',
                     borderRadius: 8,
-                    background: 'rgba(245, 158, 11, 0.12)',
-                    border: '1px solid rgba(245, 158, 11, 0.3)',
-                    color: '#FBBF24',
+                    background: 'var(--badge-venue-bg)',
+                    border: '1px solid var(--badge-venue-border)',
+                    color: 'var(--badge-venue-text)',
                     fontSize: 13,
                     fontWeight: 700,
                   }}
                 >
-                  <MapPin size={14} style={{ color: '#FBBF24', flexShrink: 0 }} />
+                  <MapPin size={14} style={{ color: 'var(--accent)', flexShrink: 0 }} />
                   {session.location}
                 </span>
               </div>
