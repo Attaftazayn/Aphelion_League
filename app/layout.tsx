@@ -8,9 +8,12 @@ export const metadata: Metadata = {
   title: 'Aphelion League',
   description: 'Sistem Manajemen Liga Tenis Aphelion League',
   icons: {
-    icon: '/aphelion.jpeg',
-    shortcut: '/aphelion.jpeg',
-    apple: '/aphelion.jpeg',
+    icon: [
+      { url: '/aphelion.jpeg?v=3', type: 'image/jpeg' },
+      { url: '/favicon.ico?v=3' },
+    ],
+    shortcut: '/aphelion.jpeg?v=3',
+    apple: '/aphelion.jpeg?v=3',
   },
 }
 
@@ -21,6 +24,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
+      <head>
+        <link rel="icon" href="/aphelion.jpeg?v=3" type="image/jpeg" />
+        <link rel="shortcut icon" href="/aphelion.jpeg?v=3" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/aphelion.jpeg?v=3" />
+      </head>
       <body
         className="antialiased"
         style={{
