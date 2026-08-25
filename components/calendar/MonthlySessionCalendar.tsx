@@ -73,6 +73,19 @@ export function MonthlySessionCalendar({
   const today = new Date()
   const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
 
+  const yearOptions = useMemo(() => {
+    const years = new Set<number>()
+    years.add(today.getFullYear())
+    years.add(currentYear)
+    for (const s of sessions) {
+      if (s.date) {
+        const y = new Date(s.date + 'T00:00:00').getFullYear()
+        if (!isNaN(y)) years.add(y)
+      }
+    }
+    return Array.from(years).sort((a, b) => a - b)
+  }, [sessions, currentYear, today])
+
   const selectedDateStr = selectedDay
     ? `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}`
     : null
@@ -91,13 +104,65 @@ export function MonthlySessionCalendar({
         gap: 16,
       }}
     >
-      {/* Calendar Header: Month + Nav Buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      {/* Calendar Header: Month/Year Dropdown + Nav Controls */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <CalendarIcon size={18} style={{ color: 'var(--accent)' }} />
-          <h2 style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.2px' }}>
-            Kalender Sesi — {MONTH_NAMES[currentMonth]} {currentYear}
+          <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.2px', marginRight: 4 }}>
+            Kalender Sesi:
           </h2>
+
+          {/* Month Dropdown */}
+          <select
+            value={currentMonth}
+            onChange={(e) => {
+              setSelectedDay(null)
+              setCurrentMonth(Number(e.target.value))
+            }}
+            style={{
+              padding: '6px 12px',
+              fontSize: 13,
+              fontWeight: 700,
+              color: 'var(--text-primary)',
+              background: 'var(--bg-raised)',
+              border: '1px solid var(--border-base)',
+              borderRadius: 8,
+              cursor: 'pointer',
+              outline: 'none',
+            }}
+          >
+            {MONTH_NAMES.map((m, idx) => (
+              <option key={idx} value={idx}>
+                {m}
+              </option>
+            ))}
+          </select>
+
+          {/* Year Dropdown */}
+          <select
+            value={currentYear}
+            onChange={(e) => {
+              setSelectedDay(null)
+              setCurrentYear(Number(e.target.value))
+            }}
+            style={{
+              padding: '6px 12px',
+              fontSize: 13,
+              fontWeight: 700,
+              color: 'var(--text-primary)',
+              background: 'var(--bg-raised)',
+              border: '1px solid var(--border-base)',
+              borderRadius: 8,
+              cursor: 'pointer',
+              outline: 'none',
+            }}
+          >
+            {yearOptions.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
