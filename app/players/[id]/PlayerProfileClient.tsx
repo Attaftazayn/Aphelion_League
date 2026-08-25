@@ -168,33 +168,14 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
           </div>
         </div>
 
-        {/* ── Achievements Card Section ── */}
-        <div className="card" style={{ padding: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-            <Award size={16} style={{ color: '#F59E0B' }} />
-            <span className="section-label">Pencapaian & Gelar ({achievements.length})</span>
-          </div>
-
-          {achievements.length === 0 ? (
-            <div
-              style={{
-                padding: '24px 16px',
-                background: 'var(--bg-raised)',
-                borderRadius: 12,
-                border: '1px dashed var(--border-subtle)',
-                textAlign: 'center',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 10,
-              }}
-            >
-              <Trophy size={18} style={{ color: 'var(--text-disabled)' }} />
-              <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-                Belum ada gelar juara bulanan yang diraih.
-              </span>
+        {/* ── Achievements Card Section (Only if player has earned titles) ── */}
+        {achievements.length > 0 && (
+          <div className="card" style={{ padding: 20 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+              <Award size={16} style={{ color: '#F59E0B' }} />
+              <span className="section-label">Pencapaian & Gelar ({achievements.length})</span>
             </div>
-          ) : (
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10 }}>
               {achievements.map((ach) => (
                 <div
@@ -241,8 +222,8 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
                 </div>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* ── Recent Matches ── */}
         <div>
