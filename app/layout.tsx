@@ -2,12 +2,16 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { MobileBottomNav } from '@/components/navigation/PublicNavbar'
 import { PublicFooter } from '@/components/navigation/PublicFooter'
-
 import { HeroBackdrop } from '@/components/ui/HeroBackdrop'
 
 export const metadata: Metadata = {
   title: 'Aphelion League',
-  description: 'Internal Tennis League Management System',
+  description: 'Sistem Manajemen Liga Tenis Aphelion League',
+  icons: {
+    icon: '/aphelion.jpeg',
+    shortcut: '/aphelion.jpeg',
+    apple: '/aphelion.jpeg',
+  },
 }
 
 export default function RootLayout({
@@ -16,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="id">
       <body
         className="antialiased"
         style={{
