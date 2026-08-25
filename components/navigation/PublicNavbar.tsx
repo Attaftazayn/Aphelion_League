@@ -136,25 +136,19 @@ export function PublicHeader() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/Logo%20jejak%20hijau.png"
+            src="/Logo%20Putih%20no%20BG.png"
             alt="Jejak Tennis Club"
             style={{
-              width: 46,
-              height: 46,
-              borderRadius: 14,
-              objectFit: 'cover',
-              background: 'var(--bg-raised)',
-              border: '1px solid var(--border-base)',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
-              transition: 'transform 0.14s ease, border-color 0.14s ease',
+              width: 48,
+              height: 48,
+              objectFit: 'contain',
+              transition: 'transform 0.14s ease',
             }}
             onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)'
-              ;(e.currentTarget as HTMLElement).style.transform = 'scale(1.05)'
+              (e.currentTarget as HTMLElement).style.transform = 'scale(1.08)'
             }}
             onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-base)'
-              ;(e.currentTarget as HTMLElement).style.transform = 'scale(1.0)'
+              (e.currentTarget as HTMLElement).style.transform = 'scale(1.0)'
             }}
             onError={(e) => {
               ;(e.target as HTMLImageElement).style.display = 'none'

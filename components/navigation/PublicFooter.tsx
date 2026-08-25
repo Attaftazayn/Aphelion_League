@@ -33,9 +33,9 @@ export function PublicFooter() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/Logo%20jejak%20hijau.png"
+            src="/Logo%20Putih%20no%20BG.png"
             alt="Jejak Tennis Club"
-            style={{ width: 48, height: 48, borderRadius: 12, objectFit: 'cover', border: '1px solid var(--border-base)' }}
+            style={{ width: 56, height: 56, objectFit: 'contain' }}
           />
           <div>
             <p style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.3px' }}>
