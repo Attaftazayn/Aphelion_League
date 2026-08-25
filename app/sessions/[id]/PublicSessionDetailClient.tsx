@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import type { SessionWithPlayers, MatchWithPlayers } from '@/lib/types'
-import { Calendar, Clock, MapPin, Users, ChevronLeft, CheckCircle2, Circle } from 'lucide-react'
+import type { SessionWithPlayers, MatchWithPlayers, Player } from '@/lib/types'
+import { Calendar, Clock, MapPin, Users, ChevronLeft, CheckCircle2, Circle, UserRound } from 'lucide-react'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('id-ID', {
@@ -21,13 +21,43 @@ function formatTime(timeStr: string) {
   return `${h}.${m}`
 }
 
-function getInitials(name: string) {
-  return name
+function PlayerAvatar({ player, size = 26 }: { player: Player; size?: number }) {
+  const initials = player.name
     .split(' ')
     .map((n) => n[0])
     .slice(0, 2)
     .join('')
     .toUpperCase()
+
+  if (player.avatar_url) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={player.avatar_url}
+        alt={player.name}
+        className="avatar"
+        style={{ width: size, height: size, objectFit: 'cover', borderRadius: '50%', flexShrink: 0 }}
+        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+      />
+    )
+  }
+
+  return (
+    <div
+      className="avatar"
+      style={{
+        width: size,
+        height: size,
+        fontSize: size > 24 ? 11 : 9,
+        background: 'var(--bg-overlay)',
+        border: '1px solid var(--border-strong)',
+        color: '#ffffff',
+        flexShrink: 0,
+      }}
+    >
+      {initials || <UserRound size={12} />}
+    </div>
+  )
 }
 
 export function PublicSessionDetailClient({
@@ -150,24 +180,7 @@ export function PublicSessionDetailClient({
                     border: '1px solid var(--border-base)',
                   }}
                 >
-                  <div
-                    className="avatar"
-                    style={{
-                      width: 26,
-                      height: 26,
-                      fontSize: 10,
-                      background: 'var(--bg-overlay)',
-                      border: '1px solid var(--border-strong)',
-                      color: '#ffffff',
-                    }}
-                  >
-                    {p.avatar_url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={p.avatar_url} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
-                    ) : (
-                      getInitials(p.name)
-                    )}
-                  </div>
+                  <PlayerAvatar player={p} size={26} />
                   <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                     {p.name}
                   </span>
@@ -260,9 +273,7 @@ export function PublicSessionDetailClient({
                         </div>
                         {teamA.map((mp) => (
                           <div key={mp.id} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                            <div className="avatar" style={{ width: 22, height: 22, fontSize: 9, color: '#ffffff' }}>
-                              {getInitials(mp.players.name)}
-                            </div>
+                            <PlayerAvatar player={mp.players} size={24} />
                             <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>
                               {mp.players.name}
                             </span>
@@ -314,9 +325,7 @@ export function PublicSessionDetailClient({
                         </div>
                         {teamB.map((mp) => (
                           <div key={mp.id} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                            <div className="avatar" style={{ width: 22, height: 22, fontSize: 9, color: '#ffffff' }}>
-                              {getInitials(mp.players.name)}
-                            </div>
+                            <PlayerAvatar player={mp.players} size={24} />
                             <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>
                               {mp.players.name}
                             </span>
@@ -330,6 +339,7 @@ export function PublicSessionDetailClient({
             </div>
           )}
         </div>
+
       </div>
     </div>
   )
