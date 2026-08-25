@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useMemo } from 'react'
 import Link from 'next/link'
 import type { Player, SessionWithPlayers } from '@/lib/types'
 import { createSession, updateSession, deleteSession } from './actions'
@@ -500,6 +500,24 @@ export function SessionsClient({
     | null
   >(null)
 
+  const sortedSessions = useMemo(() => {
+    const now = new Date()
+    const todayTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+
+    return [...sessions].sort((a, b) => {
+      const dateA = a.date ? new Date(a.date + 'T00:00:00').getTime() : 0
+      const dateB = b.date ? new Date(b.date + 'T00:00:00').getTime() : 0
+
+      const diffA = Math.abs(dateA - todayTime)
+      const diffB = Math.abs(dateB - todayTime)
+
+      if (diffA !== diffB) {
+        return diffA - diffB
+      }
+      return dateB - dateA
+    })
+  }, [sessions])
+
   return (
     <div className="page-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       {/* Page Header */}
@@ -518,7 +536,7 @@ export function SessionsClient({
                 color: 'var(--text-secondary)',
               }}
             >
-              {sessions.length}
+              {sortedSessions.length}
             </span>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 2 }}>
@@ -536,7 +554,7 @@ export function SessionsClient({
       </div>
 
       {/* Sessions Grid */}
-      {sessions.length === 0 ? (
+      {sortedSessions.length === 0 ? (
         <div
           style={{
             background: 'var(--bg-surface)',
@@ -581,7 +599,7 @@ export function SessionsClient({
             gap: 12,
           }}
         >
-          {sessions.map((session) => (
+          {sortedSessions.map((session) => (
             <SessionCard
               key={session.id}
               session={session}

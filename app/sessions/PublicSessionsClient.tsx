@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import Link from 'next/link'
 import type { Player, SessionWithPlayers } from '@/lib/types'
 import { Calendar, MapPin, Clock, Users, ChevronRight } from 'lucide-react'
@@ -27,6 +28,24 @@ export function PublicSessionsClient({
   sessions: SessionWithPlayers[]
   allPlayers: Player[]
 }) {
+  const sortedSessions = useMemo(() => {
+    const now = new Date()
+    const todayTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+
+    return [...sessions].sort((a, b) => {
+      const dateA = a.date ? new Date(a.date + 'T00:00:00').getTime() : 0
+      const dateB = b.date ? new Date(b.date + 'T00:00:00').getTime() : 0
+
+      const diffA = Math.abs(dateA - todayTime)
+      const diffB = Math.abs(dateB - todayTime)
+
+      if (diffA !== diffB) {
+        return diffA - diffB
+      }
+      return dateB - dateA
+    })
+  }, [sessions])
+
   return (
     <div>
       <div className="page-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -38,11 +57,11 @@ export function PublicSessionsClient({
             <h1 className="page-title">Sesi Pertandingan</h1>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-            Total {sessions.length} sesi pertandingan
+            Total {sortedSessions.length} sesi pertandingan
           </p>
         </div>
 
-        {sessions.length === 0 ? (
+        {sortedSessions.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <Calendar size={32} style={{ margin: '0 auto 12px', color: 'var(--text-disabled)' }} />
             <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada sesi pertandingan</p>
@@ -52,7 +71,7 @@ export function PublicSessionsClient({
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {sessions.map((s) => {
+            {sortedSessions.map((s) => {
               const playerCount = s.session_players?.length ?? 0
               return (
                 <div
