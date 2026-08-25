@@ -35,19 +35,19 @@ export function PublicSessionsClient({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
             <Calendar size={18} style={{ color: 'var(--accent)' }} />
-            <h1 className="page-title">Sessions</h1>
+            <h1 className="page-title">Sesi Pertandingan</h1>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-            {sessions.length} session{sessions.length !== 1 ? 's' : ''} in total
+            Total {sessions.length} sesi pertandingan
           </p>
         </div>
 
         {sessions.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <Calendar size={32} style={{ margin: '0 auto 12px', color: 'var(--text-disabled)' }} />
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>No sessions yet</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada sesi pertandingan</p>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
-              Sessions will appear here once an admin creates them.
+              Sesi pertandingan akan muncul di sini setelah dibuat oleh admin.
             </p>
           </div>
         ) : (
@@ -100,10 +100,10 @@ export function PublicSessionsClient({
                   >
                     <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text-muted)' }}>
                       <Users size={13} />
-                      {playerCount} player{playerCount !== 1 ? 's' : ''}
+                      {playerCount} pemain
                     </span>
                     <Link href={`/sessions/${s.id}`} className="btn btn-secondary btn-sm" style={{ fontSize: 12 }}>
-                      Match Schedule
+                      Jadwal Pertandingan
                       <ChevronRight size={13} />
                     </Link>
                   </div>

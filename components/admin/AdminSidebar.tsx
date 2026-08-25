@@ -8,9 +8,9 @@ import { TennisBall } from '@/components/ui/icons'
 import { useState } from 'react'
 
 const navItems = [
-  { href: '/admin/players',   label: 'Players',   icon: Users },
-  { href: '/admin/sessions',  label: 'Sessions',  icon: Calendar },
-  { href: '/admin/champions', label: 'Champions', icon: Award },
+  { href: '/admin/players',   label: 'Pemain',           icon: Users },
+  { href: '/admin/sessions',  label: 'Sesi Pertandingan', icon: Calendar },
+  { href: '/admin/champions', label: 'Kelola Juara',     icon: Award },
 ]
 
 const SIDEBAR_W = 200
@@ -105,7 +105,7 @@ export function AdminSidebar() {
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
       >
         <LogOut size={16} />
-        Sign Out
+        Keluar
       </button>
     </div>
   )

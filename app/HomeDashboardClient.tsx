@@ -168,11 +168,11 @@ export function HomeDashboardClient({
         {/* ── PAGE HEADER ── */}
         <div style={{ paddingBottom: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-            <span className="badge badge-accent" style={{ fontSize: 10 }}>Live League</span>
+            <span className="badge badge-accent" style={{ fontSize: 10 }}>Liga Aktif</span>
           </div>
           <h1 className="page-title" style={{ marginBottom: 4 }}>Dashboard</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: 13 }}>
-            Track sessions, scores, and live standings.
+            Pantau sesi pertandingan, skor, dan klasemen terkini.
           </p>
         </div>
 
@@ -184,10 +184,10 @@ export function HomeDashboardClient({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Calendar size={14} style={{ color: 'var(--accent)' }} />
-                <span className="section-label">Current Session</span>
+                <span className="section-label">Sesi Saat Ini</span>
               </div>
               {currentSession && (
-                <span className="badge badge-accent" style={{ fontSize: 10 }}>Active</span>
+                <span className="badge badge-accent" style={{ fontSize: 10 }}>Aktif</span>
               )}
             </div>
 
@@ -223,7 +223,7 @@ export function HomeDashboardClient({
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                     <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                      {completedCount} / {currentSessionMatches.length} matches done
+                      {completedCount} / {currentSessionMatches.length} pertandingan selesai
                     </span>
                     <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--accent)' }}>
                       {currentSessionMatches.length > 0
@@ -245,13 +245,13 @@ export function HomeDashboardClient({
                 </div>
 
                 <Link href={`/sessions/${currentSession.id}`} className="btn btn-secondary btn-sm" style={{ width: '100%' }}>
-                  View Session
+                  Lihat Detail Sesi
                   <ChevronRight size={14} />
                 </Link>
               </>
             ) : (
               <p style={{ color: 'var(--text-muted)', fontSize: 13, flex: 1 }}>
-                No active sessions scheduled.
+                Belum ada sesi aktif yang dijadwalkan.
               </p>
             )}
           </div>
@@ -261,7 +261,7 @@ export function HomeDashboardClient({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Zap size={14} style={{ color: 'var(--accent)' }} />
-                <span className="section-label">Next Up</span>
+                <span className="section-label">Pertandingan Berikutnya</span>
               </div>
               {nextMatch && (
                 <span className="badge badge-neutral" style={{ fontSize: 10 }}>
@@ -286,7 +286,7 @@ export function HomeDashboardClient({
                   {/* Team A */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                      Team A
+                      Tim A
                     </span>
                     {nextMatch.match_players?.filter((mp) => mp.team === 'A').map((mp) => (
                       <span key={mp.id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
@@ -300,7 +300,7 @@ export function HomeDashboardClient({
                   {/* Team B */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4, textAlign: 'right' }}>
                     <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                      Team B
+                      Tim B
                     </span>
                     {nextMatch.match_players?.filter((mp) => mp.team === 'B').map((mp) => (
                       <span key={mp.id} style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
@@ -311,13 +311,13 @@ export function HomeDashboardClient({
                 </div>
 
                 <Link href={`/sessions/${nextMatch.session_id}`} className="btn btn-primary btn-sm" style={{ width: '100%' }}>
-                  Match Schedule
+                  Jadwal Pertandingan
                 </Link>
               </>
             ) : (
               <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
-                  No upcoming matches.
+                  Belum ada pertandingan mendatang.
                 </p>
               </div>
             )}
@@ -335,18 +335,18 @@ export function HomeDashboardClient({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <TrendingUp size={14} style={{ color: 'var(--accent)' }} />
-                <span className="section-label">Top Standings</span>
+                <span className="section-label">Klasemen Teratas</span>
               </div>
               <Link
                 href="/leaderboard"
                 style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 600, color: 'var(--accent)' }}
               >
-                All <ChevronRight size={12} />
+                Lihat Semua <ChevronRight size={12} />
               </Link>
             </div>
 
             {top3Standings.length === 0 ? (
-              <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>No standings yet.</p>
+              <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Belum ada klasemen.</p>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {top3Standings.map((st) => (
@@ -374,7 +374,7 @@ export function HomeDashboardClient({
                           {st.player.name}
                         </p>
                         <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-                          {st.wins}W – {st.losses}L
+                          {st.wins}M – {st.losses}K
                         </p>
                       </div>
                     </div>
@@ -382,7 +382,7 @@ export function HomeDashboardClient({
                       <span style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px' }}>
                         {st.total_points}
                       </span>
-                      <span style={{ fontSize: 10, color: 'var(--text-muted)', marginLeft: 3 }}>pts</span>
+                      <span style={{ fontSize: 10, color: 'var(--text-muted)', marginLeft: 3 }}>poin</span>
                     </div>
                   </Link>
                 ))}
@@ -398,7 +398,7 @@ export function HomeDashboardClient({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Award size={14} style={{ color: 'var(--accent)' }} />
-                <span className="section-label">Latest Champion</span>
+                <span className="section-label">Juara Bulan Terakhir</span>
               </div>
             </div>
 
@@ -442,21 +442,21 @@ export function HomeDashboardClient({
                     <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)', display: 'block' }}>
                       {latestChampion.total_points}
                     </span>
-                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>pts</span>
+                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>poin</span>
                   </div>
                   <div style={{ width: 1, background: 'var(--border-base)' }} />
                   <div style={{ textAlign: 'center' }}>
                     <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', display: 'block' }}>
                       {latestChampion.wins}
                     </span>
-                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>wins</span>
+                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>menang</span>
                   </div>
                 </div>
               </div>
             ) : (
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, paddingBlock: 16 }}>
                 <Trophy size={28} style={{ color: 'var(--text-disabled)' }} />
-                <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>No confirmed champion yet.</p>
+                <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Belum ada juara terkonfirmasi.</p>
               </div>
             )}
 

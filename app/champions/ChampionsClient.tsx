@@ -109,7 +109,7 @@ export function ChampionsClient({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
             <Award size={20} style={{ color: 'var(--accent)' }} />
-            <h1 className="page-title">Monthly Champions</h1>
+            <h1 className="page-title">Juara Bulanan</h1>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
             Aphelion League Hall of Fame
@@ -119,7 +119,7 @@ export function ChampionsClient({
         {availableMonths.length > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <label htmlFor="month-select" style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>
-              Select Month:
+              Pilih Bulan:
             </label>
             <select
               id="month-select"
@@ -172,7 +172,7 @@ export function ChampionsClient({
           {/* Badge + Month */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
             <span className="badge badge-accent" style={{ fontSize: 10 }}>
-              {displayedChampion.isConfirmed ? 'Official Monthly Champion' : 'Current Month Leader'}
+              {displayedChampion.isConfirmed ? 'Juara Resmi Bulanan' : 'Pemimpin Bulan Ini'}
             </span>
             <span
               style={{
@@ -217,9 +217,9 @@ export function ChampionsClient({
             }}
           >
             {[
-              { label: 'Points', value: displayedChampion.totalPoints, accent: true },
-              { label: 'Wins', value: displayedChampion.wins, accent: false },
-              { label: 'Win Rate', value: `${(displayedChampion.winRate * 100).toFixed(0)}%`, accent: false },
+              { label: 'Poin', value: displayedChampion.totalPoints, accent: true },
+              { label: 'Menang', value: displayedChampion.wins, accent: false },
+              { label: '% Menang', value: `${(displayedChampion.winRate * 100).toFixed(0)}%`, accent: false },
             ].map(({ label, value, accent }, i, arr) => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
                 <div style={{ textAlign: 'center' }}>
@@ -262,7 +262,7 @@ export function ChampionsClient({
                 marginTop: 4,
               }}
             >
-              Provisional leaderboard standing — pending final monthly snapshot
+              Klasemen sementara — menunggu penetapan resmi bulanan
             </p>
           )}
         </div>
@@ -281,9 +281,9 @@ export function ChampionsClient({
         >
           <Trophy size={32} style={{ color: 'var(--text-disabled)' }} />
           <p style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: 14 }}>
-            No Champion Data for {formatMonthLabel(selectedMonth) || 'Selected Month'}
+            Tidak ada data juara untuk {formatMonthLabel(selectedMonth) || 'Bulan ini'}
           </p>
-          <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Complete matches in this month to generate standings.</p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Selesaikan pertandingan di bulan ini untuk melihat klasemen.</p>
         </div>
       )}
 
@@ -292,7 +292,7 @@ export function ChampionsClient({
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
           <Calendar size={15} style={{ color: 'var(--accent)' }} />
           <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-            Confirmed Champions History ({confirmedChampions.length})
+            Riwayat Juara Terkonfirmasi ({confirmedChampions.length})
           </h2>
         </div>
 
@@ -308,7 +308,7 @@ export function ChampionsClient({
               fontSize: 13,
             }}
           >
-            No official monthly champions confirmed yet. Select a month above to view provisional standings.
+            Belum ada juara bulanan resmi yang dikonfirmasi. Pilih bulan di atas untuk melihat klasemen sementara.
           </div>
         ) : (
           <div
@@ -356,7 +356,7 @@ export function ChampionsClient({
                       {c.player?.name}
                     </p>
                     <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-                      {c.total_points} pts · {c.wins} wins
+                      {c.total_points} poin · {c.wins} menang
                     </p>
                   </div>
                 </div>

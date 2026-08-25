@@ -78,7 +78,7 @@ export function PublicFooter() {
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
           </svg>
-          Follow us on Instagram
+          Follow kami di Instagram
         </a>
 
         {/* Official Sponsor Section */}
@@ -104,7 +104,7 @@ export function PublicFooter() {
               color: 'var(--text-muted)',
             }}
           >
-            Sponsored by
+            Sponsor Resmi
           </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -127,7 +127,7 @@ export function PublicFooter() {
         </div>
 
         <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
-          © {new Date().getFullYear()} Jejak Tennis Club. All rights reserved.
+          © {new Date().getFullYear()} Jejak Tennis Club. Hak cipta dilindungi undang-undang.
         </p>
       </div>
     </footer>

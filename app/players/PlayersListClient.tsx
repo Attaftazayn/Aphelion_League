@@ -61,10 +61,10 @@ export function PlayersListClient({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
               <Users size={18} style={{ color: 'var(--accent)' }} />
-              <h1 className="page-title">Players</h1>
+              <h1 className="page-title">Daftar Pemain</h1>
             </div>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-              {players.length} registered {players.length === 1 ? 'player' : 'players'}
+              {players.length} pemain terdaftar
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export function PlayersListClient({
                 type="text"
                 className="input"
                 style={{ paddingLeft: 36 }}
-                placeholder="Search players…"
+                placeholder="Cari nama pemain…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -86,14 +86,14 @@ export function PlayersListClient({
         {players.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <Users size={32} style={{ margin: '0 auto 12px', color: 'var(--text-disabled)' }} />
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>No players found</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada pemain</p>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
-              Add players in the admin portal to get started.
+              Tambahkan pemain di portal admin untuk memulai.
             </p>
           </div>
         ) : filtered.length === 0 ? (
           <div className="card" style={{ padding: '48px 24px', textAlign: 'center' }}>
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>No results for &quot;{search}&quot;</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Tidak ada hasil untuk &quot;{search}&quot;</p>
           </div>
         ) : (
           <div
@@ -134,9 +134,9 @@ export function PlayersListClient({
                       {st.player.name}
                     </p>
                     <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 3 }}>
-                      <span style={{ color: 'var(--accent)', fontWeight: 600 }}>#{st.rank}</span>
+                      <span style={{ color: 'var(--accent)', fontWeight: 600 }}>Pos #{st.rank}</span>
                       {' · '}
-                      {st.matches_played} matches
+                      {st.matches_played} pertandingan
                     </p>
                   </div>
                 </div>
@@ -146,7 +146,7 @@ export function PlayersListClient({
                     <span style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px', display: 'block' }}>
                       {st.total_points}
                     </span>
-                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>pts</span>
+                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>poin</span>
                   </div>
                   <ChevronRight size={14} style={{ color: 'var(--text-disabled)' }} />
                 </div>
