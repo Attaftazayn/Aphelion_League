@@ -78,13 +78,14 @@ export function calculateLeaderboard(
 
       pStats.matches_played += 1
       const isWinner = mp.team === winnerTeam
+      const earnedPoints = mp.team === 'A' ? pointsA : pointsB
+
+      pStats.total_points += earnedPoints
 
       if (isWinner) {
         pStats.wins += 1
-        pStats.total_points += pointsA
       } else {
         pStats.losses += 1
-        pStats.total_points += pointsB
       }
     })
   })
