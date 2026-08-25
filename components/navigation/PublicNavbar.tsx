@@ -96,11 +96,11 @@ export function PublicHeader() {
                   padding: '0 16px',
                   borderRadius: 12,
                   fontSize: 15,
-                  fontWeight: 600,
-                  color: active ? '#ffffff' : 'var(--text-secondary)',
-                  background: active ? 'var(--accent)' : 'transparent',
-                  border: active ? '1px solid var(--accent-border)' : '1px solid transparent',
-                  transition: 'background 0.14s ease, color 0.14s ease',
+                  fontWeight: active ? 800 : 600,
+                  color: active ? 'var(--accent)' : 'var(--text-secondary)',
+                  background: 'transparent',
+                  border: '1px solid transparent',
+                  transition: 'color 0.14s ease, background 0.14s ease',
                 }}
                 onMouseEnter={e => {
                   if (!active) {
@@ -130,7 +130,6 @@ export function PublicHeader() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 12,
             textDecoration: 'none',
           }}
           title="Jejak Tennis Club Instagram"
@@ -147,21 +146,20 @@ export function PublicHeader() {
               background: 'var(--bg-raised)',
               border: '1px solid var(--border-base)',
               boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+              transition: 'transform 0.14s ease, border-color 0.14s ease',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)'
+              ;(e.currentTarget as HTMLElement).style.transform = 'scale(1.05)'
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-base)'
+              ;(e.currentTarget as HTMLElement).style.transform = 'scale(1.0)'
             }}
             onError={(e) => {
               ;(e.target as HTMLImageElement).style.display = 'none'
             }}
           />
-          <span
-            style={{
-              fontSize: 14,
-              fontWeight: 800,
-              color: 'var(--text-secondary)',
-              display: 'inline-block',
-            }}
-          >
-            Jejak Tennis
-          </span>
         </a>
       </div>
     </header>
