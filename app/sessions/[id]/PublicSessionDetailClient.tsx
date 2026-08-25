@@ -124,31 +124,61 @@ export function PublicSessionDetailClient({
             padding: 20,
           }}
         >
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-              <Calendar size={14} style={{ color: 'var(--accent)' }} />
-              {formatDate(session.date)}
-            </span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+            {/* Hari & Tanggal Badge */}
             <span
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 6,
-                padding: '4px 12px',
+                padding: '5px 12px',
+                borderRadius: 8,
+                background: 'rgba(59, 130, 246, 0.12)',
+                border: '1px solid rgba(59, 130, 246, 0.3)',
+                color: '#60A5FA',
+                fontSize: 13,
+                fontWeight: 700,
+              }}
+            >
+              <Calendar size={14} style={{ color: '#60A5FA', flexShrink: 0 }} />
+              {formatDate(session.date)}
+            </span>
+
+            {/* Jam / Waktu Badge */}
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '5px 12px',
                 borderRadius: 8,
                 background: 'rgba(16, 185, 129, 0.14)',
                 border: '1px solid rgba(16, 185, 129, 0.35)',
                 color: 'var(--accent)',
                 fontSize: 13,
                 fontWeight: 800,
-                letterSpacing: '0.02em',
               }}
             >
-              <Clock size={15} style={{ color: 'var(--accent)' }} />
+              <Clock size={14} style={{ color: 'var(--accent)', flexShrink: 0 }} />
               {formatTime(session.start_time)} – {formatTime(session.end_time)} WIB
             </span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-              <MapPin size={14} style={{ color: 'var(--accent)' }} />
+
+            {/* Tempat / Lokasi Badge */}
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '5px 12px',
+                borderRadius: 8,
+                background: 'rgba(245, 158, 11, 0.12)',
+                border: '1px solid rgba(245, 158, 11, 0.3)',
+                color: '#FBBF24',
+                fontSize: 13,
+                fontWeight: 700,
+              }}
+            >
+              <MapPin size={14} style={{ color: '#FBBF24', flexShrink: 0 }} />
               {session.location}
             </span>
           </div>

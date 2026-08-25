@@ -222,37 +222,61 @@ export function HomeDashboardClient({
                     >
                       {currentSession.name}
                     </h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                        <Calendar size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
+                      {/* Hari & Tanggal Badge */}
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 6,
+                          padding: '5px 12px',
+                          borderRadius: 8,
+                          background: 'rgba(59, 130, 246, 0.12)',
+                          border: '1px solid rgba(59, 130, 246, 0.3)',
+                          color: '#60A5FA',
+                          fontSize: 12,
+                          fontWeight: 700,
+                        }}
+                      >
+                        <Calendar size={13} style={{ color: '#60A5FA', flexShrink: 0 }} />
                         {formatDate(currentSession.date)}
                       </span>
 
-                      {/* Highlighted Time Badge */}
-                      <div style={{ display: 'flex' }}>
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: 6,
-                            padding: '5px 12px',
-                            borderRadius: 8,
-                            background: 'rgba(16, 185, 129, 0.14)',
-                            border: '1px solid rgba(16, 185, 129, 0.35)',
-                            color: 'var(--accent)',
-                            fontSize: 13,
-                            fontWeight: 800,
-                            letterSpacing: '0.02em',
-                            boxShadow: '0 2px 8px rgba(16, 185, 129, 0.1)',
-                          }}
-                        >
-                          <Clock size={15} style={{ color: 'var(--accent)' }} />
-                          {formatTime(currentSession.start_time)} – {formatTime(currentSession.end_time)} WIB
-                        </span>
-                      </div>
+                      {/* Jam / Waktu Badge */}
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 6,
+                          padding: '5px 12px',
+                          borderRadius: 8,
+                          background: 'rgba(16, 185, 129, 0.14)',
+                          border: '1px solid rgba(16, 185, 129, 0.35)',
+                          color: 'var(--accent)',
+                          fontSize: 12,
+                          fontWeight: 800,
+                        }}
+                      >
+                        <Clock size={13} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+                        {formatTime(currentSession.start_time)} – {formatTime(currentSession.end_time)} WIB
+                      </span>
 
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                        <MapPin size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                      {/* Tempat / Lokasi Badge */}
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 6,
+                          padding: '5px 12px',
+                          borderRadius: 8,
+                          background: 'rgba(245, 158, 11, 0.12)',
+                          border: '1px solid rgba(245, 158, 11, 0.3)',
+                          color: '#FBBF24',
+                          fontSize: 12,
+                          fontWeight: 700,
+                        }}
+                      >
+                        <MapPin size={13} style={{ color: '#FBBF24', flexShrink: 0 }} />
                         {currentSession.location}
                       </span>
                     </div>

@@ -92,33 +92,61 @@ export function PublicSessionsClient({
                       <h2 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.2px', marginBottom: 6 }}>
                         {s.name}
                       </h2>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px 14px' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 13, color: 'var(--text-secondary)' }}>
-                          <Calendar size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
-                          {formatDate(s.date)}
-                        </span>
-
+                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
+                        {/* Hari & Tanggal Badge */}
                         <span
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: 5,
-                            padding: '3px 10px',
-                            borderRadius: 6,
+                            padding: '4px 10px',
+                            borderRadius: 7,
+                            background: 'rgba(59, 130, 246, 0.12)',
+                            border: '1px solid rgba(59, 130, 246, 0.3)',
+                            color: '#60A5FA',
+                            fontSize: 12,
+                            fontWeight: 700,
+                          }}
+                        >
+                          <Calendar size={13} style={{ color: '#60A5FA', flexShrink: 0 }} />
+                          {formatDate(s.date)}
+                        </span>
+
+                        {/* Jam / Waktu Badge */}
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 5,
+                            padding: '4px 10px',
+                            borderRadius: 7,
                             background: 'rgba(16, 185, 129, 0.14)',
                             border: '1px solid rgba(16, 185, 129, 0.35)',
                             color: 'var(--accent)',
                             fontSize: 12,
                             fontWeight: 800,
-                            letterSpacing: '0.02em',
                           }}
                         >
                           <Clock size={13} style={{ color: 'var(--accent)', flexShrink: 0 }} />
                           {formatTime(s.start_time)} – {formatTime(s.end_time)} WIB
                         </span>
 
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 13, color: 'var(--text-secondary)' }}>
-                          <MapPin size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+                        {/* Tempat / Lokasi Badge */}
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 5,
+                            padding: '4px 10px',
+                            borderRadius: 7,
+                            background: 'rgba(245, 158, 11, 0.12)',
+                            border: '1px solid rgba(245, 158, 11, 0.3)',
+                            color: '#FBBF24',
+                            fontSize: 12,
+                            fontWeight: 700,
+                          }}
+                        >
+                          <MapPin size={13} style={{ color: '#FBBF24', flexShrink: 0 }} />
                           {s.location}
                         </span>
                       </div>
