@@ -62,7 +62,7 @@ export function ChampionsClient({
   matches: MatchWithPlayers[]
   availableMonths: string[]
 }) {
-  const [selectedMonth] = useState<string>(availableMonths[0] ?? '')
+  const [selectedMonth, setSelectedMonth] = useState<string>(availableMonths[0] ?? '')
 
   const monthCandidate = useMemo(() => {
     if (!selectedMonth) return null
@@ -75,15 +75,17 @@ export function ChampionsClient({
     return topPlayer
   }, [players, matches, selectedMonth])
 
-  const latestChampion = useMemo(() => {
-    if (confirmedChampions.length > 0) {
+  const displayedChampion = useMemo(() => {
+    if (!selectedMonth) return null
+    const confirmed = confirmedChampions.find((c) => c.month_key === selectedMonth)
+    if (confirmed && confirmed.player) {
       return {
         isConfirmed: true,
-        monthKey: confirmedChampions[0].month_key,
-        player: confirmedChampions[0].player!,
-        totalPoints: confirmedChampions[0].total_points,
-        wins: confirmedChampions[0].wins,
-        winRate: confirmedChampions[0].win_rate,
+        monthKey: confirmed.month_key,
+        player: confirmed.player,
+        totalPoints: confirmed.total_points,
+        wins: confirmed.wins,
+        winRate: confirmed.win_rate,
       }
     }
     if (monthCandidate) {
@@ -99,24 +101,45 @@ export function ChampionsClient({
     return null
   }, [confirmedChampions, monthCandidate, selectedMonth])
 
-
-
   return (
     <div className="page-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
-      {/* Header */}
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-          <Award size={18} style={{ color: 'var(--accent)' }} />
-          <h1 className="page-title">Monthly Champions</h1>
+      {/* Header & Month Selector */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+            <Award size={20} style={{ color: 'var(--accent)' }} />
+            <h1 className="page-title">Monthly Champions</h1>
+          </div>
+          <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
+            Aphelion League Hall of Fame
+          </p>
         </div>
-        <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-          Aphelion League Hall of Fame
-        </p>
+
+        {availableMonths.length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <label htmlFor="month-select" style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>
+              Select Month:
+            </label>
+            <select
+              id="month-select"
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="input"
+              style={{ width: 'auto', minWidth: 180, fontSize: 13, height: 38 }}
+            >
+              {availableMonths.map((m) => (
+                <option key={m} value={m}>
+                  {formatMonthLabel(m)} {confirmedChampions.some((c) => c.month_key === m) ? '★' : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {/* Champion Banner */}
-      {latestChampion ? (
+      {displayedChampion ? (
         <div
           style={{
             background: 'var(--bg-surface)',
@@ -149,7 +172,7 @@ export function ChampionsClient({
           {/* Badge + Month */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
             <span className="badge badge-accent" style={{ fontSize: 10 }}>
-              Monthly Champion
+              {displayedChampion.isConfirmed ? 'Official Monthly Champion' : 'Current Month Leader'}
             </span>
             <span
               style={{
@@ -160,13 +183,13 @@ export function ChampionsClient({
                 color: 'var(--text-muted)',
               }}
             >
-              {formatMonthLabel(latestChampion.monthKey)}
+              {formatMonthLabel(displayedChampion.monthKey)}
             </span>
           </div>
 
           {/* Player */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-            <PlayerAvatar player={latestChampion.player} size={80} />
+            <PlayerAvatar player={displayedChampion.player} size={80} />
             <h2
               style={{
                 fontSize: 24,
@@ -175,7 +198,7 @@ export function ChampionsClient({
                 color: 'var(--text-primary)',
               }}
             >
-              {latestChampion.player.name}
+              {displayedChampion.player.name}
             </h2>
           </div>
 
@@ -194,12 +217,12 @@ export function ChampionsClient({
             }}
           >
             {[
-              { label: 'Points', value: latestChampion.totalPoints, accent: true },
-              { label: 'Wins', value: latestChampion.wins, accent: false },
-              { label: 'Win Rate', value: `${(latestChampion.winRate * 100).toFixed(0)}%`, accent: false },
+              { label: 'Points', value: displayedChampion.totalPoints, accent: true },
+              { label: 'Wins', value: displayedChampion.wins, accent: false },
+              { label: 'Win Rate', value: `${(displayedChampion.winRate * 100).toFixed(0)}%`, accent: false },
             ].map(({ label, value, accent }, i, arr) => (
-              <>
-                <div key={label} style={{ textAlign: 'center' }}>
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+                <div style={{ textAlign: 'center' }}>
                   <span
                     style={{
                       display: 'block',
@@ -224,13 +247,13 @@ export function ChampionsClient({
                   </span>
                 </div>
                 {i < arr.length - 1 && (
-                  <div key={`sep-${i}`} style={{ width: 1, height: 28, background: 'var(--border-base)' }} />
+                  <div style={{ width: 1, height: 28, background: 'var(--border-base)' }} />
                 )}
-              </>
+              </div>
             ))}
           </div>
 
-          {!latestChampion.isConfirmed && (
+          {!displayedChampion.isConfirmed && (
             <p
               style={{
                 fontSize: 11,
@@ -239,7 +262,7 @@ export function ChampionsClient({
                 marginTop: 4,
               }}
             >
-              Provisional — not yet confirmed
+              Provisional leaderboard standing — pending final monthly snapshot
             </p>
           )}
         </div>
@@ -257,18 +280,20 @@ export function ChampionsClient({
           }}
         >
           <Trophy size={32} style={{ color: 'var(--text-disabled)' }} />
-          <p style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: 14 }}>No Champion Declared Yet</p>
-          <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Complete matches to generate standings.</p>
+          <p style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: 14 }}>
+            No Champion Data for {formatMonthLabel(selectedMonth) || 'Selected Month'}
+          </p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Complete matches in this month to generate standings.</p>
         </div>
       )}
 
-
-
-      {/* Hall of Fame */}
+      {/* Hall of Fame List */}
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
           <Calendar size={15} style={{ color: 'var(--accent)' }} />
-          <span className="section-label">Hall of Fame</span>
+          <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
+            Confirmed Champions History ({confirmedChampions.length})
+          </h2>
         </div>
 
         {confirmedChampions.length === 0 ? (
@@ -276,14 +301,14 @@ export function ChampionsClient({
             style={{
               background: 'var(--bg-surface)',
               border: '1px solid var(--border-base)',
-              borderRadius: 12,
-              padding: '32px 24px',
+              borderRadius: 14,
+              padding: '36px 24px',
               textAlign: 'center',
+              color: 'var(--text-muted)',
+              fontSize: 13,
             }}
           >
-            <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-              No confirmed champions yet.
-            </p>
+            No official monthly champions confirmed yet. Select a month above to view provisional standings.
           </div>
         ) : (
           <div
