@@ -6,6 +6,8 @@ import {
   ChevronLeft,
   UserRound,
   Calendar,
+  Award,
+  Trophy,
 } from 'lucide-react'
 
 function PlayerAvatar({ player, size = 64 }: { player: Player; size?: number }) {
@@ -76,11 +78,8 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
     wins,
     losses,
     win_rate,
-    current_streak,
-    best_streak,
-    favorite_partner,
-    toughest_opponent,
     recent_matches,
+    achievements,
   } = profile
 
   return (
@@ -152,6 +151,82 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
               value={matches_played > 0 ? `${(win_rate * 100).toFixed(0)}%` : '—'}
             />
           </div>
+        </div>
+
+        {/* ── Achievements Card Section ── */}
+        <div className="card" style={{ padding: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <Award size={16} style={{ color: '#F59E0B' }} />
+            <span className="section-label">Pencapaian & Gelar ({achievements.length})</span>
+          </div>
+
+          {achievements.length === 0 ? (
+            <div
+              style={{
+                padding: '24px 16px',
+                background: 'var(--bg-raised)',
+                borderRadius: 12,
+                border: '1px dashed var(--border-subtle)',
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 10,
+              }}
+            >
+              <Trophy size={18} style={{ color: 'var(--text-disabled)' }} />
+              <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>
+                Belum ada gelar juara bulanan yang diraih.
+              </span>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10 }}>
+              {achievements.map((ach) => (
+                <div
+                  key={ach.id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 14,
+                    padding: '14px 16px',
+                    borderRadius: 12,
+                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(27, 30, 34, 0.8) 100%)',
+                    border: '1px solid rgba(245, 158, 11, 0.3)',
+                    boxShadow: '0 4px 14px rgba(245, 158, 11, 0.08)',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 42,
+                      height: 42,
+                      borderRadius: '50%',
+                      background: 'rgba(245, 158, 11, 0.18)',
+                      border: '1px solid rgba(245, 158, 11, 0.4)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#F59E0B',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Trophy size={22} />
+                  </div>
+
+                  <div>
+                    <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#F59E0B' }}>
+                      Juara Bulanan
+                    </span>
+                    <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', marginTop: 2, lineHeight: 1.2 }}>
+                      Juara APL Bulan {ach.monthLabel}
+                    </p>
+                    <p style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 3 }}>
+                      {ach.total_points} poin · {ach.wins} menang
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ── Recent Matches ── */}

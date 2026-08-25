@@ -1,13 +1,32 @@
-import type { Player, MatchWithPlayers, PlayerProfileDetails, PlayerRecentMatch } from './types'
+import type { Player, MatchWithPlayers, PlayerProfileDetails, PlayerRecentMatch, MonthlyChampion, PlayerAchievement } from './types'
 import { calculateLeaderboard, calculateMatchPoints } from './leaderboard'
+
+function formatMonthLabelIndo(monthKey: string) {
+  if (!monthKey) return ''
+  const [year, month] = monthKey.split('-')
+  const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, 1)
+  return date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })
+}
 
 export function computePlayerProfileDetails(
   targetPlayerId: string,
   allPlayers: Player[],
-  allMatches: MatchWithPlayers[]
+  allMatches: MatchWithPlayers[],
+  confirmedChampions: MonthlyChampion[] = []
 ): PlayerProfileDetails | null {
   const player = allPlayers.find((p) => p.id === targetPlayerId)
   if (!player) return null
+
+  // Achievements from confirmed monthly champions
+  const playerChampions = confirmedChampions.filter((c) => c.player_id === targetPlayerId)
+  const achievements: PlayerAchievement[] = playerChampions.map((c) => ({
+    id: c.id,
+    title: 'Juara Aphelion League',
+    monthLabel: formatMonthLabelIndo(c.month_key),
+    monthKey: c.month_key,
+    total_points: c.total_points,
+    wins: c.wins,
+  }))
 
   // Calculate global leaderboard to get player's current rank & standings
   const leaderboard = calculateLeaderboard(allPlayers, allMatches)
@@ -174,5 +193,6 @@ export function computePlayerProfileDetails(
     favorite_partner,
     toughest_opponent,
     recent_matches,
+    achievements,
   }
 }

@@ -97,6 +97,15 @@ export interface PlayerRecentMatch {
   opponents: Player[]
 }
 
+export interface PlayerAchievement {
+  id: string
+  title: string
+  monthLabel: string
+  monthKey: string
+  total_points: number
+  wins: number
+}
+
 export interface PlayerProfileDetails {
   player: Player
   rank: number
@@ -110,6 +119,7 @@ export interface PlayerProfileDetails {
   favorite_partner?: { player: Player; matches_together: number; win_rate: number }
   toughest_opponent?: { player: Player; matches_against: number; win_rate: number }
   recent_matches: PlayerRecentMatch[]
+  achievements: PlayerAchievement[]
 }
 
 export type LeaderboardFilterMode = 'overall' | 'session' | 'month'
