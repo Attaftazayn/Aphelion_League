@@ -40,7 +40,7 @@ export function AdminSidebar() {
       <img
         src="/aphelion.jpeg"
         alt="Aphelion League"
-        style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'cover', border: '1px solid var(--border-base)' }}
+        style={{ width: 42, height: 42, borderRadius: 10, objectFit: 'cover', border: '1px solid var(--border-base)' }}
       />
       <div>
         <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>Aphelion League</p>
