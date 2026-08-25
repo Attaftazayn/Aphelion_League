@@ -169,53 +169,77 @@ export function MobileBottomNav() {
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <nav
+    <div
       className="md:hidden"
       style={{
         position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        bottom: 'calc(12px + env(safe-area-inset-bottom, 0px))',
+        left: 12,
+        right: 12,
         zIndex: 50,
-        borderTop: '1px solid rgba(255,255,255,0.08)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        background: 'rgba(18,21,23,0.95)',
+        pointerEvents: 'none',
       }}
     >
-      <div
+      <nav
         style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${navLinks.length}, 1fr)`,
-          /* safe area inset for notch devices */
-          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          pointerEvents: 'auto',
+          maxWidth: 440,
+          marginInline: 'auto',
+          background: 'rgba(27, 30, 34, 0.92)',
+          backdropFilter: 'blur(24px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.14)',
+          borderRadius: 22,
+          padding: '6px 8px',
+          boxShadow: '0 16px 36px rgba(0, 0, 0, 0.55), 0 2px 10px rgba(0, 0, 0, 0.35)',
         }}
       >
-        {navLinks.map(({ href, label, icon: Icon }) => {
-          const active = isActive(href)
-          return (
-            <Link
-              key={href}
-              href={href}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 3,
-                minHeight: 56,
-                color: active ? 'var(--accent)' : 'var(--text-muted)',
-                transition: 'color 0.14s ease',
-              }}
-            >
-              <Icon size={20} />
-              <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.03em' }}>
-                {label}
-              </span>
-            </Link>
-          )
-        })}
-      </div>
-    </nav>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${navLinks.length}, 1fr)`,
+            alignItems: 'center',
+          }}
+        >
+          {navLinks.map(({ href, label, icon: Icon }) => {
+            const active = isActive(href)
+            return (
+              <Link
+                key={href}
+                href={href}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 3,
+                  padding: '8px 4px',
+                  borderRadius: 16,
+                  color: active ? '#ffffff' : 'var(--text-secondary)',
+                  background: active ? 'var(--accent)' : 'transparent',
+                  boxShadow: active ? '0 4px 14px rgba(3, 65, 44, 0.5)' : 'none',
+                  border: active ? '1px solid var(--accent-border)' : '1px solid transparent',
+                  transition: 'all 0.18s cubic-bezier(0.4, 0, 0.2, 1)',
+                  textDecoration: 'none',
+                }}
+              >
+                <Icon size={19} style={{ color: active ? '#ffffff' : 'var(--text-secondary)' }} />
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: active ? 800 : 500,
+                    letterSpacing: '-0.2px',
+                    color: active ? '#ffffff' : 'var(--text-secondary)',
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {label}
+                </span>
+              </Link>
+            )
+          })}
+        </div>
+      </nav>
+    </div>
   )
 }
