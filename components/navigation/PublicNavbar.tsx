@@ -43,7 +43,7 @@ export function PublicHeader() {
           maxWidth: 1024,
           marginInline: 'auto',
           padding: '0 24px',
-          height: 68,
+          height: 80,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -51,24 +51,25 @@ export function PublicHeader() {
         }}
       >
         {/* Brand */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/aphelion.jpeg"
             alt="Aphelion League"
             style={{
-              width: 36,
-              height: 36,
-              borderRadius: 10,
+              width: 44,
+              height: 44,
+              borderRadius: 12,
               objectFit: 'cover',
               border: '1px solid var(--border-base)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             }}
           />
           <span
             style={{
               fontWeight: 900,
-              fontSize: 18,
-              letterSpacing: '-0.4px',
+              fontSize: 21,
+              letterSpacing: '-0.5px',
               color: 'var(--text-primary)',
             }}
           >
@@ -79,7 +80,7 @@ export function PublicHeader() {
         {/* Desktop Nav — center */}
         <nav
           className="hidden md:flex"
-          style={{ alignItems: 'center', gap: 4 }}
+          style={{ alignItems: 'center', gap: 6 }}
         >
           {navLinks.map(({ href, label, icon: Icon }) => {
             const active = isActive(href)
@@ -90,14 +91,15 @@ export function PublicHeader() {
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: 8,
-                  height: 42,
-                  padding: '0 14px',
-                  borderRadius: 10,
-                  fontSize: 14,
+                  gap: 9,
+                  height: 48,
+                  padding: '0 16px',
+                  borderRadius: 12,
+                  fontSize: 15,
                   fontWeight: 600,
-                  color: active ? 'var(--accent)' : 'var(--text-secondary)',
-                  background: active ? 'var(--accent-dim)' : 'transparent',
+                  color: active ? '#ffffff' : 'var(--text-secondary)',
+                  background: active ? 'var(--accent)' : 'transparent',
+                  border: active ? '1px solid var(--accent-border)' : '1px solid transparent',
                   transition: 'background 0.14s ease, color 0.14s ease',
                 }}
                 onMouseEnter={e => {
@@ -113,7 +115,7 @@ export function PublicHeader() {
                   }
                 }}
               >
-                <Icon size={16} />
+                <Icon size={18} />
                 {label}
               </Link>
             )
@@ -128,7 +130,7 @@ export function PublicHeader() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
+            gap: 12,
             textDecoration: 'none',
           }}
           title="Jejak Tennis Club Instagram"
@@ -138,12 +140,13 @@ export function PublicHeader() {
             src="/Logo%20jejak%20hijau.png"
             alt="Jejak Tennis Club"
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 12,
+              width: 46,
+              height: 46,
+              borderRadius: 14,
               objectFit: 'cover',
               background: 'var(--bg-raised)',
               border: '1px solid var(--border-base)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
             }}
             onError={(e) => {
               ;(e.target as HTMLImageElement).style.display = 'none'
@@ -151,8 +154,8 @@ export function PublicHeader() {
           />
           <span
             style={{
-              fontSize: 13,
-              fontWeight: 700,
+              fontSize: 14,
+              fontWeight: 800,
               color: 'var(--text-secondary)',
               display: 'inline-block',
             }}
