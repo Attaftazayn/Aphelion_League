@@ -3,13 +3,14 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Users, Calendar, LogOut, Menu, X } from 'lucide-react'
+import { Users, Calendar, Award, LogOut, Menu, X } from 'lucide-react'
 import { TennisBall } from '@/components/ui/icons'
 import { useState } from 'react'
 
 const navItems = [
-  { href: '/admin/players',  label: 'Players',  icon: Users },
-  { href: '/admin/sessions', label: 'Sessions', icon: Calendar },
+  { href: '/admin/players',   label: 'Players',   icon: Users },
+  { href: '/admin/sessions',  label: 'Sessions',  icon: Calendar },
+  { href: '/admin/champions', label: 'Champions', icon: Award },
 ]
 
 const SIDEBAR_W = 200
