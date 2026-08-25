@@ -35,9 +35,17 @@ export function AdminSidebar() {
   /* ── Shared pieces ──────────────────────────────────── */
 
   const brandBlock = (
-    <div style={{ padding: '16px 14px', borderBottom: '1px solid var(--border-base)', flexShrink: 0 }}>
-      <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>Aphelion League</p>
-      <p style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 2 }}>Admin Portal</p>
+    <div style={{ padding: '16px 14px', borderBottom: '1px solid var(--border-base)', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 10 }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/aphelion.jpeg"
+        alt="Aphelion League"
+        style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'cover', border: '1px solid var(--border-base)' }}
+      />
+      <div>
+        <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>Aphelion League</p>
+        <p style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 2 }}>Admin Portal</p>
+      </div>
     </div>
   )
 

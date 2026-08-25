@@ -52,6 +52,18 @@ export function PublicHeader() {
       >
         {/* Brand */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/aphelion.jpeg"
+            alt="Aphelion League"
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 10,
+              objectFit: 'cover',
+              border: '1px solid var(--border-base)',
+            }}
+          />
           <span
             style={{
               fontWeight: 900,
