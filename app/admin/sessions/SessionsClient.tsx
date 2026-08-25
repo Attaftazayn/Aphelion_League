@@ -114,6 +114,7 @@ function SessionModal({
     session?.end_time ? session.end_time.slice(0, 5) : ''
   )
   const [location, setLocation] = useState(session?.location ?? '')
+  const [locationUrl, setLocationUrl] = useState(session?.location_url ?? '')
   const [selectedPlayerIds, setSelectedPlayerIds] = useState<string[]>(existingPlayerIds)
 
   function togglePlayer(id: string) {
@@ -132,6 +133,7 @@ function SessionModal({
     formData.set('start_time', startTime)
     formData.set('end_time', endTime)
     formData.set('location', location)
+    formData.set('location_url', locationUrl)
     selectedPlayerIds.forEach((id) => formData.append('player_ids', id))
 
     startTransition(async () => {
@@ -226,18 +228,35 @@ function SessionModal({
 
             <div>
               <label htmlFor="session-location" className="label">
-                Location <span style={{ color: 'var(--danger)' }}>*</span>
+                Nama Lokasi / Lapangan <span style={{ color: 'var(--danger)' }}>*</span>
               </label>
               <input
                 id="session-location"
                 type="text"
                 className="input"
-                placeholder="e.g. Jejak Tennis Court A"
+                placeholder="e.g. Lapangan Tenis Aphelion"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 required
                 maxLength={120}
               />
+            </div>
+
+            <div>
+              <label htmlFor="session-location-url" className="label">
+                Link Google Maps (URL / Share Link)
+              </label>
+              <input
+                id="session-location-url"
+                type="url"
+                className="input"
+                placeholder="https://maps.app.goo.gl/... atau https://google.com/maps/..."
+                value={locationUrl}
+                onChange={(e) => setLocationUrl(e.target.value)}
+              />
+              <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
+                Masukkan link Google Maps untuk menampilkan peta interaktif di halaman pengguna.
+              </p>
             </div>
 
             <PlayerSelector

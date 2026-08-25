@@ -29,6 +29,7 @@ create table if not exists public.sessions (
   start_time  time not null,
   end_time    time not null,
   location    text not null,
+  location_url text,
   created_at  timestamptz not null default now()
 );
 

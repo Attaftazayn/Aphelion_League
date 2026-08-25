@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import type { SessionWithPlayers, MatchWithPlayers, Player } from '@/lib/types'
-import { Calendar, Clock, MapPin, Users, ChevronLeft, CheckCircle2, Circle, UserRound } from 'lucide-react'
+import { Calendar, Clock, MapPin, Users, ChevronLeft, CheckCircle2, Circle, UserRound, ExternalLink } from 'lucide-react'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('id-ID', {
@@ -152,6 +152,81 @@ export function PublicSessionDetailClient({
               <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Selesai</p>
               <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--accent)', marginTop: 2 }}>{completedMatches.length}</p>
             </div>
+          </div>
+        </div>
+
+        {/* ── Lokasi & Peta Lapangan (Google Maps) ── */}
+        <div
+          style={{
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border-base)',
+            borderRadius: 14,
+            padding: 20,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 14,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 10,
+                  background: 'var(--accent-dim)',
+                  border: '1px solid var(--accent-border)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--accent)',
+                  flexShrink: 0,
+                }}
+              >
+                <MapPin size={20} />
+              </div>
+              <div>
+                <h2 style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)' }}>
+                  Lokasi Lapangan
+                </h2>
+                <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', marginTop: 2 }}>
+                  {session.location}
+                </p>
+              </div>
+            </div>
+
+            <a
+              href={session.location_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(session.location)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary btn-sm"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12 }}
+            >
+              Buka Petunjuk Arah di Google Maps
+              <ExternalLink size={13} style={{ color: 'var(--accent)' }} />
+            </a>
+          </div>
+
+          {/* Embedded Google Map */}
+          <div
+            style={{
+              width: '100%',
+              height: 240,
+              borderRadius: 10,
+              overflow: 'hidden',
+              border: '1px solid var(--border-subtle)',
+              background: 'var(--bg-raised)',
+            }}
+          >
+            <iframe
+              title={`Google Map - ${session.location}`}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(session.location)}&output=embed`}
+            />
           </div>
         </div>
 

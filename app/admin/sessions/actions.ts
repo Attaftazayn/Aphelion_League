@@ -69,6 +69,7 @@ export async function createSession(formData: FormData) {
   const start_time = formData.get('start_time') as string
   const end_time = formData.get('end_time') as string
   const location = formData.get('location') as string
+  const location_url = (formData.get('location_url') as string) || ''
   const playerIds = formData.getAll('player_ids') as string[]
 
   const validationError = validateSessionFields({ name, date, start_time, end_time, location })
@@ -77,15 +78,18 @@ export async function createSession(formData: FormData) {
   try {
     const supabase = await createClient()
 
+    const sessionPayload: Record<string, any> = {
+      name: name.trim(),
+      date,
+      start_time,
+      end_time,
+      location: location.trim(),
+      location_url: location_url.trim() || null,
+    }
+
     const { data: session, error: sessionError } = await supabase
       .from('sessions')
-      .insert({
-        name: name.trim(),
-        date,
-        start_time,
-        end_time,
-        location: location.trim(),
-      })
+      .insert(sessionPayload)
       .select()
       .single()
 
@@ -118,6 +122,7 @@ export async function updateSession(id: string, formData: FormData) {
   const start_time = formData.get('start_time') as string
   const end_time = formData.get('end_time') as string
   const location = formData.get('location') as string
+  const location_url = (formData.get('location_url') as string) || ''
   const playerIds = formData.getAll('player_ids') as string[]
 
   const validationError = validateSessionFields({ name, date, start_time, end_time, location })
@@ -126,15 +131,18 @@ export async function updateSession(id: string, formData: FormData) {
   try {
     const supabase = await createClient()
 
+    const updatePayload: Record<string, any> = {
+      name: name.trim(),
+      date,
+      start_time,
+      end_time,
+      location: location.trim(),
+      location_url: location_url.trim() || null,
+    }
+
     const { error: sessionError } = await supabase
       .from('sessions')
-      .update({
-        name: name.trim(),
-        date,
-        start_time,
-        end_time,
-        location: location.trim(),
-      })
+      .update(updatePayload)
       .eq('id', id)
 
     if (sessionError) return { error: sessionError.message }

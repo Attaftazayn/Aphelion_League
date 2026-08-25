@@ -18,6 +18,7 @@ export interface Session {
   start_time: string     // "HH:MM:SS"
   end_time: string       // "HH:MM:SS"
   location: string
+  location_url?: string | null
   created_at: string
 }
 
