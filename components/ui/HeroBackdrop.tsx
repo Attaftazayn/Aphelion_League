@@ -12,11 +12,11 @@ export function HeroBackdrop() {
         pointerEvents: 'none',
       }}
     >
-      {/* Tennis court image backdrop */}
+      {/* Jejak photo backdrop */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/foto_court.jpg"
-        alt="Tennis court backdrop"
+        src="/jejakfoto.jpg"
+        alt="Jejak Tennis backdrop"
         style={{
           width: '100%',
           height: '100%',
