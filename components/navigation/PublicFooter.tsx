@@ -81,6 +81,51 @@ export function PublicFooter() {
           Follow us on Instagram
         </a>
 
+        {/* Official Sponsor Section */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 8,
+            padding: '12px 24px',
+            borderRadius: 14,
+            background: 'var(--bg-raised)',
+            border: '1px solid var(--border-base)',
+            marginTop: 4,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              color: 'var(--text-muted)',
+            }}
+          >
+            Sponsored by
+          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/reeso.png"
+              alt="REESO Sportswear"
+              style={{
+                height: 32,
+                maxHeight: 38,
+                objectFit: 'contain',
+              }}
+              onError={(e) => {
+                ;(e.target as HTMLImageElement).style.display = 'none'
+              }}
+            />
+            <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.2px' }}>
+              REESO Sportswear
+            </span>
+          </div>
+        </div>
+
         <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
           © {new Date().getFullYear()} Jejak Tennis Club. All rights reserved.
         </p>
