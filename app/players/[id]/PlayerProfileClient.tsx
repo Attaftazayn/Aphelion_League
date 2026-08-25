@@ -3,12 +3,8 @@
 import Link from 'next/link'
 import type { PlayerProfileDetails, Player } from '@/lib/types'
 import {
-  Trophy,
   ChevronLeft,
   UserRound,
-  Flame,
-  Users,
-  ShieldAlert,
   Calendar,
 } from 'lucide-react'
 
@@ -155,40 +151,6 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
               label="% Menang"
               value={matches_played > 0 ? `${(win_rate * 100).toFixed(0)}%` : '—'}
             />
-            <StatBox
-              label="Beruntun"
-              value={
-                <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  {current_streak > 0 && <Flame size={16} style={{ color: 'var(--accent)' }} />}
-                  {current_streak}M
-                </span>
-              }
-              accent={current_streak > 0}
-            />
-          </div>
-        </div>
-
-        {/* ── Win Streaks Card ── */}
-        <div className="card" style={{ padding: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-            <Flame size={15} style={{ color: 'var(--accent)' }} />
-            <span className="section-label">Kemenangan Beruntun</span>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Beruntun Saat Ini</span>
-              <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px' }}>
-                {current_streak}
-              </span>
-              <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 3 }}>menang</span>
-            </div>
-            <div style={{ padding: '12px 14px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Rekor Terbaik</span>
-              <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>
-                {best_streak}
-              </span>
-              <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 3 }}>menang</span>
-            </div>
           </div>
         </div>
 
