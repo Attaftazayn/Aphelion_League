@@ -51,24 +51,25 @@ export function PublicHeader() {
         }}
       >
         {/* Brand */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/aphelion.jpeg"
             alt="Aphelion League"
             style={{
-              width: 58,
-              height: 58,
-              borderRadius: 14,
+              width: 36,
+              height: 36,
+              borderRadius: 9,
               objectFit: 'cover',
               border: '1px solid var(--border-base)',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.35)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
             }}
           />
           <span
+            className="hidden sm:inline"
             style={{
               fontWeight: 900,
-              fontSize: 21,
+              fontSize: 20,
               letterSpacing: '-0.5px',
               color: 'var(--text-primary)',
             }}
@@ -139,8 +140,8 @@ export function PublicHeader() {
             src="/Logo%20Putih%20no%20BG.png"
             alt="Jejak Tennis Club"
             style={{
-              width: 48,
-              height: 48,
+              width: 58,
+              height: 58,
               objectFit: 'contain',
               transition: 'transform 0.14s ease',
             }}
