@@ -12,6 +12,9 @@ import {
   UserRound,
   Search,
   AlertTriangle,
+  Upload,
+  Camera,
+  Image as ImageIcon,
 } from 'lucide-react'
 
 /* ============================================================
@@ -51,6 +54,54 @@ function PlayerAvatar({ player, size = 36 }: { player: Player; size?: number }) 
 }
 
 /* ============================================================
+   Image Compression Helper
+   ============================================================ */
+function compressProfileImage(file: File, callback: (dataUrl: string) => void, onError: (msg: string) => void) {
+  if (!file.type.startsWith('image/')) {
+    onError('Please select a valid image file (JPG, PNG, WEBP).')
+    return
+  }
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    const img = new Image()
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      const MAX_SIZE = 400
+      let width = img.width
+      let height = img.height
+
+      if (width > height) {
+        if (width > MAX_SIZE) {
+          height = Math.round((height * MAX_SIZE) / width)
+          width = MAX_SIZE
+        }
+      } else {
+        if (height > MAX_SIZE) {
+          width = Math.round((width * MAX_SIZE) / height)
+          height = MAX_SIZE
+        }
+      }
+
+      canvas.width = width
+      canvas.height = height
+
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.drawImage(img, 0, 0, width, height)
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85)
+        callback(compressedDataUrl)
+      } else {
+        callback(e.target?.result as string)
+      }
+    }
+    img.onerror = () => onError('Failed to load image file.')
+    img.src = e.target?.result as string
+  }
+  reader.readAsDataURL(file)
+}
+
+/* ============================================================
    Player Modal Form
    ============================================================ */
 function PlayerModal({
@@ -62,9 +113,31 @@ function PlayerModal({
 }) {
   const isEditing = !!player
   const [isPending, startTransition] = useTransition()
+  const [isCompressing, setIsCompressing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [name, setName] = useState(player?.name ?? '')
   const [avatarUrl, setAvatarUrl] = useState(player?.avatar_url ?? '')
+  const [showUrlInput, setShowUrlInput] = useState(false)
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setIsCompressing(true)
+    setError(null)
+
+    compressProfileImage(
+      file,
+      (dataUrl) => {
+        setAvatarUrl(dataUrl)
+        setIsCompressing(false)
+      },
+      (errMsg) => {
+        setError(errMsg)
+        setIsCompressing(false)
+      }
+    )
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -101,24 +174,50 @@ function PlayerModal({
 
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
-            {name && (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  padding: '10px 14px',
-                  borderRadius: 10,
-                  background: 'var(--bg-raised)',
-                  border: '1px solid var(--border-base)',
-                }}
-              >
-                <PlayerAvatar player={{ ...player, name, avatar_url: avatarUrl || null } as Player} size={40} />
-                <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
-                  {name}
-                </span>
+            {/* Live Profile Photo Preview & Upload Box */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 12,
+                padding: '20px 16px',
+                borderRadius: 14,
+                background: 'var(--bg-raised)',
+                border: '1px dashed var(--border-strong)',
+                textAlign: 'center',
+              }}
+            >
+              <PlayerAvatar player={{ ...player, name: name || 'Player', avatar_url: avatarUrl || null } as Player} size={64} />
+              
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <label
+                  className="btn btn-primary btn-sm"
+                  style={{ cursor: isCompressing ? 'not-allowed' : 'pointer', gap: 6 }}
+                >
+                  {isCompressing ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+                  {avatarUrl ? 'Change Profile Photo' : 'Upload Photo File'}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    disabled={isCompressing}
+                    style={{ display: 'none' }}
+                  />
+                </label>
+
+                {avatarUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setAvatarUrl('')}
+                    className="btn btn-ghost btn-sm"
+                    style={{ fontSize: 11, color: 'var(--danger)', height: 26 }}
+                  >
+                    Remove Photo
+                  </button>
+                )}
               </div>
-            )}
+            </div>
 
             <div>
               <label htmlFor="player-name" className="label">
@@ -137,18 +236,37 @@ function PlayerModal({
               />
             </div>
 
+            {/* Optional URL Toggle */}
             <div>
-              <label htmlFor="player-avatar" className="label">
-                Avatar URL <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(optional)</span>
-              </label>
-              <input
-                id="player-avatar"
-                type="url"
-                className="input"
-                placeholder="https://example.com/photo.jpg"
-                value={avatarUrl}
-                onChange={(e) => setAvatarUrl(e.target.value)}
-              />
+              <button
+                type="button"
+                onClick={() => setShowUrlInput(!showUrlInput)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-secondary)',
+                  fontSize: 12,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  padding: 0,
+                  textDecoration: 'underline',
+                }}
+              >
+                {showUrlInput ? 'Hide Image Link Input' : 'Or paste image URL link instead...'}
+              </button>
+
+              {showUrlInput && (
+                <div style={{ marginTop: 8 }}>
+                  <input
+                    id="player-avatar"
+                    type="url"
+                    className="input"
+                    placeholder="https://example.com/photo.jpg"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                  />
+                </div>
+              )}
             </div>
 
             {error && (
