@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { toPng, toBlob } from 'html-to-image'
 import { X, Share2, Download, Loader2, Sparkles } from 'lucide-react'
 import type { MatchWithPlayers, Player } from '@/lib/types'
@@ -105,6 +106,16 @@ export function MatchShareModal({
   const cardRef = useRef<HTMLDivElement>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [statusMsg, setStatusMsg] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = originalOverflow
+    }
+  }, [])
 
   const teamA = match.match_players?.filter((mp) => mp.team === 'A') ?? []
   const teamB = match.match_players?.filter((mp) => mp.team === 'B') ?? []
@@ -188,13 +199,15 @@ export function MatchShareModal({
     }
   }
 
-  return (
+  const modalContent = (
     <div
-      className="modal-overlay"
       onClick={onClose}
       style={{
-        zIndex: 100,
-        backdropFilter: 'blur(10px)',
+        position: 'fixed',
+        inset: 0,
+        zIndex: 999999, // Topmost z-index to stay above all footers & navbar elements
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         background: 'rgba(0, 0, 0, 0.88)',
         display: 'flex',
         alignItems: 'center',
@@ -203,7 +216,6 @@ export function MatchShareModal({
       }}
     >
       <div
-        className="modal-content"
         onClick={(e) => e.stopPropagation()}
         style={{
           maxWidth: 460,
@@ -215,7 +227,7 @@ export function MatchShareModal({
           background: 'var(--bg-surface)',
           border: '1px solid var(--border-strong)',
           borderRadius: 22,
-          boxShadow: '0 24px 60px rgba(0, 0, 0, 0.8)',
+          boxShadow: '0 24px 60px rgba(0, 0, 0, 0.9)',
           position: 'relative',
         }}
       >
@@ -670,5 +682,7 @@ export function MatchShareModal({
       </div>
     </div>
   )
-}
 
+  if (!mounted) return null
+  return createPortal(modalContent, document.body)
+}

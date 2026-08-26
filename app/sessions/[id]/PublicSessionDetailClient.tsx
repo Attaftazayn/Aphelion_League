@@ -426,33 +426,10 @@ export function PublicSessionDetailClient({
                       <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>
                         Match #{m.match_number}
                       </span>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <button
-                          onClick={() => setShareMatch(m)}
-                          className="btn btn-secondary btn-sm"
-                          title="Share Match Result Card"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: 5,
-                            padding: '4px 10px',
-                            borderRadius: 8,
-                            fontSize: 11,
-                            fontWeight: 700,
-                            background: 'rgba(16, 185, 129, 0.12)',
-                            border: '1px solid rgba(16, 185, 129, 0.3)',
-                            color: 'var(--accent)',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          <Share2 size={14} />
-                          <span>Share Card</span>
-                        </button>
-                        <span className={`badge ${isCompleted ? 'badge-completed' : 'badge-upcoming'}`}>
-                          {isCompleted ? <CheckCircle2 size={11} /> : <Circle size={11} />}
-                          {isCompleted ? 'Completed' : 'Upcoming'}
-                        </span>
-                      </div>
+                      <span className={`badge ${isCompleted ? 'badge-completed' : 'badge-upcoming'}`}>
+                        {isCompleted ? <CheckCircle2 size={11} /> : <Circle size={11} />}
+                        {isCompleted ? 'Completed' : 'Upcoming'}
+                      </span>
                     </div>
 
                     {/* Match Grid */}
@@ -538,6 +515,51 @@ export function PublicSessionDetailClient({
                         ))}
                       </div>
                     </div>
+
+                    {/* Share Button Below Match Result in Schedule */}
+                    <button
+                      onClick={() => setShareMatch(m)}
+                      className="btn btn-secondary btn-sm"
+                      style={{
+                        width: '100%',
+                        minHeight: 38,
+                        marginTop: 4,
+                        padding: '8px 14px',
+                        borderRadius: 10,
+                        fontSize: 12,
+                        fontWeight: 700,
+                        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(5, 150, 105, 0.1) 100%)',
+                        border: '1px solid rgba(16, 185, 129, 0.35)',
+                        color: 'var(--accent)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 8,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Share2 size={14} />
+                      <span>Share This Match Result</span>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 5,
+                          marginLeft: 4,
+                          paddingLeft: 8,
+                          borderLeft: '1px solid rgba(16, 185, 129, 0.35)',
+                        }}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                        </svg>
+                      </div>
+                    </button>
                   </div>
                 )
               })}
