@@ -48,7 +48,7 @@ export function PlayersListClient({
   }, [players, matches])
 
   const filtered = useMemo(() => {
-    if (!search.trim()) return standings
+    if (!search.trim()) return []
     return standings.filter((s) => s.player.name.toLowerCase().includes(search.toLowerCase()))
   }, [standings, search])
 
@@ -64,20 +64,21 @@ export function PlayersListClient({
               <h1 className="page-title">Daftar Pemain</h1>
             </div>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-              {players.length} pemain terdaftar
+              Cari nama pemain untuk melihat profil dan statistik detail.
             </p>
           </div>
 
           {players.length > 0 && (
-            <div style={{ position: 'relative', width: '100%', maxWidth: 280 }}>
+            <div style={{ position: 'relative', width: '100%', maxWidth: 320 }}>
               <Search size={14} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', pointerEvents: 'none' }} />
               <input
                 type="text"
                 className="input"
                 style={{ paddingLeft: 36 }}
-                placeholder="Cari nama pemain…"
+                placeholder="Ketik nama pemain…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                autoFocus
               />
             </div>
           )}
@@ -91,9 +92,24 @@ export function PlayersListClient({
               Tambahkan pemain di portal admin untuk memulai.
             </p>
           </div>
+        ) : !search.trim() ? (
+          <div className="card" style={{ padding: '56px 24px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--accent-dim)', border: '1px solid var(--accent-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+              <Search size={22} style={{ color: 'var(--accent)' }} />
+            </div>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 6 }}>
+              Pencarian Profil Pemain
+            </h3>
+            <p style={{ fontSize: 13, color: 'var(--text-secondary)', maxWidth: 380, lineHeight: 1.5 }}>
+              Untuk melihat profil pemain, Anda harus mencari nama pemain terlebih dahulu melalui kolom pencarian di atas.
+            </p>
+          </div>
         ) : filtered.length === 0 ? (
           <div className="card" style={{ padding: '48px 24px', textAlign: 'center' }}>
             <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Tidak ada hasil untuk &quot;{search}&quot;</p>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>
+              Pastikan ejaan nama yang Anda ketik sudah benar.
+            </p>
           </div>
         ) : (
           <div
