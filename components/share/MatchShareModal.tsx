@@ -13,6 +13,24 @@ interface MatchShareModalProps {
   onClose: () => void
 }
 
+function InstagramIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  )
+}
+
+function WhatsAppIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+  )
+}
+
 function PlayerAvatar({ player, size = 52 }: { player?: Player; size?: number }) {
   const name = player?.name ?? 'Player'
   const initials = name
@@ -109,7 +127,7 @@ export function MatchShareModal({
   async function generateBlob(): Promise<Blob | null> {
     if (!cardRef.current) return null
     return await toBlob(cardRef.current, {
-      quality: 0.95,
+      quality: 0.98,
       pixelRatio: 3, // High DPI rendering for crisp 1080x1920 Story export
       cacheBust: true,
     })
@@ -133,7 +151,6 @@ export function MatchShareModal({
         })
         setStatusMsg('Shared successfully!')
       } else {
-        // Fallback to direct PNG download
         await handleDownload()
       }
     } catch (err: unknown) {
@@ -152,7 +169,7 @@ export function MatchShareModal({
     try {
       if (!cardRef.current) return
       const dataUrl = await toPng(cardRef.current, {
-        quality: 0.95,
+        quality: 0.98,
         pixelRatio: 3,
         cacheBust: true,
       })
@@ -177,39 +194,42 @@ export function MatchShareModal({
       onClick={onClose}
       style={{
         zIndex: 100,
-        backdropFilter: 'blur(8px)',
-        background: 'rgba(0, 0, 0, 0.85)',
+        backdropFilter: 'blur(10px)',
+        background: 'rgba(0, 0, 0, 0.88)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '16px',
+        padding: '12px',
       }}
     >
       <div
         className="modal-content"
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: 440,
+          maxWidth: 460,
           width: '100%',
-          maxHeight: '92vh',
+          maxHeight: '94vh',
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
           background: 'var(--bg-surface)',
           border: '1px solid var(--border-strong)',
-          borderRadius: 20,
-          boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+          borderRadius: 22,
+          boxShadow: '0 24px 60px rgba(0, 0, 0, 0.8)',
+          position: 'relative',
         }}
       >
         {/* Modal Header */}
         <div
           style={{
-            padding: '16px 20px',
+            padding: '14px 20px',
             borderBottom: '1px solid var(--border-base)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             background: 'var(--bg-surface)',
+            flexShrink: 0,
+            zIndex: 10,
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -218,21 +238,22 @@ export function MatchShareModal({
               Match Result Share Card
             </h2>
           </div>
-          <button onClick={onClose} className="btn btn-ghost btn-icon">
+          <button onClick={onClose} className="btn btn-ghost btn-icon" style={{ width: 34, height: 34 }}>
             <X size={18} />
           </button>
         </div>
 
-        {/* Scrollable Preview Container */}
+        {/* Scrollable Preview Area (Fixed padding & overflow so card never clips footer) */}
         <div
           style={{
             flex: 1,
             overflowY: 'auto',
-            padding: '20px',
+            padding: '16px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            background: '#040705',
+            justifyContent: 'flex-start',
+            background: '#030604',
           }}
         >
           {/* ─────────────────────────────────────────────────────────────
@@ -253,10 +274,11 @@ export function MatchShareModal({
               justifyContent: 'space-between',
               padding: '28px 24px',
               color: '#ffffff',
-              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.8)',
+              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.9)',
               border: '1px solid rgba(16, 185, 129, 0.35)',
               boxSizing: 'border-box',
               flexShrink: 0,
+              margin: 'auto 0',
             }}
           >
             {/* Background Tennis Court Vector Artwork & Lighting */}
@@ -571,40 +593,82 @@ export function MatchShareModal({
             borderTop: '1px solid var(--border-base)',
             display: 'flex',
             flexDirection: 'column',
-            gap: 10,
+            gap: 12,
             background: 'var(--bg-surface)',
+            flexShrink: 0,
+            zIndex: 10,
           }}
         >
           {statusMsg && (
-            <p style={{ fontSize: 12, textAlign: 'center', color: 'var(--accent)', fontWeight: 600 }}>
+            <p style={{ fontSize: 12, textAlign: 'center', color: 'var(--accent)', fontWeight: 700 }}>
               {statusMsg}
             </p>
           )}
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <button
-              onClick={handleShare}
-              disabled={isProcessing}
-              className="btn btn-primary"
-              style={{ minHeight: 44, fontSize: 13, gap: 8, justifyContent: 'center' }}
-            >
-              {isProcessing ? <Loader2 size={16} className="animate-spin" /> : <Share2 size={16} />}
-              Share Card
-            </button>
+          {/* Large Prominent Share Button with IG & WA Logos */}
+          <button
+            onClick={handleShare}
+            disabled={isProcessing}
+            className="btn btn-primary"
+            style={{
+              width: '100%',
+              minHeight: 52,
+              fontSize: 15,
+              fontWeight: 800,
+              gap: 10,
+              justifyContent: 'center',
+              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              borderRadius: 14,
+              boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)',
+              border: 'none',
+              cursor: isProcessing ? 'not-allowed' : 'pointer',
+            }}
+          >
+            {isProcessing ? (
+              <Loader2 size={20} className="animate-spin" />
+            ) : (
+              <>
+                <Share2 size={20} />
+                <span>Share This Match Result</span>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    marginLeft: 6,
+                    paddingLeft: 10,
+                    borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+                  }}
+                >
+                  <InstagramIcon size={18} />
+                  <WhatsAppIcon size={18} />
+                </div>
+              </>
+            )}
+          </button>
 
-            <button
-              onClick={handleDownload}
-              disabled={isProcessing}
-              className="btn btn-secondary"
-              style={{ minHeight: 44, fontSize: 13, gap: 8, justifyContent: 'center' }}
-            >
-              {isProcessing ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
-              Download PNG
-            </button>
-          </div>
+          {/* Secondary PNG Download Button */}
+          <button
+            onClick={handleDownload}
+            disabled={isProcessing}
+            className="btn btn-secondary"
+            style={{
+              width: '100%',
+              minHeight: 42,
+              fontSize: 13,
+              fontWeight: 700,
+              gap: 8,
+              justifyContent: 'center',
+              borderRadius: 12,
+            }}
+          >
+            {isProcessing ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
+            Download Image (.PNG)
+          </button>
         </div>
 
       </div>
     </div>
   )
 }
+

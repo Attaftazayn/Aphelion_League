@@ -348,11 +348,24 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
                         }
                         setShareMatch(synthesizedMatch)
                       }}
-                      className="btn btn-secondary btn-icon btn-sm"
-                      title="Share Match Result"
-                      style={{ width: 28, height: 28, padding: 0, borderRadius: 6 }}
+                      className="btn btn-secondary btn-sm"
+                      title="Share Match Result Card"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 5,
+                        padding: '4px 10px',
+                        borderRadius: 8,
+                        fontSize: 11,
+                        fontWeight: 700,
+                        background: 'rgba(16, 185, 129, 0.12)',
+                        border: '1px solid rgba(16, 185, 129, 0.3)',
+                        color: 'var(--accent)',
+                        cursor: 'pointer',
+                      }}
                     >
-                      <Share2 size={13} style={{ color: 'var(--accent)' }} />
+                      <Share2 size={14} />
+                      <span>Share Card</span>
                     </button>
                   </div>
                 </div>
