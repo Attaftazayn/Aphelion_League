@@ -40,10 +40,8 @@ export default function RootLayout({
         }}
       >
         <HeroBackdrop />
-        <div style={{ position: 'relative', zIndex: 40 }}>
-          <PublicHeader />
-        </div>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
+        <PublicHeader />
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1, paddingTop: 76 }}>
           {children}
         </div>
         <div style={{ position: 'relative', zIndex: 1 }}>

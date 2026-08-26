@@ -30,14 +30,17 @@ export function PublicHeader() {
   return (
     <header
       style={{
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
-        zIndex: 40,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
         width: '100%',
-        borderBottom: '1px solid rgba(255,255,255,0.07)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        background: 'rgba(18,21,23,0.88)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        background: 'rgba(6, 12, 9, 0.90)',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
       }}
     >
       <div
