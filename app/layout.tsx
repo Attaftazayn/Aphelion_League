@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { MobileBottomNav } from '@/components/navigation/PublicNavbar'
+import { PublicHeader, MobileBottomNav } from '@/components/navigation/PublicNavbar'
 import { PublicFooter } from '@/components/navigation/PublicFooter'
 import { HeroBackdrop } from '@/components/ui/HeroBackdrop'
 
@@ -40,6 +40,9 @@ export default function RootLayout({
         }}
       >
         <HeroBackdrop />
+        <div style={{ position: 'relative', zIndex: 40 }}>
+          <PublicHeader />
+        </div>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
           {children}
         </div>

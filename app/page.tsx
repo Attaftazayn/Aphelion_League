@@ -1,7 +1,6 @@
 import { getLeaderboardData } from './leaderboard/actions'
 import { getChampionsData } from './champions/actions'
 import { HomeDashboardClient } from './HomeDashboardClient'
-import { PublicHeader } from '@/components/navigation/PublicNavbar'
 
 export const metadata = {
   title: 'Aphelion League | Home',
@@ -15,7 +14,6 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <PublicHeader />
       <main className="flex-1">
         <HomeDashboardClient
           players={players}

@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getSessionWithMatches } from './actions'
 import { PublicSessionDetailClient } from './PublicSessionDetailClient'
-import { PublicHeader } from '@/components/navigation/PublicNavbar'
 
 export async function generateMetadata({
   params,
@@ -31,7 +30,6 @@ export default async function PublicSessionDetailPage({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <PublicHeader />
       <main className="flex-1">
         <PublicSessionDetailClient session={session} matches={matches} />
       </main>

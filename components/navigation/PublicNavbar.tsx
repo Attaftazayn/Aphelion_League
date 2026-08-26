@@ -22,6 +22,8 @@ const navLinks = [
 
 export function PublicHeader() {
   const pathname = usePathname()
+
+  if (pathname.startsWith('/admin') || pathname === '/login') return null
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 

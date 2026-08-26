@@ -1,6 +1,5 @@
 import { getChampionsData } from './actions'
 import { ChampionsClient } from './ChampionsClient'
-import { PublicHeader } from '@/components/navigation/PublicNavbar'
 import { createClient } from '@/lib/supabase/server'
 
 export const metadata = {
@@ -12,7 +11,6 @@ export default async function ChampionsPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <PublicHeader />
       <main className="flex-1">
         <ChampionsClient
           confirmedChampions={confirmedChampions}

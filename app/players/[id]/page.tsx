@@ -3,7 +3,6 @@ import { getLeaderboardData } from '../../leaderboard/actions'
 import { getChampionsData } from '../../champions/actions'
 import { computePlayerProfileDetails } from '@/lib/player-stats'
 import { PlayerProfileClient } from './PlayerProfileClient'
-import { PublicHeader } from '@/components/navigation/PublicNavbar'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -33,7 +32,6 @@ export default async function PlayerProfilePage({ params }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <PublicHeader />
       <main className="flex-1">
         <PlayerProfileClient profile={profileDetails} />
       </main>
