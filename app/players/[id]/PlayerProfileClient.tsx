@@ -1,14 +1,17 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import type { PlayerProfileDetails, Player } from '@/lib/types'
+import type { PlayerProfileDetails, Player, MatchWithPlayers } from '@/lib/types'
 import {
   ChevronLeft,
   UserRound,
   Calendar,
   Award,
   Trophy,
+  Share2,
 } from 'lucide-react'
+import { MatchShareModal } from '@/components/share/MatchShareModal'
 
 function PlayerAvatar({ player, size = 64 }: { player: Player; size?: number }) {
   const initials = player.name
@@ -70,6 +73,7 @@ function StatBox({ label, value, accent }: { label: string; value: React.ReactNo
 }
 
 export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails }) {
+  const [shareMatch, setShareMatch] = useState<MatchWithPlayers | null>(null)
   const {
     player,
     rank,
@@ -297,26 +301,76 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
                     <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{m.date}</p>
                   </div>
 
-                  {/* Partner/Opponents */}
-                  <div style={{ display: 'flex', gap: 16, fontSize: 12, color: 'var(--text-secondary)', flexShrink: 0 }}>
-                    {m.partner && (
+                  {/* Partner/Opponents & Share */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 12, color: 'var(--text-secondary)', flexShrink: 0 }}>
+                    <div style={{ display: 'flex', gap: 16 }}>
+                      {m.partner && (
+                        <span>
+                          <span style={{ color: 'var(--text-muted)' }}>w/ </span>
+                          <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{m.partner.name}</span>
+                        </span>
+                      )}
                       <span>
-                        <span style={{ color: 'var(--text-muted)' }}>w/ </span>
-                        <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{m.partner.name}</span>
+                        <span style={{ color: 'var(--text-muted)' }}>vs </span>
+                        <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                          {m.opponents.map((op) => op.name).join(' & ')}
+                        </span>
                       </span>
-                    )}
-                    <span>
-                      <span style={{ color: 'var(--text-muted)' }}>vs </span>
-                      <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-                        {m.opponents.map((op) => op.name).join(' & ')}
-                      </span>
-                    </span>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        const scores = m.score_display.split('-').map((s) => parseInt(s.trim()))
+                        const scoreA = isNaN(scores[0]) ? 0 : scores[0]
+                        const scoreB = isNaN(scores[1]) ? 0 : scores[1]
+                        const synthesizedMatch: MatchWithPlayers = {
+                          id: m.match_id,
+                          match_number: 1,
+                          status: 'completed',
+                          score_a: scoreA,
+                          score_b: scoreB,
+                          session_id: '',
+                          created_at: '',
+                          session: {
+                            id: '',
+                            name: m.session_name,
+                            date: m.date,
+                            location: 'Aphelion Court',
+                            start_time: '',
+                            end_time: '',
+                            created_at: '',
+                          },
+                          match_players: [
+                            { id: '1', match_id: m.match_id, player_id: player.id, team: 'A' as const, created_at: '', players: player },
+                            ...(m.partner ? [{ id: '2', match_id: m.match_id, player_id: m.partner.id, team: 'A' as const, created_at: '', players: m.partner }] : []),
+                            ...m.opponents.map((op, idx) => ({ id: `op-${idx}`, match_id: m.match_id, player_id: op.id, team: 'B' as const, created_at: '', players: op })),
+                          ],
+                        }
+                        setShareMatch(synthesizedMatch)
+                      }}
+                      className="btn btn-secondary btn-icon btn-sm"
+                      title="Share Match Result"
+                      style={{ width: 28, height: 28, padding: 0, borderRadius: 6 }}
+                    >
+                      <Share2 size={13} style={{ color: 'var(--accent)' }} />
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
           )}
         </div>
+
+        {/* Share Modal */}
+        {shareMatch && (
+          <MatchShareModal
+            match={shareMatch}
+            sessionName={shareMatch.session?.name}
+            sessionDate={shareMatch.session?.date}
+            sessionLocation={shareMatch.session?.location}
+            onClose={() => setShareMatch(null)}
+          />
+        )}
 
       </div>
     </div>

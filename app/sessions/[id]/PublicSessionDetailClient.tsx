@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import type { SessionWithPlayers, MatchWithPlayers, Player } from '@/lib/types'
-import { Calendar, Clock, MapPin, Users, ChevronLeft, CheckCircle2, Circle, UserRound, ExternalLink } from 'lucide-react'
+import { Calendar, Clock, MapPin, Users, ChevronLeft, CheckCircle2, Circle, UserRound, ExternalLink, Share2 } from 'lucide-react'
+import { MatchShareModal } from '@/components/share/MatchShareModal'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('id-ID', {
@@ -137,6 +139,7 @@ export function PublicSessionDetailClient({
   session: SessionWithPlayers
   matches: MatchWithPlayers[]
 }) {
+  const [shareMatch, setShareMatch] = useState<MatchWithPlayers | null>(null)
   const participants = session.session_players?.map((sp) => sp.players) ?? []
   const completedMatches = matches.filter((m) => m.status === 'completed')
 
@@ -423,10 +426,20 @@ export function PublicSessionDetailClient({
                       <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>
                         Match #{m.match_number}
                       </span>
-                      <span className={`badge ${isCompleted ? 'badge-completed' : 'badge-upcoming'}`}>
-                        {isCompleted ? <CheckCircle2 size={11} /> : <Circle size={11} />}
-                        {isCompleted ? 'Completed' : 'Upcoming'}
-                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <button
+                          onClick={() => setShareMatch(m)}
+                          className="btn btn-secondary btn-icon btn-sm"
+                          title="Share Match Card"
+                          style={{ width: 28, height: 28, padding: 0, borderRadius: 6 }}
+                        >
+                          <Share2 size={13} style={{ color: 'var(--accent)' }} />
+                        </button>
+                        <span className={`badge ${isCompleted ? 'badge-completed' : 'badge-upcoming'}`}>
+                          {isCompleted ? <CheckCircle2 size={11} /> : <Circle size={11} />}
+                          {isCompleted ? 'Completed' : 'Upcoming'}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Match Grid */}
@@ -518,6 +531,17 @@ export function PublicSessionDetailClient({
             </div>
           )}
         </div>
+
+        {/* Share Modal */}
+        {shareMatch && (
+          <MatchShareModal
+            match={shareMatch}
+            sessionName={session.name}
+            sessionDate={session.date}
+            sessionLocation={session.location}
+            onClose={() => setShareMatch(null)}
+          />
+        )}
 
       </div>
     </div>
