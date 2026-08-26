@@ -2,11 +2,12 @@ export function HeroBackdrop() {
   return (
     <div
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
-        height: 720,
+        bottom: 0,
+        height: '100vh',
         zIndex: 0,
         overflow: 'hidden',
         pointerEvents: 'none',
