@@ -61,10 +61,10 @@ export function PlayersListClient({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
               <Users size={18} style={{ color: 'var(--accent)' }} />
-              <h1 className="page-title">Daftar Pemain</h1>
+              <h1 className="page-title">Players Directory</h1>
             </div>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-              Cari nama pemain untuk melihat profil dan statistik detail.
+              Search player name to view profile and detailed statistics.
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export function PlayersListClient({
                 type="text"
                 className="input"
                 style={{ paddingLeft: 36 }}
-                placeholder="Ketik nama pemain…"
+                placeholder="Type player name…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 autoFocus
@@ -87,9 +87,9 @@ export function PlayersListClient({
         {players.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <Users size={32} style={{ margin: '0 auto 12px', color: 'var(--text-disabled)' }} />
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada pemain</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>No players available</p>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
-              Tambahkan pemain di portal admin untuk memulai.
+              Add players in the admin portal to get started.
             </p>
           </div>
         ) : !search.trim() ? (
@@ -98,17 +98,17 @@ export function PlayersListClient({
               <Search size={22} style={{ color: 'var(--accent)' }} />
             </div>
             <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 6 }}>
-              Pencarian Profil Pemain
+              Player Profile Search
             </h3>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', maxWidth: 380, lineHeight: 1.5 }}>
-              Untuk melihat profil pemain, Anda harus mencari nama pemain terlebih dahulu melalui kolom pencarian di atas.
+              To view a player profile, please search for the player&apos;s name using the search bar above.
             </p>
           </div>
         ) : filtered.length === 0 ? (
           <div className="card" style={{ padding: '48px 24px', textAlign: 'center' }}>
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Tidak ada hasil untuk &quot;{search}&quot;</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>No results found for &quot;{search}&quot;</p>
             <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>
-              Pastikan ejaan nama yang Anda ketik sudah benar.
+              Please check the spelling of the name you entered.
             </p>
           </div>
         ) : (
@@ -150,9 +150,9 @@ export function PlayersListClient({
                       {st.player.name}
                     </p>
                     <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 3 }}>
-                      <span style={{ color: 'var(--accent)', fontWeight: 600 }}>Pos #{st.rank}</span>
+                      <span style={{ color: 'var(--accent)', fontWeight: 600 }}>Rank #{st.rank}</span>
                       {' · '}
-                      {st.matches_played} pertandingan
+                      {st.matches_played} matches
                     </p>
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export function PlayersListClient({
                     <span style={{ fontSize: 16, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px', display: 'block' }}>
                       {st.total_points}
                     </span>
-                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>poin</span>
+                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>pts</span>
                   </div>
                   <ChevronRight size={14} style={{ color: 'var(--text-disabled)' }} />
                 </div>

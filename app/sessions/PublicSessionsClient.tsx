@@ -125,10 +125,10 @@ export function PublicSessionsClient({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
             <Calendar size={18} style={{ color: 'var(--accent)' }} />
-            <h1 className="page-title">Sesi Pertandingan</h1>
+            <h1 className="page-title">Match Sessions</h1>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-            Total {sortedSessions.length} sesi pertandingan
+            Total of {sortedSessions.length} match sessions
           </p>
         </div>
 
@@ -138,16 +138,16 @@ export function PublicSessionsClient({
         {/* ── Sessions Cards List Header ── */}
         <div style={{ marginTop: 8 }}>
           <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-            Daftar Sesi Terjadwal ({sortedSessions.length})
+            Scheduled Sessions List ({sortedSessions.length})
           </h2>
         </div>
 
         {sortedSessions.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <Calendar size={32} style={{ margin: '0 auto 12px', color: 'var(--text-disabled)' }} />
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada sesi pertandingan</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>No match sessions yet</p>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
-              Sesi pertandingan akan muncul di sini setelah dibuat oleh admin.
+              Match sessions will appear here once created by the admin.
             </p>
           </div>
         ) : (
@@ -229,10 +229,10 @@ export function PublicSessionsClient({
                   >
                     <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text-muted)' }}>
                       <Users size={13} />
-                      {playerCount} pemain
+                      {playerCount} players
                     </span>
                     <Link href={`/sessions/${s.id}`} className="btn btn-secondary btn-sm" style={{ fontSize: 12 }}>
-                      Jadwal Pertandingan
+                      Match Schedule
                       <ChevronRight size={13} />
                     </Link>
                   </div>

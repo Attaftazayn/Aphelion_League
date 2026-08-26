@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
   const { players } = await getLeaderboardData()
   const p = players.find((x) => x.id === id)
   return {
-    title: p ? `${p.name} | Profil Pemain` : 'Profil Pemain | Aphelion League',
+    title: p ? `${p.name} | Player Profile` : 'Player Profile | Aphelion League',
   }
 }
 

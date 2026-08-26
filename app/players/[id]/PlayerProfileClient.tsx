@@ -105,7 +105,7 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
             }}
           >
             <ChevronLeft size={16} style={{ color: 'var(--accent)' }} />
-            Semua Pemain
+            All Players
           </Link>
         </div>
 
@@ -127,22 +127,22 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
             <PlayerAvatar player={player} size={68} />
             <div style={{ flex: 1, minWidth: 140 }}>
               <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent)', display: 'block', marginBottom: 4 }}>
-                Profil Pemain
+                Player Profile
               </span>
               <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-0.5px', color: 'var(--text-primary)', lineHeight: 1.1 }}>
                 {player.name}
               </h1>
               <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>
-                Terdaftar sejak {new Date(player.created_at).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}
+                Registered since {new Date(player.created_at).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}
               </p>
             </div>
             <div style={{ display: 'flex', gap: 10, flexShrink: 0 }}>
               <div style={{ textAlign: 'center', padding: '10px 16px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Pos</span>
+                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Rank</span>
                 <span style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-1px', color: 'var(--accent)', lineHeight: 1 }}>#{rank}</span>
               </div>
               <div style={{ textAlign: 'center', padding: '10px 16px', background: 'var(--bg-raised)', borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Poin</span>
+                <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Points</span>
                 <span style={{ fontSize: 26, fontWeight: 900, letterSpacing: '-1px', color: 'var(--text-primary)', lineHeight: 1 }}>{total_points}</span>
               </div>
             </div>
@@ -158,11 +158,11 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
               borderTop: '1px solid var(--border-subtle)',
             }}
           >
-            <StatBox label="Pertandingan" value={matches_played} />
-            <StatBox label="Menang" value={wins} accent />
-            <StatBox label="Kalah" value={losses} />
+            <StatBox label="Matches" value={matches_played} />
+            <StatBox label="Wins" value={wins} accent />
+            <StatBox label="Losses" value={losses} />
             <StatBox
-              label="% Menang"
+              label="Win Rate"
               value={matches_played > 0 ? `${(win_rate * 100).toFixed(0)}%` : '—'}
             />
           </div>
@@ -173,7 +173,7 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
           <div className="card" style={{ padding: 20 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <Award size={16} style={{ color: 'var(--accent)' }} />
-              <span className="section-label">Pencapaian & Gelar ({achievements.length})</span>
+              <span className="section-label">Achievements & Titles ({achievements.length})</span>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10 }}>
@@ -210,13 +210,13 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
 
                   <div>
                     <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent)' }}>
-                      Juara Bulanan
+                      Monthly Champion
                     </span>
                     <p style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', marginTop: 2, lineHeight: 1.2 }}>
-                      Juara APL Bulan {ach.monthLabel}
+                      APL Champion Month {ach.monthLabel}
                     </p>
                     <p style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 3 }}>
-                      {ach.total_points} poin · {ach.wins} menang
+                      {ach.total_points} pts · {ach.wins} wins
                     </p>
                   </div>
                 </div>
@@ -229,13 +229,13 @@ export function PlayerProfileClient({ profile }: { profile: PlayerProfileDetails
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
             <Calendar size={15} style={{ color: 'var(--accent)' }} />
-            <span className="section-label">Pertandingan Terakhir ({recent_matches.length})</span>
+            <span className="section-label">Recent Matches ({recent_matches.length})</span>
           </div>
 
           {recent_matches.length === 0 ? (
             <div className="card" style={{ padding: '40px 24px', textAlign: 'center' }}>
               <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-                Belum ada riwayat pertandingan.
+                No match history yet.
               </p>
             </div>
           ) : (

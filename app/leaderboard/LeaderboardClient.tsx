@@ -102,9 +102,9 @@ export function LeaderboardClient({
   }
 
   const tabs = [
-    { key: 'overall', label: 'Semua', icon: Layers },
-    { key: 'month',   label: 'Bulanan', icon: Calendar },
-    { key: 'session', label: 'Per Sesi', icon: Filter },
+    { key: 'overall', label: 'All', icon: Layers },
+    { key: 'month',   label: 'Monthly', icon: Calendar },
+    { key: 'session', label: 'Per Session', icon: Filter },
   ] as const
 
   return (
@@ -115,10 +115,10 @@ export function LeaderboardClient({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
             <Trophy size={18} style={{ color: 'var(--accent)' }} />
-            <h1 className="page-title">Klasemen</h1>
+            <h1 className="page-title">Leaderboard</h1>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-            Klasemen Resmi Aphelion League
+            Official Aphelion League Standings
           </p>
         </div>
 
@@ -195,7 +195,7 @@ export function LeaderboardClient({
               type="text"
               className="input"
               style={{ paddingLeft: 36 }}
-              placeholder="Cari nama pemain…"
+              placeholder="Search player name…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -206,16 +206,16 @@ export function LeaderboardClient({
         {players.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <Trophy size={32} style={{ margin: '0 auto 12px', color: 'var(--text-disabled)' }} />
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada pemain terdaftar</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>No registered players yet</p>
             <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
-              Tambahkan pemain di portal admin untuk memulai perhitungan klasemen.
+              Add players in the admin portal to begin tracking leaderboard standings.
             </p>
           </div>
         ) : standings.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <Search size={32} style={{ margin: '0 auto 12px', color: 'var(--text-disabled)' }} />
-            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Pemain tidak ditemukan</p>
-            <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>Coba ubah kata kunci pencarian atau filter.</p>
+            <p style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Player not found</p>
+            <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>Try changing your search keywords or filter.</p>
           </div>
         ) : (
           <>
@@ -224,13 +224,13 @@ export function LeaderboardClient({
               <table className="data-table" style={{ background: 'var(--bg-surface)' }}>
                 <thead>
                   <tr>
-                    <th style={{ width: 56, textAlign: 'center' }}>Pos</th>
-                    <th>Pemain</th>
-                    <th style={{ textAlign: 'center' }}>Main</th>
-                    <th style={{ textAlign: 'center' }}>M</th>
-                    <th style={{ textAlign: 'center' }}>K</th>
-                    <th style={{ textAlign: 'center' }}>% Menang</th>
-                    <th style={{ textAlign: 'right', paddingRight: 20 }}>Poin</th>
+                    <th style={{ width: 56, textAlign: 'center' }}>Rank</th>
+                    <th>Player</th>
+                    <th style={{ textAlign: 'center' }}>Played</th>
+                    <th style={{ textAlign: 'center' }}>W</th>
+                    <th style={{ textAlign: 'center' }}>L</th>
+                    <th style={{ textAlign: 'center' }}>Win %</th>
+                    <th style={{ textAlign: 'right', paddingRight: 20 }}>Points</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -251,7 +251,7 @@ export function LeaderboardClient({
                             <p style={{ fontWeight: 600, fontSize: 13, color: 'var(--text-primary)' }}>{st.player.name}</p>
                             {st.rank === 1 && (
                               <span style={{ fontSize: 11, color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                                <Award size={11} /> Pemimpin Klasemen
+                                <Award size={11} /> Leaderboard Leader
                               </span>
                             )}
                           </div>
@@ -267,7 +267,7 @@ export function LeaderboardClient({
                         <span style={{ fontSize: 17, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px' }}>
                           {st.total_points}
                         </span>
-                        <span style={{ fontSize: 10, color: 'var(--text-muted)', marginLeft: 3 }}>poin</span>
+                        <span style={{ fontSize: 10, color: 'var(--text-muted)', marginLeft: 3 }}>pts</span>
                       </td>
                     </tr>
                   ))}
@@ -300,7 +300,7 @@ export function LeaderboardClient({
                         {st.player.name}
                       </p>
                       <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-                        {st.matches_played} Main · {st.wins}M · {st.losses}K
+                        {st.matches_played} Played · {st.wins}W · {st.losses}L
                         {st.matches_played > 0 && ` · ${(st.win_rate * 100).toFixed(0)}%`}
                       </p>
                     </div>
@@ -309,7 +309,7 @@ export function LeaderboardClient({
                     <span style={{ fontSize: 18, fontWeight: 800, color: 'var(--accent)', letterSpacing: '-0.5px', display: 'block' }}>
                       {st.total_points}
                     </span>
-                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>poin</span>
+                    <span style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>pts</span>
                   </div>
                 </Link>
               ))}

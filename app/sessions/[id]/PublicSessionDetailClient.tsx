@@ -152,11 +152,11 @@ export function PublicSessionDetailClient({
       >
         <div className="page-wrapper" style={{ padding: '0 16px' }}>
           <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent)' }}>
-            Ringkasan Sesi
+            Session Overview
           </span>
           <h1 className="page-title" style={{ marginTop: 4 }}>{session.name}</h1>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>
-            Pasangan pertandingan, jadwal, dan hasil poin terkini
+            Match pairings, schedule, and live point results
           </p>
         </div>
       </div>
@@ -181,7 +181,7 @@ export function PublicSessionDetailClient({
             }}
           >
             <ChevronLeft size={16} style={{ color: 'var(--accent)' }} />
-            Semua Sesi
+            All Sessions
           </Link>
         </div>
 
@@ -245,15 +245,15 @@ export function PublicSessionDetailClient({
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
             <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border-base)', borderRadius: 10, padding: '12px 16px' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Pemain</p>
+              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Players</p>
               <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', marginTop: 2 }}>{participants.length}</p>
             </div>
             <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border-base)', borderRadius: 10, padding: '12px 16px' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Pertandingan</p>
+              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Matches</p>
               <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', marginTop: 2 }}>{matches.length}</p>
             </div>
             <div style={{ background: 'var(--bg-raised)', border: '1px solid var(--border-base)', borderRadius: 10, padding: '12px 16px' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Selesai</p>
+              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)' }}>Completed</p>
               <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--accent)', marginTop: 2 }}>{completedMatches.length}</p>
             </div>
           </div>
@@ -291,7 +291,7 @@ export function PublicSessionDetailClient({
               </div>
               <div>
                 <h2 style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)' }}>
-                  Lokasi Lapangan
+                  Court Location
                 </h2>
                 <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', marginTop: 2 }}>
                   {session.location}
@@ -306,7 +306,7 @@ export function PublicSessionDetailClient({
               className="btn btn-secondary btn-sm"
               style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12 }}
             >
-              Buka Petunjuk Arah di Google Maps
+              Get Directions on Google Maps
               <ExternalLink size={13} style={{ color: 'var(--accent)' }} />
             </a>
           </div>
@@ -339,11 +339,11 @@ export function PublicSessionDetailClient({
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
             <Users size={15} style={{ color: 'var(--accent)' }} />
             <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-              Peserta Terkonfirmasi ({participants.length})
+              Confirmed Participants ({participants.length})
             </h2>
           </div>
           {participants.length === 0 ? (
-            <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Belum ada peserta yang dikonfirmasi.</p>
+            <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>No confirmed participants yet.</p>
           ) : (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {participants.map((p) => (
@@ -373,7 +373,7 @@ export function PublicSessionDetailClient({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
             <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}>
-              Jadwal & Hasil Pertandingan ({matches.length})
+              Match Schedule & Results ({matches.length})
             </h2>
           </div>
 
@@ -387,9 +387,9 @@ export function PublicSessionDetailClient({
                 textAlign: 'center',
               }}
             >
-              <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Belum ada jadwal pertandingan</p>
+              <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>No match schedule yet</p>
               <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 4 }}>
-                Jadwal pertandingan akan muncul di sini setelah dibuat oleh admin.
+                Match schedule will appear here once created by the admin.
               </p>
             </div>
           ) : (
@@ -425,7 +425,7 @@ export function PublicSessionDetailClient({
                       </span>
                       <span className={`badge ${isCompleted ? 'badge-completed' : 'badge-upcoming'}`}>
                         {isCompleted ? <CheckCircle2 size={11} /> : <Circle size={11} />}
-                        {isCompleted ? 'Selesai' : 'Mendatang'}
+                        {isCompleted ? 'Completed' : 'Upcoming'}
                       </span>
                     </div>
 
@@ -445,10 +445,10 @@ export function PublicSessionDetailClient({
                       >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                           <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
-                            Tim A
+                            Team A
                           </span>
-                          {isWinnerA && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} poin</span>}
-                          {!isWinnerA && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} poin</span>}
+                          {isWinnerA && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} pts</span>}
+                          {!isWinnerA && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} pts</span>}
                         </div>
                         {teamA.map((mp) => (
                           <div key={mp.id} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -497,10 +497,10 @@ export function PublicSessionDetailClient({
                       >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                           <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
-                            Tim B
+                            Team B
                           </span>
-                          {isWinnerB && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} poin</span>}
-                          {!isWinnerB && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} poin</span>}
+                          {isWinnerB && <span className="badge badge-accent" style={{ fontSize: 9 }}>+{winPts} pts</span>}
+                          {!isWinnerB && isCompleted && <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>+{losePts} pts</span>}
                         </div>
                         {teamB.map((mp) => (
                           <div key={mp.id} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

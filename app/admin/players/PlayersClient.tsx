@@ -196,7 +196,7 @@ function PlayerModal({
                   style={{ cursor: isCompressing ? 'not-allowed' : 'pointer', gap: 6 }}
                 >
                   {isCompressing ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
-                  {avatarUrl ? 'Ganti Foto Profil' : 'Unggah Foto Profil'}
+                  {avatarUrl ? 'Change Profile Photo' : 'Upload Profile Photo'}
                   <input
                     type="file"
                     accept="image/*"
@@ -213,7 +213,7 @@ function PlayerModal({
                     className="btn btn-ghost btn-sm"
                     style={{ fontSize: 11, color: 'var(--danger)', height: 26 }}
                   >
-                    Hapus Foto
+                    Remove Photo
                   </button>
                 )}
               </div>
@@ -221,13 +221,13 @@ function PlayerModal({
 
             <div>
               <label htmlFor="player-name" className="label">
-                Nama Lengkap <span style={{ color: 'var(--danger)' }}>*</span>
+                Full Name <span style={{ color: 'var(--danger)' }}>*</span>
               </label>
               <input
                 id="player-name"
                 type="text"
                 className="input"
-                placeholder="misal: Aldo Pratama"
+                placeholder="e.g. Aldo Pratama"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -252,7 +252,7 @@ function PlayerModal({
                   textDecoration: 'underline',
                 }}
               >
-                {showUrlInput ? 'Sembunyikan Input Link Foto' : 'Atau tempel link URL foto...'}
+                {showUrlInput ? 'Hide Photo URL Input' : 'Or paste photo URL link...'}
               </button>
 
               {showUrlInput && (
@@ -291,18 +291,18 @@ function PlayerModal({
 
           <div className="modal-footer">
             <button type="button" onClick={onClose} className="btn btn-secondary">
-              Batal
+              Cancel
             </button>
             <button type="submit" disabled={isPending} className="btn btn-primary">
               {isPending ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  Menyimpan...
+                  Saving...
                 </>
               ) : isEditing ? (
-                'Simpan Perubahan'
+                'Save Changes'
               ) : (
-                'Tambah Pemain'
+                'Add Player'
               )}
             </button>
           </div>
@@ -341,7 +341,7 @@ function DeleteModal({
       <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
         <div className="modal-header">
           <h2 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
-            Hapus Pemain
+            Delete Player
           </h2>
           <button onClick={onClose} className="btn btn-ghost btn-icon">
             <X size={18} />
@@ -366,10 +366,10 @@ function DeleteModal({
             </div>
             <div>
               <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)', marginBottom: 4 }}>
-                Hapus &quot;{player.name}&quot;?
+                Delete &quot;{player.name}&quot;?
               </p>
               <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-                Pemain ini akan dihapus dari semua sesi pertandingan. Tindakan ini tidak dapat dibatalkan.
+                This player will be removed from all match sessions. This action cannot be undone.
               </p>
             </div>
           </div>
@@ -390,18 +390,18 @@ function DeleteModal({
         </div>
         <div className="modal-footer">
           <button onClick={onClose} className="btn btn-secondary">
-            Batal
+            Cancel
           </button>
           <button onClick={handleDelete} disabled={isPending} className="btn btn-danger">
             {isPending ? (
               <>
                 <Loader2 size={15} className="animate-spin" />
-                Menghapus...
+                Deleting...
               </>
             ) : (
               <>
                 <Trash2 size={15} />
-                Hapus Pemain
+                Delete Player
               </>
             )}
           </button>
@@ -433,7 +433,7 @@ export function PlayersClient({ players }: { players: Player[] }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <h1 className="page-title">Pemain</h1>
+            <h1 className="page-title">Players</h1>
             <span
               style={{
                 fontSize: 11,
@@ -449,7 +449,7 @@ export function PlayersClient({ players }: { players: Player[] }) {
             </span>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 2 }}>
-            Kelola daftar pemain dan profil liga
+            Manage player roster and league profiles
           </p>
         </div>
         <button
@@ -458,7 +458,7 @@ export function PlayersClient({ players }: { players: Player[] }) {
           className="btn btn-primary"
         >
           <Plus size={16} />
-          Tambah Pemain
+          Add Player
         </button>
       </div>
 
@@ -492,12 +492,12 @@ export function PlayersClient({ players }: { players: Player[] }) {
             <UserRound size={24} />
           </div>
           <div>
-            <p style={{ fontWeight: 600, fontSize: 15, color: 'var(--text-primary)' }}>Belum ada pemain yang terdaftar</p>
-            <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 2 }}>Tambahkan pemain untuk memulai.</p>
+            <p style={{ fontWeight: 600, fontSize: 15, color: 'var(--text-primary)' }}>No registered players yet</p>
+            <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 2 }}>Add players to get started.</p>
           </div>
           <button onClick={() => setModal({ type: 'create' })} className="btn btn-primary btn-sm">
             <Plus size={15} />
-            Tambah Pemain
+            Add Player
           </button>
         </div>
       ) : (

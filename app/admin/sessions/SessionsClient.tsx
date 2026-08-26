@@ -228,13 +228,13 @@ function SessionModal({
 
             <div>
               <label htmlFor="session-location" className="label">
-                Nama Lokasi / Lapangan <span style={{ color: 'var(--danger)' }}>*</span>
+                Location / Court Name <span style={{ color: 'var(--danger)' }}>*</span>
               </label>
               <input
                 id="session-location"
                 type="text"
                 className="input"
-                placeholder="e.g. Lapangan Tenis Aphelion"
+                placeholder="e.g. Aphelion Tennis Court"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 required
@@ -244,18 +244,18 @@ function SessionModal({
 
             <div>
               <label htmlFor="session-location-url" className="label">
-                Link Google Maps (URL / Share Link)
+                Google Maps Link (URL / Share Link)
               </label>
               <input
                 id="session-location-url"
                 type="url"
                 className="input"
-                placeholder="https://maps.app.goo.gl/... atau https://google.com/maps/..."
+                placeholder="https://maps.app.goo.gl/... or https://google.com/maps/..."
                 value={locationUrl}
                 onChange={(e) => setLocationUrl(e.target.value)}
               />
               <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
-                Masukkan link Google Maps untuk menampilkan peta interaktif di halaman pengguna.
+                Enter Google Maps link to display an interactive map on the user page.
               </p>
             </div>
 

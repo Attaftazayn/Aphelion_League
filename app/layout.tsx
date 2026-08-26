@@ -6,7 +6,7 @@ import { HeroBackdrop } from '@/components/ui/HeroBackdrop'
 
 export const metadata: Metadata = {
   title: 'Aphelion League',
-  description: 'Sistem Manajemen Liga Tenis Aphelion League',
+  description: 'Aphelion League Tennis Management System',
   icons: {
     icon: [
       { url: '/aphelion.jpeg?v=3', type: 'image/jpeg' },
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="id">
+    <html lang="en">
       <head>
         <link rel="icon" href="/aphelion.jpeg?v=3" type="image/jpeg" />
         <link rel="shortcut icon" href="/aphelion.jpeg?v=3" type="image/jpeg" />

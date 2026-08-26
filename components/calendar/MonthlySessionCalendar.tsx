@@ -109,7 +109,7 @@ export function MonthlySessionCalendar({
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <CalendarIcon size={18} style={{ color: 'var(--accent)' }} />
           <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.2px', marginRight: 4 }}>
-            Kalender Sesi:
+            Sessions Calendar:
           </h2>
 
           {/* Month Dropdown */}
@@ -170,7 +170,7 @@ export function MonthlySessionCalendar({
             onClick={prevMonth}
             className="btn btn-secondary btn-icon"
             style={{ width: 32, height: 32, padding: 0 }}
-            title="Bulan Sebelumnya"
+            title="Previous Month"
           >
             <ChevronLeft size={16} />
           </button>
@@ -183,13 +183,13 @@ export function MonthlySessionCalendar({
             className="btn btn-ghost btn-sm"
             style={{ fontSize: 11, padding: '4px 10px', height: 32 }}
           >
-            Hari Ini
+            Today
           </button>
           <button
             onClick={nextMonth}
             className="btn btn-secondary btn-icon"
             style={{ width: 32, height: 32, padding: 0 }}
-            title="Bulan Berikutnya"
+            title="Next Month"
           >
             <ChevronRight size={16} />
           </button>
@@ -298,16 +298,16 @@ export function MonthlySessionCalendar({
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-              Sesi Tanggal {selectedDay} {MONTH_NAMES[currentMonth]} {currentYear}
+              Sessions for {selectedDay} {MONTH_NAMES[currentMonth]} {currentYear}
             </span>
             <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-              {activeDaySessions.length} Sesi Terjadwal
+              {activeDaySessions.length} Scheduled Sessions
             </span>
           </div>
 
           {activeDaySessions.length === 0 ? (
             <p style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', paddingBlock: 8 }}>
-              Tidak ada sesi pertandingan di tanggal ini.
+              No match sessions scheduled for this date.
             </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -346,7 +346,7 @@ export function MonthlySessionCalendar({
                     className="btn btn-secondary btn-sm"
                     style={{ fontSize: 11, padding: '4px 10px', height: 30 }}
                   >
-                    Detail
+                    Details
                     <ArrowUpRight size={12} />
                   </Link>
                 </div>

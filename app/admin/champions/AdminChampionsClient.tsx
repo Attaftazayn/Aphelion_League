@@ -42,7 +42,7 @@ function DeleteChampionModal({
       <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
         <div className="modal-header">
           <h2 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
-            Hapus Data Juara Bulanan
+            Delete Monthly Champion Record
           </h2>
           <button onClick={onClose} className="btn btn-ghost btn-icon">
             <X size={18} />
@@ -67,10 +67,10 @@ function DeleteChampionModal({
             </div>
             <div>
               <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-primary)', marginBottom: 4 }}>
-                Hapus {champion.player?.name} sebagai Juara untuk {formatMonthLabel(champion.month_key)}?
+                Delete {champion.player?.name} as Champion for {formatMonthLabel(champion.month_key)}?
               </p>
               <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-                Tindakan ini akan menghapus data juara dari Hall of Fame publik.
+                This action will remove the champion record from the public Hall of Fame.
               </p>
             </div>
           </div>
@@ -82,18 +82,18 @@ function DeleteChampionModal({
         </div>
         <div className="modal-footer">
           <button onClick={onClose} className="btn btn-secondary">
-            Batal
+            Cancel
           </button>
           <button onClick={handleDelete} disabled={isPending} className="btn btn-danger">
             {isPending ? (
               <>
                 <Loader2 size={15} className="animate-spin" />
-                Menghapus...
+                Deleting...
               </>
             ) : (
               <>
                 <Trash2 size={15} />
-                Hapus Juara
+                Delete Champion
               </>
             )}
           </button>
@@ -152,7 +152,7 @@ export function AdminChampionsClient({
       if (res?.error) {
         setMsg({ text: res.error, error: true })
       } else {
-        setMsg({ text: `Juara Bulanan untuk ${formatMonthLabel(selectedMonth)} berhasil dikonfirmasi dan dipublikasikan!` })
+        setMsg({ text: `Monthly Champion for ${formatMonthLabel(selectedMonth)} successfully confirmed and published!` })
       }
     })
   }
@@ -163,7 +163,7 @@ export function AdminChampionsClient({
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <h1 className="page-title">Kelola Juara</h1>
+            <h1 className="page-title">Manage Champions</h1>
             <span
               style={{
                 fontSize: 11,
@@ -175,11 +175,11 @@ export function AdminChampionsClient({
                 color: 'var(--text-secondary)',
               }}
             >
-              {confirmedChampions.length} Terkonfirmasi
+              {confirmedChampions.length} Confirmed
             </span>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 2 }}>
-            Konfirmasi, kelola, atau hapus juara bulanan di Hall of Fame
+            Confirm, manage, or remove monthly champions in Hall of Fame
           </p>
         </div>
       </div>
@@ -199,18 +199,18 @@ export function AdminChampionsClient({
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <ShieldCheck size={18} style={{ color: 'var(--accent)' }} />
           <h2 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>
-            Alat Konfirmasi Juara Bulanan
+            Monthly Champion Confirmation Tool
           </h2>
         </div>
 
         {availableMonths.length === 0 ? (
           <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-            Belum ada sesi atau pertandingan untuk mengonfirmasi juara.
+            No sessions or matches yet to confirm champions.
           </p>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
-              <label className="label">Pilih Bulan</label>
+              <label className="label">Select Month</label>
               <select
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(e.target.value)}
@@ -219,7 +219,7 @@ export function AdminChampionsClient({
               >
                 {availableMonths.map((m) => (
                   <option key={m} value={m}>
-                    {formatMonthLabel(m)} {confirmedChampions.some((c) => c.month_key === m) ? '(Terkonfirmasi)' : '(Sementara)'}
+                    {formatMonthLabel(m)} {confirmedChampions.some((c) => c.month_key === m) ? '(Confirmed)' : '(Interim)'}
                   </option>
                 ))}
               </select>
@@ -257,13 +257,13 @@ export function AdminChampionsClient({
                   </div>
                   <div>
                     <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-                      Pemimpin Klasemen ({formatMonthLabel(selectedMonth)})
+                      Leaderboard Leader ({formatMonthLabel(selectedMonth)})
                     </span>
                     <p style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)', marginTop: 1 }}>
                       {monthCandidate.player.name}
                     </p>
                     <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>
-                      {monthCandidate.total_points} poin · {monthCandidate.wins} menang · {(monthCandidate.win_rate * 100).toFixed(0)}% Persentase Menang
+                      {monthCandidate.total_points} pts · {monthCandidate.wins} wins · {(monthCandidate.win_rate * 100).toFixed(0)}% Win Rate
                     </p>
                   </div>
                 </div>
@@ -275,12 +275,12 @@ export function AdminChampionsClient({
                   style={{ gap: 6 }}
                 >
                   {isPending ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
-                  {isSelectedMonthConfirmed ? 'Konfirmasi Ulang Juara' : 'Konfirmasi & Simpan Juara'}
+                  {isSelectedMonthConfirmed ? 'Re-confirm Champion' : 'Confirm & Save Champion'}
                 </button>
               </div>
             ) : (
               <div style={{ padding: '16px', background: 'var(--bg-raised)', borderRadius: 10, fontSize: 13, color: 'var(--text-muted)' }}>
-                Belum ada pertandingan selesai untuk {formatMonthLabel(selectedMonth)}.
+                No completed matches yet for {formatMonthLabel(selectedMonth)}.
               </div>
             )}
 
@@ -309,7 +309,7 @@ export function AdminChampionsClient({
       {/* Confirmed Champions History */}
       <div>
         <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-secondary)', marginBottom: 12 }}>
-          Daftar Juara Terkonfirmasi ({confirmedChampions.length})
+          Confirmed Champions History ({confirmedChampions.length})
         </h2>
 
         {confirmedChampions.length === 0 ? (
@@ -324,7 +324,7 @@ export function AdminChampionsClient({
               fontSize: 13,
             }}
           >
-            Belum ada juara bulanan yang dikonfirmasi. Gunakan alat di atas untuk mengonfirmasi juara pertama.
+            No monthly champions confirmed yet. Use the tool above to confirm the first champion.
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
@@ -352,7 +352,7 @@ export function AdminChampionsClient({
                       {c.player?.name}
                     </p>
                     <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}>
-                      {c.total_points} poin · {c.wins} menang
+                      {c.total_points} pts · {c.wins} wins
                     </p>
                   </div>
                 </div>
@@ -360,7 +360,7 @@ export function AdminChampionsClient({
                 <button
                   onClick={() => setDeletingChampion(c)}
                   className="btn btn-ghost btn-icon btn-sm"
-                  title="Hapus data juara"
+                  title="Delete champion record"
                   style={{ color: 'var(--danger)' }}
                 >
                   <Trash2 size={16} />

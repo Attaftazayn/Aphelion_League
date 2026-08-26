@@ -943,7 +943,7 @@ export function SessionDetailClient({
           }}
         >
           <ChevronLeft size={16} style={{ color: 'var(--accent)' }} />
-          Semua Sesi
+          All Sessions
         </Link>
       </div>
 

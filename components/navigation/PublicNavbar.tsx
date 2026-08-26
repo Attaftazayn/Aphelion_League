@@ -14,10 +14,10 @@ import {
 
 const navLinks = [
   { href: '/',            label: 'Dashboard',   icon: LayoutDashboard },
-  { href: '/sessions',    label: 'Sesi',        icon: Calendar },
-  { href: '/leaderboard', label: 'Klasemen',    icon: Trophy },
-  { href: '/players',     label: 'Pemain',      icon: Users },
-  { href: '/champions',   label: 'Juara',       icon: Award },
+  { href: '/sessions',    label: 'Sessions',    icon: Calendar },
+  { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+  { href: '/players',     label: 'Players',     icon: Users },
+  { href: '/champions',   label: 'Champions',   icon: Award },
 ]
 
 export function PublicHeader() {
